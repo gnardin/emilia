@@ -1,7 +1,11 @@
 package emilia.entity.sanction;
 
-import emilia.entity.EntityInterface;
+import emilia.entity.EntityAbstract;
 
-public abstract class SanctionEntityAbstract implements EntityInterface {
+@SuppressWarnings("serial")
+public abstract class SanctionEntityAbstract extends EntityAbstract {
 
+	public SanctionEntityAbstract(long sanctionId) {
+		super(sanctionId);
+	}
 }
