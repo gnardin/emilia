@@ -1,0 +1,16 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<schema xmlns="http://www.w3.org/2001/XMLSchema">
+
+	<element name="emilia">
+		<complexType>
+			<sequence>
+				<element name="normRecognitionClass" type="string" />
+				<element name="normAdoptionClass" type="string" />
+				<element name="normSalienceClass" type="string" />
+				<element name="normEnforcementClass" type="string" />
+				<element name="normComplianceClass" type="string" />
+				<element name="normativeBoardClass" type="string" />
+			</sequence>
+		</complexType>
+	</element>
+</schema>

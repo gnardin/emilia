@@ -1,0 +1,11 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emilia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="emilia.xsd">
+
+	<normRecognitionClass>emilia.impl.modules.NormRecognitionController</normRecognitionClass>
+	<normAdoptionClass>emilia.impl.modules.NormAdoptionController</normAdoptionClass>
+	<normSalienceClass>emilia.impl.modules.NormSalienceController</normSalienceClass>
+	<normEnforcementClass>emilia.impl.modules.NormEnforcementController</normEnforcementClass>
+	<normComplianceClass>emilia.impl.modules.NormComplianceController</normComplianceClass>
+	<normativeBoardClass>emilia.impl.board.NormativeBoard</normativeBoardClass>
+</emilia>

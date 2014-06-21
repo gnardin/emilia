@@ -1,28 +1,31 @@
 package emilia.modules.compliance;
 
-import emilia.board.normative.NormativeBoardInterface;
+import emilia.board.NormativeBoardInterface;
 
 public abstract class NormComplianceAbstract {
-
-	protected NormativeBoardInterface normativeBoard;
-
+	
+	// Normative Board
+	protected NormativeBoardInterface	normativeBoard;
+	
+	
 	/**
-	 * Constructor
+	 * Create a norm compliance
 	 * 
 	 * @param normativeBoard
-	 *            Normative board
+	 *          Normative board
 	 * @return none
 	 */
 	public NormComplianceAbstract(NormativeBoardInterface normativeBoard) {
 		this.normativeBoard = normativeBoard;
 	}
-
+	
+	
 	/**
 	 * Get normative drive
 	 * 
 	 * @param normId
-	 *            Norm identification
+	 *          Norm identification
 	 * @return Normative drive
 	 */
-	public abstract double getNormativeDrive(int normId);
+	public abstract Double getNormativeDrive(Integer normId);
 }

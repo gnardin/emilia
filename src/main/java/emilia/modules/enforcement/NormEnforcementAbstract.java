@@ -1,20 +1,21 @@
 package emilia.modules.enforcement;
 
-import emilia.modules.classifier.EventClassifierListener;
+import emilia.modules.recognition.EventListener;
 
-public abstract class NormEnforcementAbstract extends EventClassifierListener {
-
-	public NormEnforcementAbstract(int id) {
-		super(id);
-	}
-
+public abstract class NormEnforcementAbstract implements
+		EventListener {
+	
 	public abstract void monitor();
-
+	
+	
 	public abstract void detect();
-
+	
+	
 	public abstract void evaluate();
-
+	
+	
 	public abstract void enforce();
-
+	
+	
 	public abstract void adapt();
 }

@@ -2,10 +2,18 @@ package emilia.entity.sanction;
 
 import emilia.entity.EntityAbstract;
 
-@SuppressWarnings("serial")
 public abstract class SanctionEntityAbstract extends EntityAbstract {
-
-	public SanctionEntityAbstract(long sanctionId) {
-		super(sanctionId);
+	
+	public enum SanctionType {
 	}
+	
+	protected Integer										id;
+	
+	protected SanctionType							type;
+	
+	protected SanctionContentInterface	content;
+	
+	protected String										context;
+	
+	protected String										deontic;
 }

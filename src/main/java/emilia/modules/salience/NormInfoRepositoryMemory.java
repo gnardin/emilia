@@ -2,17 +2,17 @@ package emilia.modules.salience;
 
 import java.util.HashMap;
 import java.util.Map;
-
-import emilia.entity.event.EventContentAbstract;
 import emilia.modules.salience.NormInfoEntity;
 import emilia.modules.salience.NormInfoRepositoryInterface;
 
 public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
-
-	private Map<Integer, NormInfoEntity> normativeInfoRep;
-
+	
+	// <NormId, Normative Information>
+	private Map<Integer, NormInfoEntity>	normativeInfoRep;
+	
+	
 	/**
-	 * Constructor
+	 * Create a normative information repository into memory
 	 * 
 	 * @param none
 	 * @return none
@@ -20,50 +20,49 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	public NormInfoRepositoryMemory() {
 		this.normativeInfoRep = new HashMap<Integer, NormInfoEntity>();
 	}
-
+	
+	
 	/**
 	 * Get normative information about a data type from a norm
 	 * 
 	 * @param normId
-	 *            Norm identification
+	 *          Norm identification
 	 * @param dataType
-	 *            Information type
+	 *          Data type
 	 * @return none
 	 */
 	@Override
-	public int getNormInfo(int normId, int dataType) {
-		int result = 0;
-
-		if (this.normativeInfoRep.containsKey(normId)) {
+	public Integer getNormInfo(Integer normId, DataType dataType) {
+		Integer result = 0;
+		
+		if(this.normativeInfoRep.containsKey(normId)) {
 			NormInfoEntity normInfoEntity = this.normativeInfoRep.get(normId);
-
-			if (normInfoEntity.has(dataType)) {
-				result = normInfoEntity.getNumber(dataType);
-			}
+			result = normInfoEntity.getNumber(dataType);
 		}
-
+		
 		return result;
 	}
-
+	
+	
 	/**
 	 * Increment the counter of a data type for a norm depending on the event
 	 * content
 	 * 
 	 * @param content
-	 *            Event content
+	 *          Event content
 	 * @return none
 	 */
 	@Override
-	public void increment(EventContentAbstract content) {
-
+	public void increment(Integer normId, DataType dataType) {
+		
 		NormInfoEntity normInfoEntity;
-		if (this.normativeInfoRep.containsKey(content.getNormId())) {
-			normInfoEntity = this.normativeInfoRep.get(content.getNormId());
-		} else {
+		if(this.normativeInfoRep.containsKey(normId)) {
+			normInfoEntity = this.normativeInfoRep.get(normId);
+		}else {
 			normInfoEntity = new NormInfoEntity();
 		}
-
-		normInfoEntity.increment(content.getType().ordinal());
-		this.normativeInfoRep.put(content.getNormId(), normInfoEntity);
+		
+		normInfoEntity.increment(dataType, 1);
+		this.normativeInfoRep.put(normId, normInfoEntity);
 	}
 }
