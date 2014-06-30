@@ -5,19 +5,17 @@ import emilia.entity.EntityAbstract;
 public abstract class NormEntityAbstract extends EntityAbstract implements
 		Cloneable {
 	
-	public enum Type {
+	public enum NormType {
 		LEGAL,
 		SOCIAL;
 	}
 	
-	public enum Source {
+	public enum NormSource {
 		AUTHORITY,
-		SET_AGENTS,
-		DISTRIBUTED,
-		IMPERSONAL;
+		DISTRIBUTED;
 	}
 	
-	public enum Status {
+	public enum NormStatus {
 		INACTIVE,
 		BELIEF,
 		GOAL;
@@ -25,15 +23,13 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	
 	protected Integer								id;
 	
-	protected Type									type;
+	protected NormType							type;
 	
-	protected Source								source;
+	protected NormSource						source;
 	
-	protected Status								status;
+	protected NormStatus						status;
 	
 	protected NormContentInterface	content;
-	
-	protected String								context;
 	
 	protected Double								salience;
 	
@@ -67,7 +63,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Norm type
 	 */
-	public Type getType() {
+	public NormType getType() {
 		return this.type;
 	}
 	
@@ -79,7 +75,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 *          Norm type
 	 * @return none
 	 */
-	public void setType(Type type) {
+	public void setType(NormType type) {
 		this.type = type;
 	}
 	
@@ -90,7 +86,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Source type
 	 */
-	public Source getSource() {
+	public NormSource getSource() {
 		return this.source;
 	}
 	
@@ -102,7 +98,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 *          Source type
 	 * @return none
 	 */
-	public void setSource(Source source) {
+	public void setSource(NormSource source) {
 		this.source = source;
 	}
 	
@@ -113,7 +109,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Norm status
 	 */
-	public Status getStatus() {
+	public NormStatus getStatus() {
 		return this.status;
 	}
 	
@@ -125,7 +121,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 *          Norm status
 	 * @return none
 	 */
-	public void setStatus(Status status) {
+	public void setStatus(NormStatus status) {
 		this.status = status;
 	}
 	
@@ -150,29 +146,6 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 */
 	public void setContent(NormContentInterface content) {
 		this.content = content;
-	}
-	
-	
-	/**
-	 * Get norm context in which the norm is valid
-	 * 
-	 * @param none
-	 * @return Norm context
-	 */
-	public String getContext() {
-		return this.context;
-	}
-	
-	
-	/**
-	 * Set norm context
-	 * 
-	 * @param context
-	 *          Norm context
-	 * @return none
-	 */
-	public void setContext(String context) {
-		this.context = context;
 	}
 	
 	

@@ -15,6 +15,6 @@ public interface NormativeBoardListener {
 	 *          New norm entity
 	 * @return none
 	 */
-	public void receive(NormativeEventType type, NormEntityAbstract oldNorm,
+	public void receive(NormativeBoardEventType type, NormEntityAbstract oldNorm,
 			NormEntityAbstract newNorm);
 }

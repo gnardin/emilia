@@ -1,6 +1,7 @@
 package emilia.impl.modules;
 
 import emilia.board.NormativeBoardInterface;
+import emilia.entity.event.NormativeEventType;
 import emilia.modules.salience.DataType;
 import emilia.modules.salience.NormInfoRepositoryMemory;
 import emilia.modules.salience.NormSalienceAbstract;
@@ -73,16 +74,25 @@ public class NormSalienceController extends NormSalienceAbstract {
 		int normInvocationViolation = this.repository.getNormInfo(normId,
 				DataType.VIOLATION_INVOKED);
 		
+		double nominator = 0;
+		double denominator = 0;
+		
 		double own = 0;
 		if ((compliance + violation) > 0) {
 			own = (double) (compliance - violation)
 					/ (double) (compliance + violation);
+			
+			nominator += 0.99;
+			denominator += 1.98;
 		}
 		
 		double obs = 0;
 		if ((obsCompliance + obsViolation) > 0) {
 			obs = (double) (obsCompliance - obsViolation)
 					/ (double) (obsCompliance + obsViolation);
+			
+			nominator += 0.33;
+			denominator += 0.66;
 		}
 		
 		double npv = 0;
@@ -90,6 +100,9 @@ public class NormSalienceController extends NormSalienceAbstract {
 			npv = (double) Math.max(0, (obsViolation + violation) - punishment
 					- sanction)
 					/ (double) (obsViolation + violation);
+			
+			nominator += 0.66;
+			denominator += 1.65;
 		}
 		
 		double p = 0;
@@ -108,14 +121,25 @@ public class NormSalienceController extends NormSalienceAbstract {
 		if ((normInvocationCompliance + normInvocationViolation) > 0) {
 			e = (double) (normInvocationCompliance - normInvocationViolation)
 					/ (double) (normInvocationCompliance + normInvocationViolation);
+			
+			nominator += 0.99;
+			denominator += 1.98;
 		}
 		
-		salience = (double) (2.97 + ((own * Weight.WC.getValue())
-				+ (obs * Weight.WO.getValue()) + (npv * Weight.WNPV.getValue())
-				+ (p * Weight.WP.getValue()) + (s * Weight.WS.getValue()) + (e * Weight.WE
-				.getValue()))) / (double) 6.27;
-		
-		// Set the Salience in the Normative Board
-		this.normativeBoard.setSalience(normId, salience);
+		if (denominator > 0) {
+			salience = (double) (nominator + ((own * Weight.WC.getValue())
+					+ (obs * Weight.WO.getValue()) + (npv * Weight.WNPV.getValue())
+					+ (p * Weight.WP.getValue()) + (s * Weight.WS.getValue()) + (e * Weight.WE
+					.getValue()))) / (double) denominator;
+			
+			// Set the Salience in the Normative Board
+			this.normativeBoard.setSalience(normId, salience);
+		}
+	}
+	
+	
+	@Override
+	// TODO
+	public void receive(NormativeEventType type) {
 	}
 }

@@ -1,6 +1,7 @@
 package emilia.board;
 
 import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import java.util.List;
 
 public interface NormativeBoardInterface {
@@ -48,11 +49,11 @@ public interface NormativeBoardInterface {
 	/**
 	 * Match norms
 	 * 
-	 * @param info
-	 *          Information to match
-	 * @return List of norms that match the information
+	 * @param content
+	 *          Content to match with norms
+	 * @return List of norms that match the content
 	 */
-	public abstract List<NormEntityAbstract> match(Object info);
+	public abstract List<NormEntityAbstract> match(Object content);
 	
 	
 	/**
@@ -78,6 +79,92 @@ public interface NormativeBoardInterface {
 	
 	
 	/**
+	 * Get sanction
+	 * 
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return Sanction entity
+	 */
+	public SanctionEntityAbstract getSanction(Integer sanctionId);
+	
+	
+	/**
+	 * Add or set a sanction
+	 * 
+	 * @param sanction
+	 *          Sanction entity
+	 * @return none
+	 */
+	public void setSanction(SanctionEntityAbstract sanction);
+	
+	
+	/**
+	 * Remove a sanction
+	 * 
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return none
+	 */
+	public void removeSanction(Integer sanctionId);
+	
+	
+	/**
+	 * Exist the sanction
+	 * 
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return True if sanction exists, False otherwise
+	 */
+	public Boolean hasSanction(Integer sanctionId);
+	
+	
+	/**
+	 * Get sanctions associated to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @return List of sanctions associated to the norm
+	 */
+	public List<Integer> getNormSanctions(Integer normId);
+	
+	
+	/**
+	 * Add or set a sanction association to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return none
+	 */
+	public void setNormSanction(Integer normId, Integer sanctionId);
+	
+	
+	/**
+	 * Remove a sanction association to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return none
+	 */
+	public void removeNormSanction(Integer normId, Integer sanctionId);
+	
+	
+	/**
+	 * Exist the sanction association to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @param sanctionId
+	 *          Sanction identification
+	 * @return True if association exists, False otherwise
+	 */
+	public Boolean hasNormSanction(Integer normId, Integer sanctionId);
+	
+	
+	/**
 	 * Register a callback method
 	 * 
 	 * @param types
@@ -86,7 +173,7 @@ public interface NormativeBoardInterface {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void registerCallback(List<NormativeEventType> types,
+	public void registerCallback(List<NormativeBoardEventType> types,
 			NormativeBoardListener normListener);
 	
 	
@@ -99,6 +186,6 @@ public interface NormativeBoardInterface {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void unregisterCallback(List<NormativeEventType> types,
+	public void unregisterCallback(List<NormativeBoardEventType> types,
 			NormativeBoardListener normListener);
 }

@@ -10,16 +10,16 @@ import emilia.entity.sanction.SanctionEntityAbstract;
 public abstract class NormativeBoardAbstract implements NormativeBoardInterface {
 	
 	// Norm entities <NormId, NormEntity>
-	protected Map<Integer, NormEntityAbstract>											norms;
+	protected Map<Integer, NormEntityAbstract>														norms;
 	
 	// Sanction entities <SanctionId, SanctionEntity>
-	protected Map<Integer, SanctionEntityAbstract>									sanctions;
+	protected Map<Integer, SanctionEntityAbstract>												sanctions;
 	
 	// Norm x Sanction <NormId, List<SanctionId>>
-	protected Map<Integer, List<Integer>>														normSanctions;
+	protected Map<Integer, List<Integer>>																	normSanctions;
 	
 	// Callbacks
-	protected Map<NormativeEventType, List<NormativeBoardListener>>	callbacks;
+	protected Map<NormativeBoardEventType, List<NormativeBoardListener>>	callbacks;
 	
 	
 	/**
@@ -29,8 +29,8 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	 * @return none
 	 */
 	public NormativeBoardAbstract() {
-		this.callbacks = new HashMap<NormativeEventType, List<NormativeBoardListener>>();
-		for(NormativeEventType type : NormativeEventType.values()) {
+		this.callbacks = new HashMap<NormativeBoardEventType, List<NormativeBoardListener>>();
+		for(NormativeBoardEventType type : NormativeBoardEventType.values()) {
 			this.callbacks.put(type, new ArrayList<NormativeBoardListener>());
 		}
 		
@@ -60,12 +60,17 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		// Update a norm
 		if (this.norms.containsKey(normId)) {
 			oldNorm = this.norms.replace(normId, norm);
-			this.processNormativeEvent(NormativeEventType.UPDATE_NORM, oldNorm, norm);
+			
+			this.processNormativeEvent(NormativeBoardEventType.UPDATE_NORM, oldNorm,
+					norm);
 			
 			// Insert a norm
 		} else {
 			this.norms.put(normId, norm);
-			this.processNormativeEvent(NormativeEventType.INSERT_NORM, null, norm);
+			this.normSanctions.put(normId, new ArrayList<Integer>());
+			
+			this.processNormativeEvent(NormativeBoardEventType.INSERT_NORM, null,
+					norm);
 		}
 	}
 	
@@ -74,7 +79,12 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public void removeNorm(Integer normId) {
 		if (this.norms.containsKey(normId)) {
 			NormEntityAbstract oldNorm = this.norms.remove(normId);
-			this.processNormativeEvent(NormativeEventType.REMOVE_NORM, oldNorm, null);
+			if (this.normSanctions.containsKey(normId)) {
+				this.normSanctions.remove(normId);
+			}
+			
+			this.processNormativeEvent(NormativeBoardEventType.REMOVE_NORM, oldNorm,
+					null);
 		}
 	}
 	
@@ -99,9 +109,6 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 			salience = this.norms.get(normId).getSalience();
 		}
 		
-		if (salience == null)
-			System.out.println(this.norms.get(normId).getSalience());
-		
 		return salience;
 	}
 	
@@ -113,18 +120,132 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 			NormEntityAbstract oldNorm = newNorm.clone();
 			newNorm.setSalience(salience);
 			
-			this.processNormativeEvent(NormativeEventType.UPDATE_SALIENCE, oldNorm,
-					newNorm);
+			this.processNormativeEvent(NormativeBoardEventType.UPDATE_SALIENCE,
+					oldNorm, newNorm);
 		}
 	}
 	
 	
 	@Override
-	public void registerCallback(List<NormativeEventType> types,
+	public SanctionEntityAbstract getSanction(Integer sanctionId) {
+		SanctionEntityAbstract sanction = null;
+		
+		if (this.sanctions.containsKey(sanctionId)) {
+			sanction = this.sanctions.get(sanctionId);
+		}
+		
+		return sanction;
+	}
+	
+	
+	@Override
+	public void setSanction(SanctionEntityAbstract sanction) {
+		Integer sanctionId = sanction.getId();
+		
+		// Update a sanction
+		if (this.sanctions.containsKey(sanctionId)) {
+			this.sanctions.replace(sanctionId, sanction);
+			// Insert a sanction
+		} else {
+			this.sanctions.put(sanctionId, sanction);
+		}
+	}
+	
+	
+	@Override
+	public void removeSanction(Integer sanctionId) {
+		if (this.sanctions.containsKey(sanctionId)) {
+			this.sanctions.remove(sanctionId);
+			
+			List<Integer> sanctions;
+			for(Integer normId : this.normSanctions.keySet()) {
+				sanctions = this.normSanctions.get(normId);
+				
+				if (sanctions.contains(sanctionId)) {
+					sanctions.remove(sanctionId);
+					this.normSanctions.replace(normId, sanctions);
+				}
+			}
+		}
+	}
+	
+	
+	@Override
+	public Boolean hasSanction(Integer sanctionId) {
+		Boolean found = false;
+		
+		if (this.sanctions.containsKey(sanctionId)) {
+			found = true;
+		}
+		
+		return found;
+	}
+	
+	
+	@Override
+	public List<Integer> getNormSanctions(Integer normId) {
+		List<Integer> sanctions = new ArrayList<Integer>();
+		
+		if (this.normSanctions.containsKey(normId)) {
+			sanctions = this.normSanctions.get(normId);
+		}
+		
+		return sanctions;
+	}
+	
+	
+	@Override
+	public void setNormSanction(Integer normId, Integer sanctionId) {
+		List<Integer> sanctions;
+		
+		if (this.normSanctions.containsKey(normId)) {
+			sanctions = this.normSanctions.get(normId);
+			if (!sanctions.contains(sanctionId)) {
+				sanctions.add(sanctionId);
+			}
+			this.normSanctions.replace(normId, sanctions);
+		} else {
+			sanctions = new ArrayList<Integer>();
+			sanctions.add(sanctionId);
+			this.normSanctions.put(normId, sanctions);
+		}
+	}
+	
+	
+	@Override
+	public void removeNormSanction(Integer normId, Integer sanctionId) {
+		
+		if (this.normSanctions.containsKey(normId)) {
+			List<Integer> sanctions = this.normSanctions.get(normId);
+			if (sanctions.contains(sanctionId)) {
+				sanctions.remove(sanctionId);
+			}
+			this.normSanctions.replace(normId, sanctions);
+		}
+	}
+	
+	
+	@Override
+	public Boolean hasNormSanction(Integer normId, Integer sanctionId) {
+		Boolean found = false;
+		
+		if (this.normSanctions.containsKey(normId)) {
+			List<Integer> sanctions = this.normSanctions.get(normId);
+			if (sanctions.contains(sanctionId)) {
+				found = true;
+			}
+		}
+		
+		return found;
+	}
+	
+	
+	@Override
+	public void registerCallback(List<NormativeBoardEventType> types,
 			NormativeBoardListener normListener) {
 		
 		List<NormativeBoardListener> listener;
-		for(NormativeEventType type : types) {
+		for(NormativeBoardEventType type : types) {
 			if (this.callbacks.containsKey(type)) {
 				listener = this.callbacks.get(type);
 			} else {
@@ -138,11 +259,11 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	
 	@Override
-	public void unregisterCallback(List<NormativeEventType> types,
+	public void unregisterCallback(List<NormativeBoardEventType> types,
 			NormativeBoardListener normListener) {
 		
 		List<NormativeBoardListener> listener;
-		for(NormativeEventType type : types) {
+		for(NormativeBoardEventType type : types) {
 			if (this.callbacks.containsKey(type)) {
 				listener = this.callbacks.get(type);
 				
@@ -161,7 +282,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	 * @param type
 	 * @param normId
 	 */
-	private void processNormativeEvent(NormativeEventType type,
+	private void processNormativeEvent(NormativeBoardEventType type,
 			NormEntityAbstract oldNorm, NormEntityAbstract newNorm) {
 		for(NormativeBoardListener normListener : this.callbacks.get(type)) {
 			normListener.receive(type, oldNorm, newNorm);

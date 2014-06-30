@@ -1,6 +1,6 @@
 package emilia.board;
 
-public enum NormativeEventType {
+public enum NormativeBoardEventType {
 	INSERT_NORM,
 	UPDATE_NORM,
 	REMOVE_NORM,

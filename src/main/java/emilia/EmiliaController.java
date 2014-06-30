@@ -1,12 +1,12 @@
 package emilia;
 
 import emilia.board.NormativeBoardInterface;
-import emilia.board.NormativeEventType;
+import emilia.board.NormativeBoardEventType;
 import emilia.conf.EmiliaConf;
 import emilia.conf.EmiliaConf.Param;
 import emilia.conf.EmiliaConfParser;
-import emilia.entity.event.EventEntityAbstract;
-import emilia.entity.event.EventType;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
 import emilia.modules.adoption.NormAdoptionAbstract;
 import emilia.modules.compliance.NormComplianceAbstract;
 import emilia.modules.enforcement.NormEnforcementAbstract;
@@ -81,9 +81,10 @@ public class EmiliaController extends EmiliaAbstract {
 		logger.debug("Initializing [NORM ADOPTION]");
 		this.setNormAdoption((String) conf.getStrValue(Param.NORM_ADOPTION_CLASS));
 		this.normativeBoard.registerCallback(
-				new ArrayList<NormativeEventType>(Arrays.asList(
-						NormativeEventType.INSERT_NORM, NormativeEventType.UPDATE_NORM,
-						NormativeEventType.UPDATE_SALIENCE)), this.normAdoption);
+				new ArrayList<NormativeBoardEventType>(Arrays.asList(
+						NormativeBoardEventType.INSERT_NORM,
+						NormativeBoardEventType.UPDATE_NORM,
+						NormativeBoardEventType.UPDATE_SALIENCE)), this.normAdoption);
 		logger.debug("Initialized [NORM ADOPTION]");
 		
 		// Norm Salience
@@ -91,14 +92,25 @@ public class EmiliaController extends EmiliaAbstract {
 		this.setNormSalience((String) conf.getStrValue(Param.NORM_SALIENCE_CLASS));
 		this.normRecognition.registerCallback(
 				new ArrayList<Boolean>(Arrays.asList(true)),
-				new ArrayList<EventType>(Arrays.asList(EventType.COMPLIANCE,
-						EventType.COMPLIANCE_INFORMED, EventType.VIOLATION,
-						EventType.VIOLATION_INFORMED, EventType.PUNISHMENT,
-						EventType.PUNISHMENT_INFORMED, EventType.SANCTION,
-						EventType.SANCTION_INFORMED, EventType.COMPLIANCE_INVOCATION,
-						EventType.COMPLIANCE_INVOCATION_INFORMED,
-						EventType.VIOLATION_INVOCATION,
-						EventType.VIOLATION_INVOCATION_INFORMED)), this.normSalience);
+				new ArrayList<NormativeEventType>(Arrays.asList(
+						NormativeEventType.COMPLIANCE,
+						NormativeEventType.COMPLIANCE_OBSERVED,
+						NormativeEventType.COMPLIANCE_INFORMED,
+						NormativeEventType.VIOLATION,
+						NormativeEventType.VIOLATION_OBSERVED,
+						NormativeEventType.VIOLATION_INFORMED,
+						NormativeEventType.PUNISHMENT,
+						NormativeEventType.PUNISHMENT_OBSERVED,
+						NormativeEventType.PUNISHMENT_INFORMED,
+						NormativeEventType.SANCTION, NormativeEventType.SANCTION_OBSERVED,
+						NormativeEventType.SANCTION_INFORMED,
+						NormativeEventType.COMPLIANCE_INVOCATION,
+						NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
+						NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
+						NormativeEventType.VIOLATION_INVOCATION,
+						NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
+						NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
+				this.normSalience);
 		logger.debug("Initialized [NORM SALIENCE]");
 		
 		// Norm Enforcement
@@ -107,16 +119,26 @@ public class EmiliaController extends EmiliaAbstract {
 				.getStrValue(Param.NORM_ENFORCEMENT_CLASS));
 		this.normRecognition.registerCallback(
 				new ArrayList<Boolean>(Arrays.asList(true)),
-				new ArrayList<EventType>(Arrays.asList(EventType.ACTION,
-						EventType.ACTION_OBSERVED, EventType.ACTION_INFORMED,
-						EventType.COMPLIANCE, EventType.COMPLIANCE_INFORMED,
-						EventType.VIOLATION, EventType.VIOLATION_INFORMED,
-						EventType.PUNISHMENT, EventType.PUNISHMENT_INFORMED,
-						EventType.SANCTION, EventType.SANCTION_INFORMED,
-						EventType.COMPLIANCE_INVOCATION,
-						EventType.COMPLIANCE_INVOCATION_INFORMED,
-						EventType.VIOLATION_INVOCATION,
-						EventType.VIOLATION_INVOCATION_INFORMED)), this.normEnforcement);
+				new ArrayList<NormativeEventType>(Arrays.asList(
+						NormativeEventType.ACTION, NormativeEventType.ACTION_OBSERVED,
+						NormativeEventType.ACTION_INFORMED, NormativeEventType.COMPLIANCE,
+						NormativeEventType.COMPLIANCE_OBSERVED,
+						NormativeEventType.COMPLIANCE_INFORMED,
+						NormativeEventType.VIOLATION,
+						NormativeEventType.VIOLATION_OBSERVED,
+						NormativeEventType.VIOLATION_INFORMED,
+						NormativeEventType.PUNISHMENT,
+						NormativeEventType.PUNISHMENT_OBSERVED,
+						NormativeEventType.PUNISHMENT_INFORMED,
+						NormativeEventType.SANCTION, NormativeEventType.SANCTION_OBSERVED,
+						NormativeEventType.SANCTION_INFORMED,
+						NormativeEventType.COMPLIANCE_INVOCATION,
+						NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
+						NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
+						NormativeEventType.VIOLATION_INVOCATION,
+						NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
+						NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
+				this.normEnforcement);
 		logger.debug("Initialized [NORM ENFORCEMENT]");
 		
 		// Norm Compliance
@@ -333,8 +355,8 @@ public class EmiliaController extends EmiliaAbstract {
 	
 	@Override
 	public void input(Object event) {
-		if (event instanceof EventEntityAbstract) {
-			EventEntityAbstract entity = (EventEntityAbstract) event;
+		if (event instanceof NormativeEventEntityAbstract) {
+			NormativeEventEntityAbstract entity = (NormativeEventEntityAbstract) event;
 			this.normRecognition.matchEvent(entity);
 		}
 	}

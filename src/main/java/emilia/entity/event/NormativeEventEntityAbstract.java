@@ -1,23 +1,28 @@
 package emilia.entity.event;
 
-public abstract class EventEntityAbstract {
+public abstract class NormativeEventEntityAbstract {
+	
+	// Time in milliseconds
+	protected Long								time;
 	
 	// Agent source identification of the reported action
-	protected Integer		sourceId;
+	protected Integer							sourceId;
 	
 	// Agent target identification of the reported action
-	protected Integer		targetId;
+	protected Integer							targetId;
 	
 	// Agent identification informing the event
-	protected Integer		informerId;
+	protected Integer							informerId;
 	
 	// Type of the content
-	protected EventType	type;
+	protected NormativeEventType	type;
 	
 	
 	/**
 	 * Create an event entity
 	 * 
+	 * @param time
+	 *          Event time
 	 * @param sourceId
 	 *          Agent source of the reported action
 	 * @param targetId
@@ -27,12 +32,24 @@ public abstract class EventEntityAbstract {
 	 * @param type
 	 *          Type of the Event
 	 */
-	public EventEntityAbstract(Integer sourceId, Integer targetId,
-			Integer informerId, EventType type) {
+	public NormativeEventEntityAbstract(Long time, Integer sourceId, Integer targetId,
+			Integer informerId, NormativeEventType type) {
+		this.time = time;
 		this.sourceId = sourceId;
 		this.targetId = targetId;
 		this.informerId = informerId;
 		this.type = type;
+	}
+	
+	
+	/**
+	 * Get the event time
+	 * 
+	 * @param none
+	 * @return Event time
+	 */
+	public Long getTime() {
+		return this.time;
 	}
 	
 	
@@ -75,7 +92,7 @@ public abstract class EventEntityAbstract {
 	 * @param none
 	 * @return Event entity type
 	 */
-	public EventType getType() {
+	public NormativeEventType getType() {
 		return this.type;
 	}
 	
@@ -90,8 +107,8 @@ public abstract class EventEntityAbstract {
 	public String toString() {
 		String str;
 		
-		str = this.sourceId + " " + this.targetId + " " + this.informerId + " "
-				+ this.type;
+		str = this.time + " " + this.sourceId + " " + this.targetId + " "
+				+ this.informerId + " " + this.type;
 		
 		return str;
 	}

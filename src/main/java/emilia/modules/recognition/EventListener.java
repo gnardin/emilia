@@ -1,6 +1,6 @@
 package emilia.modules.recognition;
 
-import emilia.entity.event.EventEntityAbstract;
+import emilia.entity.event.NormativeEventEntityAbstract;
 
 public interface EventListener {
 	
@@ -11,5 +11,5 @@ public interface EventListener {
 	 *          Event entity content
 	 * @return none
 	 */
-	public void receive(EventEntityAbstract event);
+	public void receive(NormativeEventEntityAbstract event);
 }

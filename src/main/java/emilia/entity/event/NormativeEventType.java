@@ -1,6 +1,6 @@
 package emilia.entity.event;
 
-public enum EventType {
+public enum NormativeEventType {
 	ACTION,
 	ACTION_OBSERVED,
 	ACTION_INFORMED,

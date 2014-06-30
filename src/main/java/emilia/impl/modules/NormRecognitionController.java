@@ -2,15 +2,16 @@ package emilia.impl.modules;
 
 import java.util.List;
 import emilia.board.NormativeBoardInterface;
-import emilia.entity.event.EventEntityAbstract;
+import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.type.ActionEvent;
 import emilia.entity.event.type.NormativeEvent;
 import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.norm.NormEntityAbstract.Source;
-import emilia.entity.norm.NormEntityAbstract.Status;
-import emilia.entity.norm.NormEntityAbstract.Type;
+import emilia.entity.norm.NormEntityAbstract.NormSource;
+import emilia.entity.norm.NormEntityAbstract.NormStatus;
+import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.impl.entity.norm.NormContent;
 import emilia.impl.entity.norm.NormEntity;
+import emilia.impl.entity.sanction.SanctionContent;
 import emilia.modules.recognition.NormRecognitionAbstract;
 
 public class NormRecognitionController extends NormRecognitionAbstract {
@@ -20,26 +21,28 @@ public class NormRecognitionController extends NormRecognitionAbstract {
 		super(agentId, normativeBoard);
 		
 		// COOPERATE norm
-		NormContent content = new NormContent("COOPERATE");
-		NormEntityAbstract norm = new NormEntity(1, Type.SOCIAL, Source.IMPERSONAL,
-				Status.GOAL, "All", content, 0.0);
+		NormContent normContent = new NormContent("COOPERATE");
+		NormEntityAbstract norm = new NormEntity(1, NormType.SOCIAL,
+				NormSource.DISTRIBUTED, NormStatus.GOAL, normContent, 0.0);
+		
+		SanctionContent sanctionContent = new SanctionContent("");
 		
 		this.normativeBoard.setNorm(norm);
 	}
 	
 	
 	@Override
-	public void recognizeNorm(EventEntityAbstract event) {
+	public void recognizeNorm(NormativeEventEntityAbstract event) {
 	}
 	
 	
 	@Override
-	public void recognizeSanction(EventEntityAbstract event) {
+	public void recognizeSanction(NormativeEventEntityAbstract event) {
 	}
 	
 	
 	@Override
-	public void matchEvent(EventEntityAbstract event) {
+	public void matchEvent(NormativeEventEntityAbstract event) {
 		List<NormEntityAbstract> norms;
 		
 		if (event instanceof ActionEvent) {

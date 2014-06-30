@@ -10,5 +10,4 @@ public interface NormContentInterface {
 	 * @return True if it matches, False otherwise
 	 */
 	public Boolean match(Object value);
-	
 }

@@ -1,9 +1,9 @@
 package emilia.entity.event.type;
 
-import emilia.entity.event.EventEntityAbstract;
-import emilia.entity.event.EventType;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
 
-public class NormativeEvent extends EventEntityAbstract {
+public class NormativeEvent extends NormativeEventEntityAbstract {
 	
 	// Norm identification
 	protected Integer	normId;
@@ -12,6 +12,8 @@ public class NormativeEvent extends EventEntityAbstract {
 	/**
 	 * Create a Normative event entity
 	 * 
+	 * @param time
+	 *          Event time
 	 * @param sourceId
 	 *          Agent source identification of the reported action
 	 * @param targetId
@@ -24,9 +26,9 @@ public class NormativeEvent extends EventEntityAbstract {
 	 *          Norm identification
 	 * @return none
 	 */
-	public NormativeEvent(Integer sourceId, Integer targetId, Integer informerId,
-			EventType type, Integer normId) {
-		super(sourceId, targetId, informerId, type);
+	public NormativeEvent(Long time, Integer sourceId, Integer targetId,
+			Integer informerId, NormativeEventType type, Integer normId) {
+		super(time, sourceId, targetId, informerId, type);
 		
 		this.normId = normId;
 	}

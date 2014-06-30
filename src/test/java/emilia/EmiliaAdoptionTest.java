@@ -6,12 +6,12 @@ import java.util.Arrays;
 import org.junit.Before;
 import org.junit.Test;
 import emilia.board.NormativeBoardInterface;
-import emilia.board.NormativeEventType;
+import emilia.board.NormativeBoardEventType;
 import emilia.entity.norm.NormContentInterface;
 import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.norm.NormEntityAbstract.Source;
-import emilia.entity.norm.NormEntityAbstract.Status;
-import emilia.entity.norm.NormEntityAbstract.Type;
+import emilia.entity.norm.NormEntityAbstract.NormSource;
+import emilia.entity.norm.NormEntityAbstract.NormStatus;
+import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.impl.board.NormativeBoard;
 import emilia.impl.modules.NormAdoptionController;
 import emilia.modules.adoption.NormAdoptionAbstract;
@@ -28,35 +28,33 @@ public class EmiliaAdoptionTest {
 		this.normtiveBoard = new NormativeBoard();
 		this.normAdoption = new NormAdoptionController(this.normtiveBoard);
 		
-		this.normtiveBoard
-				.registerCallback(
-						new ArrayList<NormativeEventType>(Arrays.asList(
-								NormativeEventType.INSERT_NORM,
-								NormativeEventType.UPDATE_SALIENCE)), this.normAdoption);
+		this.normtiveBoard.registerCallback(
+				new ArrayList<NormativeBoardEventType>(Arrays.asList(
+						NormativeBoardEventType.INSERT_NORM,
+						NormativeBoardEventType.UPDATE_SALIENCE)), this.normAdoption);
 	}
 	
 	
 	@Test
 	public void test() {
 		NormContent content = new NormContent("COOPERATE");
-		NormEntity norm = new NormEntity(1, Type.SOCIAL, Source.DISTRIBUTED,
-				Status.BELIEF, "ALL", content);
+		NormEntity norm = new NormEntity(1, NormType.SOCIAL,
+				NormSource.DISTRIBUTED, NormStatus.BELIEF, content);
 		this.normtiveBoard.setNorm(norm);
 		
-		assertEquals(this.normtiveBoard.getNorm(1).getStatus(), Status.GOAL);
+		assertEquals(this.normtiveBoard.getNorm(1).getStatus(), NormStatus.GOAL);
 	}
 }
 
 
 class NormEntity extends NormEntityAbstract {
 	
-	public NormEntity(Integer id, Type type, Source source, Status status,
-			String context, NormContentInterface content) {
+	public NormEntity(Integer id, NormType type, NormSource source,
+			NormStatus status, NormContentInterface content) {
 		this.setId(id);
 		this.setType(type);
 		this.setSource(source);
 		this.setStatus(status);
-		this.setContext(context);
 		this.setContent(content);
 	}
 }

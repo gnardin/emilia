@@ -17,7 +17,7 @@ public class NormContent implements NormContentInterface {
 		Boolean result = false;
 		
 		if (value instanceof String) {
-			if (this.content.equals((String) value)) {
+			if (this.content.equalsIgnoreCase((String) value)) {
 				return true;
 			}
 		}

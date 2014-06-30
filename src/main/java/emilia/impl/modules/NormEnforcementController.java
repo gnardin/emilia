@@ -1,21 +1,13 @@
 package emilia.impl.modules;
 
 import emilia.board.NormativeBoardInterface;
-import emilia.entity.event.EventEntityAbstract;
+import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.modules.enforcement.NormEnforcementAbstract;
 
 public class NormEnforcementController extends NormEnforcementAbstract {
 	
-	protected NormativeBoardInterface	normativeBoard;
-	
-	
 	public NormEnforcementController(NormativeBoardInterface normativeBoard) {
-		this.normativeBoard = normativeBoard;
-	}
-	
-	
-	@Override
-	public void monitor() {
+		
 	}
 	
 	
@@ -40,6 +32,6 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	
 	
 	@Override
-	public void receive(EventEntityAbstract event) {
+	public void receive(NormativeEventEntityAbstract event) {
 	}
 }

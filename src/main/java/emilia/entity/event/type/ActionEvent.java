@@ -1,18 +1,20 @@
 package emilia.entity.event.type;
 
-import emilia.entity.action.ActionInterface;
-import emilia.entity.event.EventEntityAbstract;
-import emilia.entity.event.EventType;
+import emilia.entity.action.ActionAbstract;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
 
-public class ActionEvent extends EventEntityAbstract {
+public class ActionEvent extends NormativeEventEntityAbstract {
 	
-	// Action performed in the environment
-	protected ActionInterface	action;
+	// Action performed
+	protected ActionAbstract	action;
 	
 	
 	/**
 	 * Create an Action event entity
 	 * 
+	 * @param time
+	 *          Event time
 	 * @param sourceId
 	 *          Agent source of the reported action
 	 * @param targetId
@@ -23,9 +25,9 @@ public class ActionEvent extends EventEntityAbstract {
 	 *          Performed action
 	 * @return none
 	 */
-	public ActionEvent(Integer sourceId, Integer targetId, Integer informerId,
-			ActionInterface action) {
-		super(sourceId, targetId, informerId, EventType.ACTION);
+	public ActionEvent(Long time, Integer sourceId, Integer targetId,
+			Integer informerId, ActionAbstract action) {
+		super(time, sourceId, targetId, informerId, NormativeEventType.ACTION);
 		
 		this.action = action;
 	}
@@ -37,7 +39,7 @@ public class ActionEvent extends EventEntityAbstract {
 	 * @param none
 	 * @return Performed action
 	 */
-	public ActionInterface getAction() {
+	public ActionAbstract getAction() {
 		return this.action;
 	}
 }

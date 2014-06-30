@@ -2,11 +2,7 @@ package emilia.modules.enforcement;
 
 import emilia.modules.recognition.EventListener;
 
-public abstract class NormEnforcementAbstract implements
-		EventListener {
-	
-	public abstract void monitor();
-	
+public abstract class NormEnforcementAbstract implements EventListener {
 	
 	public abstract void detect();
 	

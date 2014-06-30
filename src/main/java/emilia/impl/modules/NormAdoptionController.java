@@ -1,9 +1,9 @@
 package emilia.impl.modules;
 
 import emilia.board.NormativeBoardInterface;
-import emilia.board.NormativeEventType;
+import emilia.board.NormativeBoardEventType;
 import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.norm.NormEntityAbstract.Status;
+import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.modules.adoption.NormAdoptionAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -27,18 +27,18 @@ public class NormAdoptionController extends NormAdoptionAbstract {
 	
 	
 	@Override
-	public void receive(NormativeEventType type, NormEntityAbstract oldNorm,
+	public void receive(NormativeBoardEventType type, NormEntityAbstract oldNorm,
 			NormEntityAbstract newNorm) {
 		
 		String str = new String();
 		
-		if ((newNorm != null) && (newNorm.getStatus() != Status.GOAL)) {
+		if ((newNorm != null) && (newNorm.getStatus() != NormStatus.GOAL)) {
 			
 			str = type.name() + " " + newNorm.getContent().toString() + " "
 					+ newNorm.getStatus().name();
 			logger.debug(str);
 			
-			newNorm.setStatus(Status.GOAL);
+			newNorm.setStatus(NormStatus.GOAL);
 			this.normativeBoard.setNorm(newNorm);
 			
 			str = type.name() + " " + newNorm.getContent().toString() + " "

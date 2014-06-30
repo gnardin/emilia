@@ -7,8 +7,8 @@ import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardInterface;
-import emilia.entity.event.EventEntityAbstract;
-import emilia.entity.event.EventType;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
 import emilia.entity.norm.NormEntityAbstract;
 
 public abstract class NormRecognitionAbstract {
@@ -23,7 +23,7 @@ public abstract class NormRecognitionAbstract {
 	protected NormativeBoardInterface														normativeBoard;
 	
 	// Callbacks
-	protected Map<Boolean, Map<EventType, List<EventListener>>>	callbacks;
+	protected Map<Boolean, Map<NormativeEventType, List<EventListener>>>	callbacks;
 	
 	
 	/**
@@ -39,7 +39,7 @@ public abstract class NormRecognitionAbstract {
 			NormativeBoardInterface normativeBoard) {
 		this.agentId = agentId;
 		this.normativeBoard = normativeBoard;
-		this.callbacks = new HashMap<Boolean, Map<EventType, List<EventListener>>>();
+		this.callbacks = new HashMap<Boolean, Map<NormativeEventType, List<EventListener>>>();
 	}
 	
 	
@@ -54,20 +54,20 @@ public abstract class NormRecognitionAbstract {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void registerCallback(List<Boolean> matches, List<EventType> types,
+	public void registerCallback(List<Boolean> matches, List<NormativeEventType> types,
 			EventListener eventListener) {
 		
-		Map<EventType, List<EventListener>> eventListeners;
+		Map<NormativeEventType, List<EventListener>> eventListeners;
 		List<EventListener> listener;
 		for(Boolean match : matches) {
 			
 			if (this.callbacks.containsKey(match)) {
 				eventListeners = this.callbacks.get(match);
 			} else {
-				eventListeners = new HashMap<EventType, List<EventListener>>();
+				eventListeners = new HashMap<NormativeEventType, List<EventListener>>();
 			}
 			
-			for(EventType type : types) {
+			for(NormativeEventType type : types) {
 				if (eventListeners.containsKey(type)) {
 					listener = eventListeners.get(type);
 				} else {
@@ -96,16 +96,16 @@ public abstract class NormRecognitionAbstract {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void unregisterCallback(List<Boolean> matches, List<EventType> types,
+	public void unregisterCallback(List<Boolean> matches, List<NormativeEventType> types,
 			EventListener eventListener) {
 		
-		Map<EventType, List<EventListener>> eventListeners;
+		Map<NormativeEventType, List<EventListener>> eventListeners;
 		List<EventListener> listener;
 		for(Boolean match : matches) {
 			
 			eventListeners = this.callbacks.get(match);
 			
-			for(EventType type : types) {
+			for(NormativeEventType type : types) {
 				if (eventListeners.containsKey(type)) {
 					listener = eventListeners.get(type);
 					
@@ -129,7 +129,7 @@ public abstract class NormRecognitionAbstract {
 	 *          Norms matched
 	 * @return none
 	 */
-	protected void processEvent(EventEntityAbstract event,
+	protected void processEvent(NormativeEventEntityAbstract event,
 			List<NormEntityAbstract> norms) {
 		Boolean found = false;
 		
@@ -140,7 +140,7 @@ public abstract class NormRecognitionAbstract {
 		
 		if (this.callbacks.containsKey(matches)) {
 			
-			Map<EventType, List<EventListener>> eventListeners = this.callbacks
+			Map<NormativeEventType, List<EventListener>> eventListeners = this.callbacks
 					.get(matches);
 			
 			if (eventListeners.containsKey(event.getType())) {
@@ -166,7 +166,7 @@ public abstract class NormRecognitionAbstract {
 	 *          Event entity content
 	 * @return none
 	 */
-	public abstract void matchEvent(EventEntityAbstract event);
+	public abstract void matchEvent(NormativeEventEntityAbstract event);
 	
 	
 	/**
@@ -176,7 +176,7 @@ public abstract class NormRecognitionAbstract {
 	 *          Event entity content
 	 * @return none
 	 */
-	public abstract void recognizeNorm(EventEntityAbstract event);
+	public abstract void recognizeNorm(NormativeEventEntityAbstract event);
 	
 	
 	/**
@@ -186,5 +186,5 @@ public abstract class NormRecognitionAbstract {
 	 *          Event entity content
 	 * @return none
 	 */
-	public abstract void recognizeSanction(EventEntityAbstract event);
+	public abstract void recognizeSanction(NormativeEventEntityAbstract event);
 }
