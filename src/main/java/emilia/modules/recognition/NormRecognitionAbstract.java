@@ -1,26 +1,28 @@
 package emilia.modules.recognition;
 
+import emilia.board.NormativeBoardInterface;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
+import emilia.modules.EventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import emilia.board.NormativeBoardInterface;
-import emilia.entity.event.NormativeEventEntityAbstract;
-import emilia.entity.event.NormativeEventType;
-import emilia.entity.norm.NormEntityAbstract;
 
 public abstract class NormRecognitionAbstract {
 	
-	private static final Logger																	logger	= LoggerFactory
-																																					.getLogger(NormRecognitionAbstract.class);
+	private static final Logger																						logger	= LoggerFactory
+																																										.getLogger(NormRecognitionAbstract.class);
 	
 	// Agent identification
-	protected Integer																						agentId;
+	protected Integer																											agentId;
 	
 	// Normative Board
-	protected NormativeBoardInterface														normativeBoard;
+	protected NormativeBoardInterface																			normativeBoard;
 	
 	// Callbacks
 	protected Map<Boolean, Map<NormativeEventType, List<EventListener>>>	callbacks;
@@ -54,8 +56,8 @@ public abstract class NormRecognitionAbstract {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void registerCallback(List<Boolean> matches, List<NormativeEventType> types,
-			EventListener eventListener) {
+	public void registerCallback(List<Boolean> matches,
+			List<NormativeEventType> types, EventListener eventListener) {
 		
 		Map<NormativeEventType, List<EventListener>> eventListeners;
 		List<EventListener> listener;
@@ -96,8 +98,8 @@ public abstract class NormRecognitionAbstract {
 	 *          Method to be called
 	 * @return none
 	 */
-	public void unregisterCallback(List<Boolean> matches, List<NormativeEventType> types,
-			EventListener eventListener) {
+	public void unregisterCallback(List<Boolean> matches,
+			List<NormativeEventType> types, EventListener eventListener) {
 		
 		Map<NormativeEventType, List<EventListener>> eventListeners;
 		List<EventListener> listener;
@@ -111,6 +113,8 @@ public abstract class NormRecognitionAbstract {
 					
 					if (listener.contains(eventListener)) {
 						listener.remove(eventListener);
+						eventListeners.put(type, listener);
+						this.callbacks.put(match, eventListeners);
 						
 						logger.debug("CALLBACK UNREGISTERED [" + type + "]");
 					}
@@ -130,11 +134,11 @@ public abstract class NormRecognitionAbstract {
 	 * @return none
 	 */
 	protected void processEvent(NormativeEventEntityAbstract event,
-			List<NormEntityAbstract> norms) {
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions) {
 		Boolean found = false;
 		
 		Boolean matches = false;
-		if ((norms != null) && (norms.size() > 0)) {
+		if ((normSanctions != null) && (normSanctions.size() > 0)) {
 			matches = true;
 		}
 		
@@ -147,7 +151,7 @@ public abstract class NormRecognitionAbstract {
 				List<EventListener> listener = eventListeners.get(event.getType());
 				
 				for(EventListener eventListener : listener) {
-					eventListener.receive(event);
+					eventListener.receive(event, normSanctions);
 					found = true;
 				}
 			}

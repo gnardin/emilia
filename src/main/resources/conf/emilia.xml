@@ -2,10 +2,11 @@
 <emilia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="emilia.xsd">
 
-	<normRecognitionClass>emilia.impl.modules.NormRecognitionController</normRecognitionClass>
-	<normAdoptionClass>emilia.impl.modules.NormAdoptionController</normAdoptionClass>
-	<normSalienceClass>emilia.impl.modules.NormSalienceController</normSalienceClass>
-	<normEnforcementClass>emilia.impl.modules.NormEnforcementController</normEnforcementClass>
-	<normComplianceClass>emilia.impl.modules.NormComplianceController</normComplianceClass>
-	<normativeBoardClass>emilia.impl.board.NormativeBoard</normativeBoardClass>
+	<eventClassifierClass>emilia.test.modules.EventClassifier</eventClassifierClass>
+	<normRecognitionClass>emilia.test.modules.NormRecognitionController</normRecognitionClass>
+	<normAdoptionClass>emilia.test.modules.NormAdoptionController</normAdoptionClass>
+	<normSalienceClass>emilia.test.modules.NormSalienceController</normSalienceClass>
+	<normEnforcementClass>emilia.test.modules.NormEnforcementController</normEnforcementClass>
+	<normComplianceClass>emilia.test.modules.NormComplianceController</normComplianceClass>
+	<normativeBoardClass>emilia.test.board.NormativeBoard</normativeBoardClass>
 </emilia>

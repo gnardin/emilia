@@ -1,12 +1,20 @@
 package emilia.modules.enforcement;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public abstract class DeviationAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(DeviationAbstract.class);
 	
 	public enum Type {
 		COMPLIANCE,
 		VIOLATION;
 	}
 	
+	// Deviation type
 	protected Type	type;
 	
 	

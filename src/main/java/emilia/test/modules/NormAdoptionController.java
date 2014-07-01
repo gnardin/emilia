@@ -1,7 +1,7 @@
-package emilia.impl.modules;
+package emilia.test.modules;
 
-import emilia.board.NormativeBoardInterface;
 import emilia.board.NormativeBoardEventType;
+import emilia.board.NormativeBoardInterface;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.modules.adoption.NormAdoptionAbstract;
@@ -17,12 +17,15 @@ public class NormAdoptionController extends NormAdoptionAbstract {
 	/**
 	 * Create norm adoption
 	 * 
+	 * @param agentId
+	 *          Agent identification
 	 * @param normativeBoard
 	 *          Normative board
 	 * @return none
 	 */
-	public NormAdoptionController(NormativeBoardInterface normativeBoard) {
-		super(normativeBoard);
+	public NormAdoptionController(Integer agentId,
+			NormativeBoardInterface normativeBoard) {
+		super(agentId, normativeBoard);
 	}
 	
 	
@@ -41,10 +44,6 @@ public class NormAdoptionController extends NormAdoptionAbstract {
 			newNorm.setStatus(NormStatus.GOAL);
 			this.normativeBoard.setNorm(newNorm);
 			
-			str = type.name() + " " + newNorm.getContent().toString() + " "
-					+ newNorm.getStatus().name();
-			logger.debug(str);
-		} else {
 			str = type.name() + " " + newNorm.getContent().toString() + " "
 					+ newNorm.getStatus().name();
 			logger.debug(str);

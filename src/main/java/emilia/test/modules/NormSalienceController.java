@@ -1,7 +1,6 @@
-package emilia.impl.modules;
+package emilia.test.modules;
 
 import emilia.board.NormativeBoardInterface;
-import emilia.entity.event.NormativeEventType;
 import emilia.modules.salience.DataType;
 import emilia.modules.salience.NormInfoRepositoryMemory;
 import emilia.modules.salience.NormSalienceAbstract;
@@ -34,14 +33,15 @@ public class NormSalienceController extends NormSalienceAbstract {
 	/**
 	 * Constructor
 	 * 
-	 * @param moduleId
-	 *          Norm salience controller identification
+	 * @param agentId
+	 *          Agent identification
 	 * @param normativeBoard
 	 *          Normative board
 	 * @return none
 	 */
-	public NormSalienceController(NormativeBoardInterface normativeBoard) {
-		super(normativeBoard);
+	public NormSalienceController(Integer agentId,
+			NormativeBoardInterface normativeBoard) {
+		super(agentId, normativeBoard);
 		this.repository = new NormInfoRepositoryMemory();
 	}
 	
@@ -135,11 +135,5 @@ public class NormSalienceController extends NormSalienceAbstract {
 			// Set the Salience in the Normative Board
 			this.normativeBoard.setSalience(normId, salience);
 		}
-	}
-	
-	
-	@Override
-	// TODO
-	public void receive(NormativeEventType type) {
 	}
 }

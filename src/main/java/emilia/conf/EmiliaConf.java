@@ -10,6 +10,7 @@ public class EmiliaConf {
 	
 	// Configuration Parameters
 	public enum Param {
+		EVENT_CLASSIFIER_CLASS("eventClassifierClass"),
 		NORM_RECOGNITION_CLASS("normRecognitionClass"),
 		NORM_ADOPTION_CLASS("normAdoptionClass"),
 		NORM_SALIENCE_CLASS("normSalienceClass"),

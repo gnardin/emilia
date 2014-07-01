@@ -2,39 +2,49 @@ package emilia.entity.sanction;
 
 public class SanctionCategory {
 	
+	// Source types
 	public enum Source {
 		FORMAL,
 		INFORMAL;
 	}
 	
+	// Locus types
 	public enum Locus {
 		SELF_DIRECTED,
 		OTHER_DIRECTED;
 	}
 	
+	// Mode types
 	public enum Mode {
 		DIRECT,
 		INDIRECT;
 	}
 	
+	// Polarity types
 	public enum Polarity {
 		POSITIVE,
 		NEGATIVE;
 	}
 	
+	// Discernibility types
 	public enum Discernibility {
 		OBSTRUSIVE,
 		UNOBSTRUSIVE;
 	}
 	
+	// Source type
 	private Source					source;
 	
+	// Locus type
 	private Locus						locus;
 	
+	// Mode type
 	private Mode						mode;
 	
+	// Polarity type
 	private Polarity				polarity;
 	
+	// Discernibility type
 	private Discernibility	discernibility;
 	
 	

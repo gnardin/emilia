@@ -1,12 +1,13 @@
-package emilia.impl.modules;
+package emilia.test.modules;
 
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.compliance.NormComplianceAbstract;
 
 public class NormComplianceController extends NormComplianceAbstract {
 	
-	public NormComplianceController(NormativeBoardInterface normativeBoard) {
-		super(normativeBoard);
+	public NormComplianceController(Integer agentId,
+			NormativeBoardInterface normativeBoard) {
+		super(agentId, normativeBoard);
 	}
 	
 	

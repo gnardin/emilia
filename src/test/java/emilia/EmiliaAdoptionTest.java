@@ -1,20 +1,20 @@
 package emilia;
 
 import static org.junit.Assert.assertEquals;
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.junit.Before;
-import org.junit.Test;
-import emilia.board.NormativeBoardInterface;
 import emilia.board.NormativeBoardEventType;
+import emilia.board.NormativeBoardInterface;
 import emilia.entity.norm.NormContentInterface;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
-import emilia.impl.board.NormativeBoard;
-import emilia.impl.modules.NormAdoptionController;
 import emilia.modules.adoption.NormAdoptionAbstract;
+import emilia.test.board.NormativeBoard;
+import emilia.test.modules.NormAdoptionController;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.Before;
+import org.junit.Test;
 
 public class EmiliaAdoptionTest {
 	
@@ -26,7 +26,7 @@ public class EmiliaAdoptionTest {
 	@Before
 	public void constructor() {
 		this.normtiveBoard = new NormativeBoard();
-		this.normAdoption = new NormAdoptionController(this.normtiveBoard);
+		this.normAdoption = new NormAdoptionController(1, this.normtiveBoard);
 		
 		this.normtiveBoard.registerCallback(
 				new ArrayList<NormativeBoardEventType>(Arrays.asList(
@@ -36,7 +36,7 @@ public class EmiliaAdoptionTest {
 	
 	
 	@Test
-	public void test() {
+	public void normAdoptionTest() {
 		NormContent content = new NormContent("COOPERATE");
 		NormEntity norm = new NormEntity(1, NormType.SOCIAL,
 				NormSource.DISTRIBUTED, NormStatus.BELIEF, content);

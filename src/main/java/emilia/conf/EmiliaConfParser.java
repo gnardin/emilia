@@ -1,5 +1,6 @@
 package emilia.conf;
 
+import emilia.conf.EmiliaConf.Param;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
@@ -18,7 +19,6 @@ import javax.xml.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
-import emilia.conf.EmiliaConf.Param;
 
 public class EmiliaConfParser {
 	
@@ -80,8 +80,16 @@ public class EmiliaConfParser {
 					if (event.isStartElement()) {
 						startElement = event.asStartElement();
 						
-						// Set normRecognitionClass
+						// Set eventClassifierClass
 						if (startElement.getName().getLocalPart()
+								.equals(Param.EVENT_CLASSIFIER_CLASS.getName())) {
+							event = eventReader.nextEvent();
+							conf.setValue(Param.EVENT_CLASSIFIER_CLASS, event.asCharacters()
+									.getData());
+							continue;
+							
+							// Set normRecognitionClass
+						} else if (startElement.getName().getLocalPart()
 								.equals(Param.NORM_RECOGNITION_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_RECOGNITION_CLASS, event.asCharacters()

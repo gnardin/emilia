@@ -4,6 +4,7 @@
 	<element name="emilia">
 		<complexType>
 			<sequence>
+				<element name="eventClassifierClass" type="string" />
 				<element name="normRecognitionClass" type="string" />
 				<element name="normAdoptionClass" type="string" />
 				<element name="normSalienceClass" type="string" />

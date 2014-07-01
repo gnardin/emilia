@@ -2,8 +2,6 @@ package emilia.modules.salience;
 
 import java.util.HashMap;
 import java.util.Map;
-import emilia.modules.salience.NormInfoEntity;
-import emilia.modules.salience.NormInfoRepositoryInterface;
 
 public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	
@@ -22,20 +20,11 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	}
 	
 	
-	/**
-	 * Get normative information about a data type from a norm
-	 * 
-	 * @param normId
-	 *          Norm identification
-	 * @param dataType
-	 *          Data type
-	 * @return none
-	 */
 	@Override
 	public Integer getNormInfo(Integer normId, DataType dataType) {
 		Integer result = 0;
 		
-		if(this.normativeInfoRep.containsKey(normId)) {
+		if (this.normativeInfoRep.containsKey(normId)) {
 			NormInfoEntity normInfoEntity = this.normativeInfoRep.get(normId);
 			result = normInfoEntity.getNumber(dataType);
 		}
@@ -44,21 +33,13 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	}
 	
 	
-	/**
-	 * Increment the counter of a data type for a norm depending on the event
-	 * content
-	 * 
-	 * @param content
-	 *          Event content
-	 * @return none
-	 */
 	@Override
 	public void increment(Integer normId, DataType dataType) {
 		
 		NormInfoEntity normInfoEntity;
-		if(this.normativeInfoRep.containsKey(normId)) {
+		if (this.normativeInfoRep.containsKey(normId)) {
 			normInfoEntity = this.normativeInfoRep.get(normId);
-		}else {
+		} else {
 			normInfoEntity = new NormInfoEntity();
 		}
 		

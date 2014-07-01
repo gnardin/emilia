@@ -1,11 +1,11 @@
 package emilia.board;
 
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.sanction.SanctionEntityAbstract;
 
 public abstract class NormativeBoardAbstract implements NormativeBoardInterface {
 	
@@ -183,14 +183,20 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	
 	@Override
-	public List<Integer> getNormSanctions(Integer normId) {
-		List<Integer> sanctions = new ArrayList<Integer>();
+	public List<SanctionEntityAbstract> getSanctions(Integer normId) {
+		List<Integer> sanctions;
+		List<SanctionEntityAbstract> sanctionEntities = new ArrayList<SanctionEntityAbstract>();
 		
 		if (this.normSanctions.containsKey(normId)) {
 			sanctions = this.normSanctions.get(normId);
+			for(Integer sanctionId : sanctions) {
+				if (this.sanctions.containsKey(sanctionId)) {
+					sanctionEntities.add(this.sanctions.get(sanctionId));
+				}
+			}
 		}
 		
-		return sanctions;
+		return sanctionEntities;
 	}
 	
 	
@@ -241,6 +247,18 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	
 	@Override
+	public List<Integer> getNormSanctions(Integer normId) {
+		List<Integer> sanctions = new ArrayList<Integer>();
+		
+		if (this.normSanctions.containsKey(normId)) {
+			sanctions = this.normSanctions.get(normId);
+		}
+		
+		return sanctions;
+	}
+	
+	
+	@Override
 	public void registerCallback(List<NormativeBoardEventType> types,
 			NormativeBoardListener normListener) {
 		
@@ -280,7 +298,12 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	 * Send event to all callbacks
 	 * 
 	 * @param type
-	 * @param normId
+	 *          Normative board event type
+	 * @param oldNorm
+	 *          Old norm
+	 * @param newNorm
+	 *          New norm
+	 * @return none
 	 */
 	private void processNormativeEvent(NormativeBoardEventType type,
 			NormEntityAbstract oldNorm, NormEntityAbstract newNorm) {

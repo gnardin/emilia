@@ -5,6 +5,11 @@ import emilia.modules.classifier.EventClassifierAbstract;
 
 public class EventClassifier extends EventClassifierAbstract {
 	
+	public EventClassifier(Integer agentId) {
+		super(agentId);
+	}
+	
+	
 	@Override
 	public NormativeEventEntityAbstract classify(Object event) {
 		if (event instanceof NormativeEventEntityAbstract) {

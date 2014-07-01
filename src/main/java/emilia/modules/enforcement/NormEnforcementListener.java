@@ -1,15 +1,15 @@
 package emilia.modules.enforcement;
 
-import emilia.entity.event.NormativeEventType;
+import emilia.entity.sanction.SanctionEntityAbstract;
 
 public interface NormEnforcementListener {
 	
 	/**
-	 * Submit a norm to the listener
+	 * Submit a sanction to the listener
 	 * 
-	 * @param type
-	 *          Event type
+	 * @param Sanction
+	 *          Sanction
 	 * @return none
 	 */
-	public void receive(NormativeEventType type);
+	public void receive(SanctionEntityAbstract sanction);
 }

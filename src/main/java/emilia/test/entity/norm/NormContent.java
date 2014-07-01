@@ -1,14 +1,51 @@
-package emilia.impl.entity.norm;
+package emilia.test.entity.norm;
 
+import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormContentInterface;
 
 public class NormContent implements NormContentInterface {
 	
-	private String	content;
+	// Action
+	private ActionAbstract	action;
+	
+	// Negated action
+	private ActionAbstract	notAction;
 	
 	
-	public NormContent(String content) {
-		this.content = content;
+	/**
+	 * Create a norm content
+	 * 
+	 * @param action
+	 *          Action
+	 * @param notAction
+	 *          Negated action
+	 * @return none
+	 */
+	public NormContent(ActionAbstract action, ActionAbstract notAction) {
+		this.action = action;
+		this.notAction = notAction;
+	}
+	
+	
+	/**
+	 * Get action
+	 * 
+	 * @param none
+	 * @return Action
+	 */
+	public ActionAbstract getAction() {
+		return this.action;
+	}
+	
+	
+	/**
+	 * Get negated action
+	 * 
+	 * @param none
+	 * @return Negated action
+	 */
+	public ActionAbstract getNotAction() {
+		return this.notAction;
 	}
 	
 	
@@ -17,17 +54,12 @@ public class NormContent implements NormContentInterface {
 		Boolean result = false;
 		
 		if (value instanceof String) {
-			if (this.content.equalsIgnoreCase((String) value)) {
+			if ((this.action.getDescription().equalsIgnoreCase((String) value))
+					|| (this.notAction.getDescription().equalsIgnoreCase((String) value))) {
 				return true;
 			}
 		}
 		
 		return result;
-	}
-	
-	
-	@Override
-	public String toString() {
-		return this.content;
 	}
 }

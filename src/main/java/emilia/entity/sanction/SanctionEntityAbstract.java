@@ -5,42 +5,22 @@ import emilia.entity.EntityAbstract;
 public abstract class SanctionEntityAbstract extends EntityAbstract implements
 		Cloneable {
 	
-	public enum Source {
-		FORMAL,
-		INFORMAL;
-	}
-	
-	public enum Locus {
-		SELF_DIRECTED,
-		OTHER_DIRECTED;
-	}
-	
-	public enum Mode {
-		DIRECT,
-		INDIRECT;
-	}
-	
-	public enum Polarity {
-		POSITIVE,
-		NEGATIVE;
-	}
-	
-	public enum Discernibility {
-		OBSTRUSIVE,
-		UNOBSTRUSIVE;
-	}
-	
+	// Sanction status
 	public enum SanctionStatus {
 		ACTIVE,
 		INACTIVE;
 	}
 	
+	// Sanction identification
 	protected Integer										id;
 	
-	protected Integer										type;
+	// Sanction category
+	protected SanctionCategory					category;
 	
+	// Sanction status
 	protected SanctionStatus						status;
 	
+	// Sanction content
 	protected SanctionContentInterface	content;
 	
 	
@@ -68,74 +48,25 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	
 	
 	/**
-	 * Get sanction type
+	 * Get sanction category
 	 * 
 	 * @param none
-	 * @return Sanction type
+	 * @return Sanction category
 	 */
-	public Integer getType() {
-		return this.type;
+	public SanctionCategory getCategory() {
+		return this.category;
 	}
 	
 	
 	/**
-	 * Calculate the sanction type number
+	 * Set sanction category
 	 * 
-	 * @param source
-	 *          Source type
-	 * @param locus
-	 *          Locus type
-	 * @param mode
-	 *          Mode type
-	 * @param polarity
-	 *          Polarity type
-	 * @param discernibility
-	 *          Discernibility type
-	 * @return Calculate type
-	 */
-	public Integer calcType(Source source, Locus locus, Mode mode,
-			Polarity polarity, Discernibility discernibility) {
-		
-		Integer localType = source.ordinal() - 1;
-		
-		if ((locus.ordinal() - 1) > 0) {
-			localType += (int) Math.pow(2, 1);
-		}
-		
-		if ((mode.ordinal() - 1) > 0) {
-			localType += (int) Math.pow(2, 2);
-		}
-		
-		if ((polarity.ordinal() - 1) > 0) {
-			localType += (int) Math.pow(2, 3);
-		}
-		
-		if ((discernibility.ordinal() - 1) > 0) {
-			localType += (int) Math.pow(2, 4);
-		}
-		
-		return localType;
-	}
-	
-	
-	/**
-	 * Set sanction type
-	 * 
-	 * @param source
-	 *          Source type
-	 * @param locus
-	 *          Locus type
-	 * @param mode
-	 *          Mode type
-	 * @param polarity
-	 *          Polarity type
-	 * @param discernibility
-	 *          Discernibility type
+	 * @param category
+	 *          Sanction category
 	 * @return none
 	 */
-	public void setType(Source source, Locus locus, Mode mode, Polarity polarity,
-			Discernibility discernibility) {
-		this.type = calcType(source, locus, mode, polarity, discernibility);
+	public void setCategory(SanctionCategory category) {
+		this.category = category;
 	}
 	
 	

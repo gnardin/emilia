@@ -10,6 +10,9 @@ public abstract class NormAdoptionAbstract implements NormativeBoardListener {
 	private static final Logger				logger	= LoggerFactory
 																								.getLogger(NormAdoptionAbstract.class);
 	
+	// Agent identification
+	protected Integer									agentId;
+	
 	// Normative Board
 	protected NormativeBoardInterface	normativeBoard;
 	
@@ -17,11 +20,15 @@ public abstract class NormAdoptionAbstract implements NormativeBoardListener {
 	/**
 	 * Create a Norm Adoption module
 	 * 
+	 * @param agentId
+	 *          Agent identification
 	 * @param normativeBoard
 	 *          Normative board
 	 * @return none
 	 */
-	public NormAdoptionAbstract(NormativeBoardInterface normativeBoard) {
+	public NormAdoptionAbstract(Integer agentId,
+			NormativeBoardInterface normativeBoard) {
+		this.agentId = agentId;
 		this.normativeBoard = normativeBoard;
 		
 		logger.debug("NORM ADOPTION INITIALIZED");

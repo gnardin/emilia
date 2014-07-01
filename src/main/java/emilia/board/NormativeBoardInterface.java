@@ -123,6 +123,16 @@ public interface NormativeBoardInterface {
 	 * 
 	 * @param normId
 	 *          Norm identification
+	 * @return List of sanctions entities associated to the norm
+	 */
+	public List<SanctionEntityAbstract> getSanctions(Integer normId);
+	
+	
+	/**
+	 * Get sanctions identification associated to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
 	 * @return List of sanctions associated to the norm
 	 */
 	public List<Integer> getNormSanctions(Integer normId);

@@ -1,6 +1,10 @@
-package emilia.modules.recognition;
+package emilia.modules;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
+import java.util.List;
+import java.util.Map;
 
 public interface EventListener {
 	
@@ -11,5 +15,6 @@ public interface EventListener {
 	 *          Event entity content
 	 * @return none
 	 */
-	public void receive(NormativeEventEntityAbstract event);
+	public void receive(NormativeEventEntityAbstract event,
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions);
 }

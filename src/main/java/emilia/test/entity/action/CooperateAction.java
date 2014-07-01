@@ -1,4 +1,4 @@
-package emilia.impl.entity.action;
+package emilia.test.entity.action;
 
 import emilia.entity.action.ActionAbstract;
 

@@ -7,6 +7,9 @@ public abstract class ActionAbstract {
 	// Action identification
 	protected Integer				id;
 	
+	// Action description
+	protected String				description;
+	
 	// Action parameters
 	protected List<Object>	params;
 	
@@ -16,10 +19,13 @@ public abstract class ActionAbstract {
 	 * 
 	 * @param id
 	 *          Action identification
+	 * @param description
+	 *          Action description
 	 * @return none
 	 */
-	public ActionAbstract(Integer id) {
+	public ActionAbstract(Integer id, String description) {
 		this.id = id;
+		this.description = description;
 		this.params = null;
 	}
 	
@@ -29,12 +35,15 @@ public abstract class ActionAbstract {
 	 * 
 	 * @param id
 	 *          Action identification
+	 * @param description
+	 *          Action description
 	 * @param params
 	 *          Action parameters
 	 * @return none
 	 */
-	public ActionAbstract(Integer id, List<Object> params) {
+	public ActionAbstract(Integer id, String description, List<Object> params) {
 		this.id = id;
+		this.description = description;
 		this.params = params;
 	}
 	
@@ -47,6 +56,17 @@ public abstract class ActionAbstract {
 	 */
 	public Integer getId() {
 		return this.id;
+	}
+	
+	
+	/**
+	 * Get the action description
+	 * 
+	 * @param none
+	 * @return Action description
+	 */
+	public String getDescription() {
+		return this.description;
 	}
 	
 	

@@ -1,15 +1,18 @@
 package emilia;
 
-import emilia.board.NormativeBoardInterface;
 import emilia.board.NormativeBoardEventType;
+import emilia.board.NormativeBoardInterface;
 import emilia.conf.EmiliaConf;
 import emilia.conf.EmiliaConf.Param;
 import emilia.conf.EmiliaConfParser;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.adoption.NormAdoptionAbstract;
+import emilia.modules.classifier.EventClassifierAbstract;
 import emilia.modules.compliance.NormComplianceAbstract;
 import emilia.modules.enforcement.NormEnforcementAbstract;
+import emilia.modules.enforcement.NormEnforcementListener;
 import emilia.modules.recognition.NormRecognitionAbstract;
 import emilia.modules.salience.NormSalienceAbstract;
 import java.lang.reflect.Constructor;
@@ -19,13 +22,17 @@ import java.util.Arrays;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class EmiliaController extends EmiliaAbstract {
+public class EmiliaController extends EmiliaAbstract implements
+		NormEnforcementListener {
 	
 	private static final Logger			logger	= LoggerFactory
 																							.getLogger(EmiliaController.class);
 	
 	// Agent identification
 	private Integer									agentId;
+	
+	// Event Classifier module
+	private EventClassifierAbstract	eventClassifier;
 	
 	// Norm Recognition module
 	private NormRecognitionAbstract	normRecognition;
@@ -64,6 +71,12 @@ public class EmiliaController extends EmiliaAbstract {
 		
 		EmiliaConf conf = EmiliaConfParser.getInstance().getConf(xmlFilename,
 				xsdFilename);
+		
+		// Event Classifier
+		logger.debug("Initializing [EVENT CLASSIFIER]");
+		this.setEventClassifier((String) conf
+				.getStrValue(Param.EVENT_CLASSIFIER_CLASS));
+		logger.debug("Initialized [EVENT CLASSIFIER]");
 		
 		// Normative Board
 		logger.debug("Initializing [NORMATIVE BOARD]");
@@ -139,6 +152,17 @@ public class EmiliaController extends EmiliaAbstract {
 						NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
 						NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
 				this.normEnforcement);
+		
+		this.normEnforcement.registerCallback(
+				new ArrayList<NormativeEventType>(Arrays.asList(
+						NormativeEventType.COMPLIANCE,
+						NormativeEventType.COMPLIANCE_OBSERVED,
+						NormativeEventType.COMPLIANCE_INFORMED,
+						NormativeEventType.VIOLATION,
+						NormativeEventType.VIOLATION_OBSERVED,
+						NormativeEventType.VIOLATION_INFORMED)), this.normSalience);
+		
+		this.normEnforcement.registerNormEnforcement(this);
 		logger.debug("Initialized [NORM ENFORCEMENT]");
 		
 		// Norm Compliance
@@ -146,6 +170,38 @@ public class EmiliaController extends EmiliaAbstract {
 		this.setNormCompliance((String) conf
 				.getStrValue(Param.NORM_COMPLIANCE_CLASS));
 		logger.debug("Initialized [NORM COMPLIANCE]");
+	}
+	
+	
+	/**
+	 * Set Event Classifier
+	 * 
+	 * @param eventClassifierClass
+	 *          Event Classifier class name
+	 * @return none
+	 */
+	private void setEventClassifier(String eventClassifierClass) {
+		try {
+			@SuppressWarnings("unchecked")
+			Class<EventClassifierAbstract> nbClass = (Class<EventClassifierAbstract>) Class
+					.forName(eventClassifierClass);
+			
+			Constructor<EventClassifierAbstract> nbConstructor = nbClass
+					.getDeclaredConstructor(Integer.class);
+			
+			this.eventClassifier = nbConstructor.newInstance(this.agentId);
+			
+		} catch(ClassNotFoundException e) {
+			e.printStackTrace();
+		} catch(NoSuchMethodException e) {
+			e.printStackTrace();
+		} catch(InvocationTargetException e) {
+			e.printStackTrace();
+		} catch(IllegalAccessException e) {
+			e.printStackTrace();
+		} catch(InstantiationException e) {
+			e.printStackTrace();
+		}
 	}
 	
 	
@@ -228,9 +284,10 @@ public class EmiliaController extends EmiliaAbstract {
 					.forName(normAdoptionClass);
 			
 			Constructor<NormAdoptionAbstract> naConstructor = naClass
-					.getDeclaredConstructor(NormativeBoardInterface.class);
+					.getDeclaredConstructor(Integer.class, NormativeBoardInterface.class);
 			
-			this.normAdoption = naConstructor.newInstance(this.normativeBoard);
+			this.normAdoption = naConstructor.newInstance(this.agentId,
+					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
@@ -260,9 +317,10 @@ public class EmiliaController extends EmiliaAbstract {
 					.forName(normSalienceClass);
 			
 			Constructor<NormSalienceAbstract> nsConstructor = nsClass
-					.getDeclaredConstructor(NormativeBoardInterface.class);
+					.getDeclaredConstructor(Integer.class, NormativeBoardInterface.class);
 			
-			this.normSalience = nsConstructor.newInstance(this.normativeBoard);
+			this.normSalience = nsConstructor.newInstance(this.agentId,
+					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
@@ -292,9 +350,9 @@ public class EmiliaController extends EmiliaAbstract {
 					.forName(normEnforcementClass);
 			
 			Constructor<NormEnforcementAbstract> neConstructor = neClass
-					.getDeclaredConstructor(NormativeBoardInterface.class);
+					.getDeclaredConstructor(Integer.class);
 			
-			this.normEnforcement = neConstructor.newInstance(this.normativeBoard);
+			this.normEnforcement = neConstructor.newInstance(this.agentId);
 			
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
@@ -324,9 +382,10 @@ public class EmiliaController extends EmiliaAbstract {
 					.forName(normComplianceClass);
 			
 			Constructor<NormComplianceAbstract> ncConstructor = ncClass
-					.getDeclaredConstructor(NormativeBoardInterface.class);
+					.getDeclaredConstructor(Integer.class, NormativeBoardInterface.class);
 			
-			this.normCompliance = ncConstructor.newInstance(this.normativeBoard);
+			this.normCompliance = ncConstructor.newInstance(this.agentId,
+					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
 			e.printStackTrace();
@@ -342,22 +401,12 @@ public class EmiliaController extends EmiliaAbstract {
 	}
 	
 	
-	/**
-	 * Get Normative Board
-	 * 
-	 * @param none
-	 * @return Normative Board
-	 */
-	public NormativeBoardInterface getNormativeBoard() {
-		return this.normativeBoard;
-	}
-	
-	
 	@Override
 	public void input(Object event) {
-		if (event instanceof NormativeEventEntityAbstract) {
-			NormativeEventEntityAbstract entity = (NormativeEventEntityAbstract) event;
-			this.normRecognition.matchEvent(entity);
+		NormativeEventEntityAbstract normativeEvent = this.eventClassifier
+				.classify(event);
+		if (normativeEvent != null) {
+			this.normRecognition.matchEvent(normativeEvent);
 		}
 	}
 	
@@ -365,5 +414,11 @@ public class EmiliaController extends EmiliaAbstract {
 	@Override
 	public Double getNormativeDrive(Integer normId) {
 		return this.normCompliance.getNormativeDrive(normId);
+	}
+	
+	
+	@Override
+	public void receive(SanctionEntityAbstract sanction) {
+		this.sendSanction(sanction);
 	}
 }
