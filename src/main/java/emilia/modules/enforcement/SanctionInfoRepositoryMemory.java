@@ -7,7 +7,7 @@ public class SanctionInfoRepositoryMemory implements
 		SanctionInfoRepositoryInterface {
 	
 	// Sanction information repository <NormId, <SanctionId, Evaluation>>
-	private Map<Integer, Map<Integer, SanctionEvaluationInterface>>	sanctionInfoRep;
+	private Map<Integer, Map<Integer, SanctionInfoEntityInterface>>	sanctionInfoRep;
 	
 	
 	/**
@@ -17,17 +17,17 @@ public class SanctionInfoRepositoryMemory implements
 	 * @return none
 	 */
 	public SanctionInfoRepositoryMemory() {
-		this.sanctionInfoRep = new HashMap<Integer, Map<Integer, SanctionEvaluationInterface>>();
+		this.sanctionInfoRep = new HashMap<Integer, Map<Integer, SanctionInfoEntityInterface>>();
 	}
 	
 	
 	@Override
-	public SanctionEvaluationInterface getSanction(Integer normId,
+	public SanctionInfoEntityInterface getSanctionInfo(Integer normId,
 			Integer sanctionId) {
 		
-		SanctionEvaluationInterface sanctionEval = null;
+		SanctionInfoEntityInterface sanctionEval = null;
 		if (this.sanctionInfoRep.containsKey(normId)) {
-			Map<Integer, SanctionEvaluationInterface> sanctionInfo = this.sanctionInfoRep
+			Map<Integer, SanctionInfoEntityInterface> sanctionInfo = this.sanctionInfoRep
 					.get(normId);
 			
 			if (sanctionInfo.containsKey(sanctionId)) {
@@ -40,9 +40,9 @@ public class SanctionInfoRepositoryMemory implements
 	
 	
 	@Override
-	public Map<Integer, SanctionEvaluationInterface> getSanctions(Integer normId) {
+	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(Integer normId) {
 		
-		Map<Integer, SanctionEvaluationInterface> sanctionInfo = null;
+		Map<Integer, SanctionInfoEntityInterface> sanctionInfo = null;
 		if (this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		}
@@ -52,14 +52,14 @@ public class SanctionInfoRepositoryMemory implements
 	
 	
 	@Override
-	public void setSanction(Integer normId, Integer sanctionId,
-			SanctionEvaluationInterface evaluation) {
+	public void setSanctionInfo(Integer normId, Integer sanctionId,
+			SanctionInfoEntityInterface evaluation) {
 		
-		Map<Integer, SanctionEvaluationInterface> sanctionInfo;
+		Map<Integer, SanctionInfoEntityInterface> sanctionInfo;
 		if (this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		} else {
-			sanctionInfo = new HashMap<Integer, SanctionEvaluationInterface>();
+			sanctionInfo = new HashMap<Integer, SanctionInfoEntityInterface>();
 		}
 		
 		sanctionInfo.put(sanctionId, evaluation);

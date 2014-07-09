@@ -1,4 +1,4 @@
-package emilia.test.entity.action;
+package examples.pgg.entity.action;
 
 import emilia.entity.action.ActionAbstract;
 

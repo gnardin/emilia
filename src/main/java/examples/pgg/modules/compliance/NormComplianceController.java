@@ -1,4 +1,4 @@
-package emilia.test.modules;
+package examples.pgg.modules.compliance;
 
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.compliance.NormComplianceAbstract;

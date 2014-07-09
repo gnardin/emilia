@@ -23,14 +23,14 @@ import emilia.entity.sanction.SanctionCategory.Source;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import emilia.modules.EventListener;
 import emilia.modules.enforcement.NormEnforcementListener;
-import emilia.test.entity.action.CooperateAction;
-import emilia.test.entity.action.DefectAction;
-import emilia.test.entity.norm.NormContent;
-import emilia.test.entity.norm.NormEntity;
-import emilia.test.entity.sanction.SanctionContent;
-import emilia.test.entity.sanction.SanctionEntity;
-import emilia.test.entity.sanction.SanctionContent.Sanction;
-import emilia.test.modules.NormEnforcementController;
+import examples.pgg.entity.action.CooperateAction;
+import examples.pgg.entity.action.DefectAction;
+import examples.pgg.entity.norm.NormContent;
+import examples.pgg.entity.norm.NormEntity;
+import examples.pgg.entity.sanction.SanctionContent;
+import examples.pgg.entity.sanction.SanctionEntity;
+import examples.pgg.entity.sanction.SanctionContent.Sanction;
+import examples.pgg.modules.enforcement.NormEnforcementController;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -57,7 +57,7 @@ public class EmiliaEnforcementTest {
 		// PUNISHMENT sanction
 		Integer sanctionId = 1;
 		SanctionContent sanctionContent = new SanctionContent(Sanction.PUNISHMENT,
-				new Double(3.0));
+				new Double(1.5), new Double(3.0));
 		SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
 				Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 				Discernibility.UNOBSTRUSIVE);
@@ -112,7 +112,8 @@ class EventHandler implements EventListener, NormEnforcementListener {
 	
 	
 	@Override
-	public void receive(SanctionEntityAbstract sanction) {
+	public void receive(NormativeEventEntityAbstract entity,
+			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		
 		if (sanction.getContent() instanceof SanctionContent) {
 			SanctionContent sanctionContent = (SanctionContent) sanction.getContent();

@@ -1,15 +1,19 @@
-package emilia.test.entity.sanction;
+package examples.pgg.entity.sanction;
 
 import emilia.entity.sanction.SanctionContentInterface;
 
 public class SanctionContent implements SanctionContentInterface {
 	
 	public enum Sanction {
-		PUNISHMENT;
+		PUNISHMENT,
+		SANCTION;
 	}
 	
 	// Sanction action
 	private Sanction	action;
+	
+	// Sanction cost
+	private Double		cost;
 	
 	// Sanction punishment amount
 	private Double		amount;
@@ -23,8 +27,9 @@ public class SanctionContent implements SanctionContentInterface {
 	 * @param amount
 	 *          Sanction amount
 	 */
-	public SanctionContent(Sanction action, Double amount) {
+	public SanctionContent(Sanction action, Double cost, Double amount) {
 		this.action = action;
+		this.cost = cost;
 		this.amount = amount;
 	}
 	
@@ -37,6 +42,17 @@ public class SanctionContent implements SanctionContentInterface {
 	 */
 	public Sanction getAction() {
 		return this.action;
+	}
+	
+	
+	/**
+	 * Get sanction cost
+	 * 
+	 * @param none
+	 * @return Sanction cost
+	 */
+	public Double getCost() {
+		return this.cost;
 	}
 	
 	

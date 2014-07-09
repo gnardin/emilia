@@ -1,4 +1,4 @@
-package emilia.test.entity.sanction;
+package examples.pgg.entity.sanction;
 
 import emilia.entity.sanction.SanctionCategory;
 import emilia.entity.sanction.SanctionContentInterface;

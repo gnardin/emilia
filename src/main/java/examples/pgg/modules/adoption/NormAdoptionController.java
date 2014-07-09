@@ -1,4 +1,4 @@
-package emilia.test.modules;
+package examples.pgg.modules.adoption;
 
 import emilia.board.NormativeBoardEventType;
 import emilia.board.NormativeBoardInterface;

@@ -7,12 +7,12 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.modules.salience.NormSalienceAbstract;
-import emilia.test.board.NormativeBoard;
-import emilia.test.entity.action.CooperateAction;
-import emilia.test.entity.action.DefectAction;
-import emilia.test.entity.norm.NormContent;
-import emilia.test.entity.norm.NormEntity;
-import emilia.test.modules.NormSalienceController;
+import examples.pgg.board.NormativeBoard;
+import examples.pgg.entity.action.CooperateAction;
+import examples.pgg.entity.action.DefectAction;
+import examples.pgg.entity.norm.NormContent;
+import examples.pgg.entity.norm.NormEntity;
+import examples.pgg.modules.salience.NormSalienceController;
 import java.util.Calendar;
 import org.junit.Test;
 

@@ -1,5 +1,9 @@
 package emilia;
 
+import java.util.List;
+import java.util.Map;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.enforcement.NormEnforcementListener;
 import org.slf4j.Logger;
@@ -9,6 +13,9 @@ public abstract class EmiliaAbstract {
 	
 	private static final Logger				logger	= LoggerFactory
 																								.getLogger(EmiliaAbstract.class);
+	
+	// Agent identification
+	protected Integer									agentId;
 	
 	// Norm Enforcement callback
 	protected NormEnforcementListener	callback;
@@ -20,8 +27,20 @@ public abstract class EmiliaAbstract {
 	 * @param none
 	 * @return none
 	 */
-	public EmiliaAbstract() {
+	public EmiliaAbstract(Integer agentId) {
+		this.agentId = agentId;
 		this.callback = null;
+	}
+	
+	
+	/**
+	 * Get agent identification
+	 * 
+	 * @param none
+	 * @return none
+	 */
+	public Integer getId() {
+		return this.agentId;
 	}
 	
 	
@@ -46,15 +65,27 @@ public abstract class EmiliaAbstract {
 	
 	
 	/**
+	 * Add norms and associated sanctions
+	 * 
+	 * @param normsSanctions
+	 *          Norms and associated sanctions
+	 * @return none
+	 */
+	public abstract void addNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+	
+	
+	/**
 	 * Output sanction action
 	 * 
 	 * @param sanction
 	 *          Sanction object
 	 * @return none
 	 */
-	public void sendSanction(SanctionEntityAbstract sanction) {
+	public void sendSanction(NormativeEventEntityAbstract event,
+			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		if ((this.callback != null) && (sanction != null)) {
-			this.callback.receive(sanction);
+			this.callback.receive(event, norm, sanction);
 		}
 	}
 	

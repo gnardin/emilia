@@ -13,7 +13,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Sanction identification
 	 * @return Norm x sanction evaluation information
 	 */
-	public SanctionEvaluationInterface getSanction(Integer normId,
+	public SanctionInfoEntityInterface getSanctionInfo(Integer normId,
 			Integer sanctionId);
 	
 	
@@ -24,7 +24,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm identification
 	 * @return Sanctions evaluation information
 	 */
-	public Map<Integer, SanctionEvaluationInterface> getSanctions(Integer normId);
+	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(Integer normId);
 	
 	
 	/**
@@ -38,6 +38,6 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm x sanction evaluation information
 	 * @return none
 	 */
-	public void setSanction(Integer normId, Integer sanctionId,
-			SanctionEvaluationInterface evaluation);
+	public void setSanctionInfo(Integer normId, Integer sanctionId,
+			SanctionInfoEntityInterface evaluation);
 }

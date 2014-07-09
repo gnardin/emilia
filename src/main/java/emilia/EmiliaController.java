@@ -7,6 +7,7 @@ import emilia.conf.EmiliaConf.Param;
 import emilia.conf.EmiliaConfParser;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
+import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.adoption.NormAdoptionAbstract;
 import emilia.modules.classifier.EventClassifierAbstract;
@@ -19,6 +20,8 @@ import java.lang.reflect.Constructor;
 import java.lang.reflect.InvocationTargetException;
 import java.util.ArrayList;
 import java.util.Arrays;
+import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -27,9 +30,6 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	private static final Logger			logger	= LoggerFactory
 																							.getLogger(EmiliaController.class);
-	
-	// Agent identification
-	private Integer									agentId;
 	
 	// Event Classifier module
 	private EventClassifierAbstract	eventClassifier;
@@ -66,8 +66,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 */
 	public EmiliaController(Integer agentId, String xmlFilename,
 			String xsdFilename) {
-		
-		this.agentId = agentId;
+		super(agentId);
 		
 		EmiliaConf conf = EmiliaConfParser.getInstance().getConf(xmlFilename,
 				xsdFilename);
@@ -418,7 +417,32 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	
 	@Override
-	public void receive(SanctionEntityAbstract sanction) {
-		this.sendSanction(sanction);
+	public void addNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions) {
+		
+		List<SanctionEntityAbstract> sanctions;
+		Integer normId;
+		Integer sanctionId;
+		for(NormEntityAbstract norm : normsSanctions.keySet()) {
+			normId = norm.getId();
+			if (!this.normativeBoard.hasNorm(normId)) {
+				sanctions = normsSanctions.get(norm);
+				this.normativeBoard.setNorm(norm);
+				for(SanctionEntityAbstract sanction : sanctions) {
+					sanctionId = sanction.getId();
+					if (!this.normativeBoard.hasSanction(sanctionId)) {
+						this.normativeBoard.setSanction(sanction);
+					}
+					this.normativeBoard.setNormSanction(normId, sanctionId);
+				}
+			}
+		}
+	}
+	
+	
+	@Override
+	public void receive(NormativeEventEntityAbstract event,
+			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
+		this.sendSanction(event, norm, sanction);
 	}
 }

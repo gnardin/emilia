@@ -4,12 +4,31 @@ import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
 import emilia.entity.event.type.ActionEvent;
 import emilia.entity.event.type.NormativeEvent;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.norm.NormEntityAbstract.NormSource;
+import emilia.entity.norm.NormEntityAbstract.NormStatus;
+import emilia.entity.norm.NormEntityAbstract.NormType;
+import emilia.entity.sanction.SanctionCategory;
 import emilia.entity.sanction.SanctionEntityAbstract;
+import emilia.entity.sanction.SanctionCategory.Discernibility;
+import emilia.entity.sanction.SanctionCategory.Locus;
+import emilia.entity.sanction.SanctionCategory.Mode;
+import emilia.entity.sanction.SanctionCategory.Polarity;
+import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import emilia.modules.enforcement.NormEnforcementListener;
-import emilia.test.entity.action.CooperateAction;
-import emilia.test.entity.action.DefectAction;
-import emilia.test.entity.sanction.SanctionContent;
+import examples.pgg.entity.action.CooperateAction;
+import examples.pgg.entity.action.DefectAction;
+import examples.pgg.entity.norm.NormContent;
+import examples.pgg.entity.norm.NormEntity;
+import examples.pgg.entity.sanction.SanctionContent;
+import examples.pgg.entity.sanction.SanctionEntity;
+import examples.pgg.entity.sanction.SanctionContent.Sanction;
+import java.util.ArrayList;
 import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Test;
 
 public class EmiliaControllerTest implements NormEnforcementListener {
@@ -23,7 +42,32 @@ public class EmiliaControllerTest implements NormEnforcementListener {
 		
 		emilia.registerNormEnforcement(this);
 		
-		Integer normId = new Integer(1);
+		// COOPERATE norm
+		Integer normId = 1;
+		NormContent normContent = new NormContent(new CooperateAction(),
+				new DefectAction());
+		NormEntityAbstract norm = new NormEntity(normId, NormType.SOCIAL,
+				NormSource.DISTRIBUTED, NormStatus.GOAL, normContent, 0.0);
+		
+		// PUNISHMENT sanction
+		Integer sanctionId = 1;
+		SanctionContent sanctionContent = new SanctionContent(Sanction.PUNISHMENT,
+				new Double(1.5), new Double(3.0));
+		SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
+				Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
+				Discernibility.UNOBSTRUSIVE);
+		SanctionEntityAbstract sanction = new SanctionEntity(sanctionId,
+				sanctionCategory, SanctionStatus.ACTIVE, sanctionContent);
+		
+		// Norms X Sanctions
+		Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
+		List<SanctionEntityAbstract> sanctions = new ArrayList<SanctionEntityAbstract>();
+		sanctions.add(sanction);
+		normsSanctions.put(norm, sanctions);
+		
+		emilia.addNormsSanctions(normsSanctions);
+		
+		// Event entities
 		NormativeEventEntityAbstract eventEntity;
 		
 		System.out.println("A " + emilia.getNormativeDrive(normId));
@@ -73,7 +117,8 @@ public class EmiliaControllerTest implements NormEnforcementListener {
 	
 	
 	@Override
-	public void receive(SanctionEntityAbstract sanction) {
+	public void receive(NormativeEventEntityAbstract entity,
+			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		
 		if (sanction.getContent() instanceof SanctionContent) {
 			SanctionContent sanctionContent = (SanctionContent) sanction.getContent();

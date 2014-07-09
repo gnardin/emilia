@@ -1,4 +1,4 @@
-package emilia.test.modules;
+package examples.pgg.modules.salience;
 
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.salience.DataType;

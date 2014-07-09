@@ -153,7 +153,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
 			
 			if (deviation.getType().equals(DeviationAbstract.Type.COMPLIANCE)) {
 				
-				if (event.getSource().equals(agentId)) {
+				if (event.getSource().equals(this.agentId)) {
 					type = NormativeEventType.COMPLIANCE;
 				} else {
 					if (event.getInformer().equals(this.agentId)) {
@@ -168,7 +168,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
 				
 			} else if (deviation.getType().equals(DeviationAbstract.Type.VIOLATION)) {
 				
-				if (event.getSource().equals(agentId)) {
+				if (event.getSource().equals(this.agentId)) {
 					type = NormativeEventType.VIOLATION;
 				} else {
 					if (event.getInformer().equals(this.agentId)) {
@@ -192,22 +192,25 @@ public abstract class NormEnforcementAbstract implements EventListener {
 			}
 		}
 		
-		List<SanctionEntityAbstract> sanctions;
-		for(NormEntityAbstract norm : normDeviations.keySet()) {
-			// Sanction Effectiveness Updater
-			this.adapt(event, norm, normDeviations.get(norm));
-			
-			List<SanctionEntityAbstract> possibleSanctions = normSanctions.get(norm);
-			
-			// Sanction Identified
-			sanctions = this.evaluate(event, norm, possibleSanctions,
-					normDeviations.get(norm));
-			
-			// Sanction Issuer
-			this.enforce(norm, sanctions);
-			
-			for(SanctionEntityAbstract sanction : sanctions) {
-				this.callback.receive(sanction);
+		if (event.getSource() != event.getTarget()) {
+			List<SanctionEntityAbstract> sanctions;
+			for(NormEntityAbstract norm : normDeviations.keySet()) {
+				List<SanctionEntityAbstract> possibleSanctions = normSanctions
+						.get(norm);
+				
+				// Sanction Identified
+				sanctions = this.evaluate(event, norm, possibleSanctions,
+						normDeviations.get(norm));
+				
+				// Sanction Issuer
+				this.enforce(norm, sanctions);
+				
+				for(SanctionEntityAbstract sanction : sanctions) {
+					// Sanction Effectiveness Updater
+					this.adapt(event, norm, sanction, normDeviations.get(norm));
+					
+					this.callback.receive(event, norm, sanction);
+				}
 			}
 		}
 	}
@@ -264,10 +267,13 @@ public abstract class NormEnforcementAbstract implements EventListener {
 	 *          Normative event evaluated
 	 * @param norm
 	 *          Norm evaluated
+	 * @param sanction
+	 *          Sanction evaluated
 	 * @param evaluation
 	 *          Deviation evaluation
 	 * @return none
 	 */
 	public abstract void adapt(NormativeEventEntityAbstract event,
-			NormEntityAbstract norm, DeviationAbstract evaluation);
+			NormEntityAbstract norm, SanctionEntityAbstract sanction,
+			DeviationAbstract evaluation);
 }

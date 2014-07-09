@@ -1,4 +1,4 @@
-package emilia.test.entity.norm;
+package examples.pgg.entity.norm;
 
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormContentInterface;

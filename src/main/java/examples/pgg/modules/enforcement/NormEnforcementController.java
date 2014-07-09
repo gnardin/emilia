@@ -1,4 +1,4 @@
-package emilia.test.modules;
+package examples.pgg.modules.enforcement;
 
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
@@ -10,7 +10,7 @@ import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.enforcement.DeviationAbstract;
 import emilia.modules.enforcement.DeviationAbstract.Type;
 import emilia.modules.enforcement.NormEnforcementAbstract;
-import emilia.test.entity.norm.NormContent;
+import examples.pgg.entity.norm.NormContent;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -113,40 +113,7 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	
 	@Override
 	public void adapt(NormativeEventEntityAbstract event,
-			NormEntityAbstract norm, DeviationAbstract evaluation) {
-	}
-}
-
-
-/**
- * Compliance deviation class
- */
-class ComplianceDeviation extends DeviationAbstract {
-	
-	/**
-	 * Create a compliance deviation
-	 * 
-	 * @param none
-	 * @return none
-	 */
-	public ComplianceDeviation() {
-		super(Type.COMPLIANCE);
-	}
-}
-
-
-/**
- * Violation deviation class
- */
-class ViolationDeviation extends DeviationAbstract {
-	
-	/**
-	 * Create a violation deviation
-	 * 
-	 * @param none
-	 * @return none
-	 */
-	public ViolationDeviation() {
-		super(Type.VIOLATION);
+			NormEntityAbstract norm, SanctionEntityAbstract sanction,
+			DeviationAbstract evaluation) {
 	}
 }

@@ -1,4 +1,4 @@
-package emilia.test.board;
+package examples.pgg.board;
 
 import emilia.board.NormativeBoardAbstract;
 import emilia.entity.norm.NormEntityAbstract;
