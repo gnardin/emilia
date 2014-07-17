@@ -102,19 +102,24 @@ public class NormSalienceController extends NormSalienceAbstract {
 					/ (double) (obsViolation + violation);
 			
 			nominator += 0.66;
-			denominator += 1.65;
+			denominator += 0.66;
 		}
 		
 		double p = 0;
-		if ((Math.max(punishment + sanction, obsViolation + violation)) > 0) {
-			p = (double) punishment
-					/ (double) (Math.max(punishment + sanction, obsViolation + violation));
-		}
-		
 		double s = 0;
 		if ((Math.max(punishment + sanction, obsViolation + violation)) > 0) {
-			s = (double) sanction
-					/ (double) (Math.max(punishment + sanction, obsViolation + violation));
+			
+			if (punishment > 0) {
+				p = (double) punishment
+						/ (double) (Math.max(punishment, obsViolation + violation));
+				denominator += 0.33;
+			}
+			
+			if (sanction > 0) {
+				s = (double) sanction
+						/ (double) (Math.max(sanction, obsViolation + violation));
+				denominator += 0.99;
+			}
 		}
 		
 		double e = 0;

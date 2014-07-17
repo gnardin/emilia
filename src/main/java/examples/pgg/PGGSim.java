@@ -32,7 +32,7 @@ public class PGGSim {
 	// Constants
 	public final static Integer		numAgents				= 4;
 	
-	public final static Integer		numIteractions	= 10;
+	public final static Integer		numIteractions	= 1000000;
 	
 	public final static Integer		contribution		= 20;
 	
@@ -48,7 +48,7 @@ public class PGGSim {
 	
 	public final static Double		initSalience		= 0.5;
 	
-	public final static String		xmlFile					= "src/main/resources/conf/emilia.xml";
+	public final static String		xmlFile					= "src/main/resources/conf/pgg/emilia.xml";
 	
 	public final static String		xsdFile					= "src/main/resources/conf/emilia.xsd";
 	
@@ -145,9 +145,13 @@ public class PGGSim {
 		for(Integer r = 0; r < numIteractions; r++) {
 			actions = new HashMap<Integer, ActionAbstract>();
 			punishments = new HashMap<Integer, Map<Integer, SanctionEntityAbstract>>();
-			payoff = 0.0;
+			
+			System.out.println();
+			System.out.println("------ ITERATION " + (r + 1) + " ------");
+			System.out.println();
 			
 			// Play PD
+			payoff = 0.0;
 			for(Integer i = 0; i < numAgents; i++) {
 				agent = this.agents.get(i);
 				agent.init();
@@ -157,8 +161,10 @@ public class PGGSim {
 				}
 				actions.put(i, action);
 				
-				System.out.println(i + " " + action.getDescription());
+				System.out.println("AgentId [" + i + "] ACTION ["
+						+ action.getDescription() + "]");
 			}
+			System.out.println();
 			
 			// Set payoff
 			payoff *= multiplier;
@@ -195,9 +201,11 @@ public class PGGSim {
 			}
 			
 			// Payoff
+			System.out.println();
 			for(Integer i = 0; i < numAgents; i++) {
 				agent = this.agents.get(i);
-				System.out.println(r + " " + i + " " + agent.getSalience());
+				System.out.println("AgentId [" + i + "] SALIENCE ["
+						+ agent.getSalience() + "]");
 			}
 		}
 	}

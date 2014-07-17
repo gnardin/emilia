@@ -281,8 +281,9 @@ public class PGGAgent implements NormEnforcementListener {
 			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		
 		if (this.action == COOPERATE) {
-			System.out.println(event.getSource() + " " + event.getTarget() + " "
-					+ sanction.getContent().toString());
+			System.out.println("PUNISHER [" + event.getTarget() + "] PUNISHED ["
+					+ event.getSource() + "] ENFORCEMENT ["
+					+ sanction.getContent().toString() + "]");
 			this.punishments.put(event.getSource(), sanction);
 		}
 	}
