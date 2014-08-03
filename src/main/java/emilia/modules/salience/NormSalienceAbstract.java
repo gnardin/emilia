@@ -122,7 +122,6 @@ public abstract class NormSalienceAbstract implements EventListener {
 		if ((dataType != null) && (event instanceof NormativeEvent)) {
 			NormativeEvent normativeEvent = (NormativeEvent) event;
 			this.repository.increment(normativeEvent.getNormId(), dataType);
-			this.updateSalience(normativeEvent.getNormId());
 		}
 	}
 }

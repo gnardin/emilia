@@ -172,12 +172,31 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	}
 	
 	
-	/**
-	 * Clone
-	 * 
-	 * @param none
-	 * @return Cloned norm entity
-	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		
+		if (this == obj) {
+			result = true;
+		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+			NormEntityAbstract norm = (NormEntityAbstract) obj;
+			if (this.getId().intValue() == norm.getId().intValue()) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		int hash = 217 + this.id;
+		return hash;
+	}
+	
+	
+	@Override
 	public NormEntityAbstract clone() {
 		try {
 			return (NormEntityAbstract) super.clone();

@@ -26,13 +26,19 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class PGGSim {
 	
-	// Constants
-	public final static Integer		numAgents				= 4;
+	@SuppressWarnings("unused")
+	private static final Logger		logger					= LoggerFactory
+																										.getLogger(PGGSim.class);
 	
-	public final static Integer		numIteractions	= 1000000;
+	// Constants
+	public final static Integer		numAgents				= 10;
+	
+	public final static Integer		numIteractions	= 100000;
 	
 	public final static Integer		contribution		= 20;
 	

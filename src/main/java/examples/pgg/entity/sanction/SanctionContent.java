@@ -1,8 +1,14 @@
 package examples.pgg.entity.sanction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.entity.sanction.SanctionContentInterface;
 
 public class SanctionContent implements SanctionContentInterface {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(SanctionContent.class);
 	
 	public enum Sanction {
 		PUNISHMENT,

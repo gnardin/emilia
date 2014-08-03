@@ -10,8 +10,15 @@ import emilia.modules.recognition.NormRecognitionAbstract;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormRecognitionController extends NormRecognitionAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormRecognitionController.class);
+	
 	
 	public NormRecognitionController(Integer agentId,
 			NormativeBoardInterface normativeBoard) {

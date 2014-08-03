@@ -9,10 +9,10 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
-public class LatticeGenerator<V, E> implements GraphGenerator<V, E, V> {
+public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
 	
 	private static final Logger	logger	= LoggerFactory
-																					.getLogger(LatticeGenerator.class);
+																					.getLogger(LatticeGraphGenerator.class);
 	
 	private int									numAgents;
 	
@@ -30,7 +30,7 @@ public class LatticeGenerator<V, E> implements GraphGenerator<V, E, V> {
 	 * @throws IllegalArgumentException
 	 *           if the specified size is negative.
 	 */
-	public LatticeGenerator(int numAgents, int numNeighbors) {
+	public LatticeGraphGenerator(int numAgents, int numNeighbors) {
 		
 		if (numAgents < 0) {
 			throw new IllegalArgumentException(

@@ -1,15 +1,21 @@
 package examples.pgg.entity.norm;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormContentInterface;
 
 public class NormContent implements NormContentInterface {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormContent.class);
+	
 	// Action
-	private ActionAbstract	action;
+	private ActionAbstract			action;
 	
 	// Negated action
-	private ActionAbstract	notAction;
+	private ActionAbstract			notAction;
 	
 	
 	/**

@@ -22,6 +22,9 @@ public abstract class NormEnforcementAbstract implements EventListener {
 	// Agent identification
 	protected Integer																				agentId;
 	
+	// Enforcement memory
+	protected SanctionInfoRepositoryMemory									memory;
+	
 	// Norm Salience callbacks
 	protected Map<NormativeEventType, List<EventListener>>	callbacks;
 	
@@ -37,6 +40,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
 	 */
 	public NormEnforcementAbstract(Integer agentId) {
 		this.agentId = agentId;
+		this.memory = new SanctionInfoRepositoryMemory();
 		this.callbacks = new HashMap<NormativeEventType, List<EventListener>>();
 		this.callback = null;
 	}
@@ -142,7 +146,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
 		Map<NormEntityAbstract, DeviationAbstract> normDeviations = this.detect(
 				event, normSanctions);
 		
-		// Send messages to Norm Salience
+		// Send messages to callbacks
 		DeviationAbstract deviation;
 		NormativeEvent normativeEvent;
 		NormativeEventType type;
@@ -192,24 +196,26 @@ public abstract class NormEnforcementAbstract implements EventListener {
 			}
 		}
 		
+		// Avoid sanction its own actions
 		if (event.getSource() != event.getTarget()) {
 			List<SanctionEntityAbstract> sanctions;
+			List<SanctionEntityAbstract> possibleSanctions;
 			for(NormEntityAbstract norm : normDeviations.keySet()) {
-				List<SanctionEntityAbstract> possibleSanctions = normSanctions
-						.get(norm);
+				// Sanction Effectiveness Updater
+				this.adapt(event, norm, normDeviations.get(norm));
 				
-				// Sanction Identified
-				sanctions = this.evaluate(event, norm, possibleSanctions,
-						normDeviations.get(norm));
-				
-				// Sanction Issuer
-				this.enforce(norm, sanctions);
-				
-				for(SanctionEntityAbstract sanction : sanctions) {
-					// Sanction Effectiveness Updater
-					this.adapt(event, norm, sanction, normDeviations.get(norm));
+				possibleSanctions = normSanctions.get(norm);
+				if (!possibleSanctions.isEmpty()) {
+					// Sanction Identified
+					sanctions = this.evaluate(event, norm, possibleSanctions,
+							normDeviations.get(norm));
 					
-					this.callback.receive(event, norm, sanction);
+					// Sanction Issuer
+					this.enforce(event, norm, sanctions);
+					
+					for(SanctionEntityAbstract sanction : sanctions) {
+						this.callback.receive(event, norm, sanction);
+					}
 				}
 			}
 		}
@@ -227,6 +233,21 @@ public abstract class NormEnforcementAbstract implements EventListener {
 	public abstract Map<NormEntityAbstract, DeviationAbstract> detect(
 			NormativeEventEntityAbstract event,
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions);
+	
+	
+	/**
+	 * Adjust the Sanction effectiveness
+	 * 
+	 * @param event
+	 *          Normative event evaluated
+	 * @param norm
+	 *          Norm evaluated
+	 * @param evaluation
+	 *          Deviation evaluation
+	 * @return none
+	 */
+	public abstract void adapt(NormativeEventEntityAbstract event,
+			NormEntityAbstract norm, DeviationAbstract evaluation);
 	
 	
 	/**
@@ -250,30 +271,23 @@ public abstract class NormEnforcementAbstract implements EventListener {
 	/**
 	 * Enforce the sanction
 	 * 
+	 * @param event
+	 *          Normative event
 	 * @param norm
 	 *          Norm evaluated
 	 * @param sanctions
 	 *          List of sanctions to apply because of norm compliance or violation
 	 * @return none
 	 */
-	public abstract void enforce(NormEntityAbstract norm,
-			List<SanctionEntityAbstract> sanctions);
+	public abstract void enforce(NormativeEventEntityAbstract event,
+			NormEntityAbstract norm, List<SanctionEntityAbstract> sanctions);
 	
 	
 	/**
-	 * Adjust the Sanction effectiveness
+	 * Update the norm enforcement module
 	 * 
-	 * @param event
-	 *          Normative event evaluated
-	 * @param norm
-	 *          Norm evaluated
-	 * @param sanction
-	 *          Sanction evaluated
-	 * @param evaluation
-	 *          Deviation evaluation
+	 * @param none
 	 * @return none
 	 */
-	public abstract void adapt(NormativeEventEntityAbstract event,
-			NormEntityAbstract norm, SanctionEntityAbstract sanction,
-			DeviationAbstract evaluation);
+	public abstract void update();
 }

@@ -32,7 +32,8 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	/**
 	 * Create Norm Enforcement controller
 	 * 
-	 * @param none
+	 * @param agentId
+	 *          Agent identification
 	 * @return none
 	 */
 	public NormEnforcementController(Integer agentId) {
@@ -106,14 +107,18 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	
 	
 	@Override
-	public void enforce(NormEntityAbstract norm,
-			List<SanctionEntityAbstract> sanctions) {
+	public void enforce(NormativeEventEntityAbstract event,
+			NormEntityAbstract norm, List<SanctionEntityAbstract> sanctions) {
 	}
 	
 	
 	@Override
 	public void adapt(NormativeEventEntityAbstract event,
-			NormEntityAbstract norm, SanctionEntityAbstract sanction,
-			DeviationAbstract evaluation) {
+			NormEntityAbstract norm, DeviationAbstract evaluation) {
+	}
+	
+	
+	@Override
+	public void update() {
 	}
 }

@@ -5,6 +5,8 @@ import java.util.Calendar;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.EmiliaController;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.event.NormativeEventEntityAbstract;
@@ -20,10 +22,16 @@ import examples.pgg.entity.sanction.SanctionContent;
 
 public class PGGAgent implements NormEnforcementListener {
 	
+	@SuppressWarnings("unused")
+	private static final Logger										logger		= LoggerFactory
+																															.getLogger(PGGAgent.class);
+	
 	// Constants
 	private final static ActionAbstract						COOPERATE	= new CooperateAction();
 	
 	private final static ActionAbstract						DEFECT		= new DefectAction();
+	
+	private final static Double										NOISE			= 0.05;
 	
 	private final static Integer									normId		= 1;
 	
@@ -63,6 +71,7 @@ public class PGGAgent implements NormEnforcementListener {
 			Uniform rnd, Double costPunish) {
 		this.agentId = agentId;
 		this.normative = new EmiliaController(agentId, xmlFile, xsdFile);
+		this.normative.init();
 		this.normative.registerNormEnforcement(this);
 		this.normative.addNormsSanctions(normsSanctions);
 		this.rnd = rnd;
@@ -95,6 +104,7 @@ public class PGGAgent implements NormEnforcementListener {
 		this.payoff = 0.0;
 		this.punishments.clear();
 		this.neighborsActions.clear();
+		this.normative.update();
 	}
 	
 	
@@ -105,7 +115,7 @@ public class PGGAgent implements NormEnforcementListener {
 	 * @return Salience
 	 */
 	public Double getSalience() {
-		return this.normative.getNormativeDrive(normId);
+		return this.normative.getNormSalience(normId);
 	}
 	
 	
@@ -141,10 +151,18 @@ public class PGGAgent implements NormEnforcementListener {
 	public ActionAbstract decideAction() {
 		
 		// Cooperation probability
-		if (this.rnd.nextDouble() < this.normative.getNormativeDrive(normId)) {
-			this.action = COOPERATE;
+		if (this.rnd.nextDouble() > NOISE) {
+			if (this.rnd.nextDouble() < this.normative.getNormSalience(normId)) {
+				this.action = COOPERATE;
+			} else {
+				this.action = DEFECT;
+			}
 		} else {
-			this.action = DEFECT;
+			if (this.rnd.nextIntFromTo(0, 1) == 0) {
+				this.action = COOPERATE;
+			} else {
+				this.action = DEFECT;
+			}
 		}
 		
 		return this.action;
@@ -187,12 +205,16 @@ public class PGGAgent implements NormEnforcementListener {
 	 */
 	public Map<Integer, SanctionEntityAbstract> decidePunish() {
 		
-		SanctionEntityAbstract sanction;
-		SanctionContent sanctionContent;
-		for(Integer neighborId : this.punishments.keySet()) {
-			sanction = this.punishments.get(neighborId);
-			sanctionContent = (SanctionContent) sanction.getContent();
-			this.payoff -= sanctionContent.getCost();
+		if (this.action.equals(COOPERATE)) {
+			SanctionEntityAbstract sanction;
+			SanctionContent sanctionContent;
+			for(Integer neighborId : this.punishments.keySet()) {
+				sanction = this.punishments.get(neighborId);
+				sanctionContent = (SanctionContent) sanction.getContent();
+				this.payoff -= sanctionContent.getCost();
+			}
+		} else {
+			this.punishments = new HashMap<Integer, SanctionEntityAbstract>();
 		}
 		
 		return this.punishments;

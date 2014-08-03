@@ -6,7 +6,10 @@ import java.util.Map;
 public class SanctionInfoRepositoryMemory implements
 		SanctionInfoRepositoryInterface {
 	
-	// Sanction information repository <NormId, <SanctionId, Evaluation>>
+	// Norm information repository <NormId, NormEvaluation>
+	private Map<Integer, NormInfoEntityInterface>										normInfoRep;
+	
+	// Sanction information repository <NormId, <SanctionId, SanctionEvaluation>>
 	private Map<Integer, Map<Integer, SanctionInfoEntityInterface>>	sanctionInfoRep;
 	
 	
@@ -17,7 +20,38 @@ public class SanctionInfoRepositoryMemory implements
 	 * @return none
 	 */
 	public SanctionInfoRepositoryMemory() {
+		this.normInfoRep = new HashMap<Integer, NormInfoEntityInterface>();
 		this.sanctionInfoRep = new HashMap<Integer, Map<Integer, SanctionInfoEntityInterface>>();
+	}
+	
+	
+	@Override
+	public Boolean hasNormInfo(Integer normId) {
+		return this.normInfoRep.containsKey(normId);
+	}
+	
+	
+	@Override
+	public NormInfoEntityInterface getNormInfo(Integer normId) {
+		NormInfoEntityInterface normInfo = null;
+		
+		if (this.normInfoRep.containsKey(normId)) {
+			normInfo = this.normInfoRep.get(normId);
+		}
+		
+		return normInfo;
+	}
+	
+	
+	@Override
+	public Map<Integer, NormInfoEntityInterface> getNormsInfo() {
+		return this.normInfoRep;
+	}
+	
+	
+	@Override
+	public void setNormInfo(Integer normId, NormInfoEntityInterface evaluation) {
+		this.normInfoRep.put(normId, evaluation);
 	}
 	
 	
@@ -40,7 +74,8 @@ public class SanctionInfoRepositoryMemory implements
 	
 	
 	@Override
-	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(Integer normId) {
+	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(
+			Integer normId) {
 		
 		Map<Integer, SanctionInfoEntityInterface> sanctionInfo = null;
 		if (this.sanctionInfoRep.containsKey(normId)) {

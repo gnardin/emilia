@@ -1,11 +1,17 @@
 package examples.pgg.modules.salience;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.salience.DataType;
 import emilia.modules.salience.NormInfoRepositoryMemory;
 import emilia.modules.salience.NormSalienceAbstract;
 
 public class NormSalienceController extends NormSalienceAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormSalienceController.class);
 	
 	// Weight values
 	public enum Weight {

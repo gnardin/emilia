@@ -11,6 +11,7 @@ public class SanctionContent implements SanctionContentInterface {
 																					.getLogger(SanctionContent.class);
 	
 	public enum Sanction {
+		MESSAGE,
 		PUNISHMENT,
 		SANCTION;
 	}

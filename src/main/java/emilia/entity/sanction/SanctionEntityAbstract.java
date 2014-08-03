@@ -116,12 +116,31 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	}
 	
 	
-	/**
-	 * Clone
-	 * 
-	 * @param none
-	 * @return Cloned sanction entity
-	 */
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		
+		if (this == obj) {
+			result = true;
+		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+			SanctionEntityAbstract sanction = (SanctionEntityAbstract) obj;
+			if (this.getId().intValue() == sanction.getId().intValue()) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		int hash = 217 + this.id;
+		return hash;
+	}
+	
+	
+	@Override
 	public SanctionEntityAbstract clone() {
 		try {
 			return (SanctionEntityAbstract) super.clone();

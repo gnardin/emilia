@@ -113,4 +113,28 @@ public abstract class ActionAbstract {
 			this.params.set(index, param);
 		}
 	}
+	
+	
+	@Override
+	public boolean equals(Object obj) {
+		boolean result = false;
+		
+		if (this == obj) {
+			result = true;
+		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+			ActionAbstract action = (ActionAbstract) obj;
+			if (this.getId().intValue() == action.getId().intValue()) {
+				result = true;
+			}
+		}
+		
+		return result;
+	}
+	
+	
+	@Override
+	public int hashCode() {
+		int hash = 217 + this.id;
+		return hash;
+	}
 }

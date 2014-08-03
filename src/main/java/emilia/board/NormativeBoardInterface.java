@@ -3,6 +3,7 @@ package emilia.board;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import java.util.List;
+import java.util.Map;
 
 public interface NormativeBoardInterface {
 	
@@ -14,6 +15,15 @@ public interface NormativeBoardInterface {
 	 * @return Norm entity
 	 */
 	public NormEntityAbstract getNorm(Integer normId);
+	
+	
+	/**
+	 * Get all norms
+	 * 
+	 * @param none
+	 * @return List of existing norms
+	 */
+	public List<NormEntityAbstract> getNorms();
 	
 	
 	/**
@@ -89,6 +99,15 @@ public interface NormativeBoardInterface {
 	
 	
 	/**
+	 * Get all sanctions
+	 * 
+	 * @param none
+	 * @return List of existing sanctions
+	 */
+	public List<SanctionEntityAbstract> getSanctions();
+	
+	
+	/**
 	 * Add or set a sanction
 	 * 
 	 * @param sanction
@@ -129,16 +148,6 @@ public interface NormativeBoardInterface {
 	
 	
 	/**
-	 * Get sanctions identification associated to the norm
-	 * 
-	 * @param normId
-	 *          Norm identification
-	 * @return List of sanctions associated to the norm
-	 */
-	public List<Integer> getNormSanctions(Integer normId);
-	
-	
-	/**
 	 * Add or set a sanction association to the norm
 	 * 
 	 * @param normId
@@ -172,6 +181,47 @@ public interface NormativeBoardInterface {
 	 * @return True if association exists, False otherwise
 	 */
 	public Boolean hasNormSanction(Integer normId, Integer sanctionId);
+	
+	
+	/**
+	 * Get sanctions identification associated to the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @return List of sanctions associated to the norm
+	 */
+	public List<Integer> getNormSanctions(Integer normId);
+	
+	
+	/**
+	 * Add norms and associated sanctions
+	 * 
+	 * @param normsSanctions
+	 *          Norms and associated sanctions
+	 * @return none
+	 */
+	public abstract void addNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+	
+	
+	/**
+	 * Get norms and associated sanctions
+	 * 
+	 * @param none
+	 * @return Norms and associated sanctions
+	 */
+	public abstract Map<NormEntityAbstract, List<SanctionEntityAbstract>> getNormsSanctions();
+	
+	
+	/**
+	 * Update the norms and associated sanctions
+	 * 
+	 * @param normsSanctions
+	 *          Norms and associated sanctions
+	 * @return none
+	 */
+	public abstract void updateNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
 	
 	
 	/**

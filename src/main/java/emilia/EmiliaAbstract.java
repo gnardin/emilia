@@ -55,13 +55,22 @@ public abstract class EmiliaAbstract {
 	
 	
 	/**
-	 * Get the normative drive
+	 * Update norm salience
+	 * 
+	 * @param none
+	 * @return none
+	 */
+	public abstract void update();
+	
+	
+	/**
+	 * Get the norm salience
 	 * 
 	 * @param normId
 	 *          Norm identification
-	 * @return Normative drive
+	 * @return Norm salience
 	 */
-	public abstract Double getNormativeDrive(Integer normId);
+	public abstract Double getNormSalience(Integer normId);
 	
 	
 	/**
@@ -73,6 +82,36 @@ public abstract class EmiliaAbstract {
 	 */
 	public abstract void addNormsSanctions(
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+	
+	
+	/**
+	 * Get norms and associated sanctions
+	 * 
+	 * @param none
+	 * @return Norms and associated sanctions
+	 */
+	public abstract Map<NormEntityAbstract, List<SanctionEntityAbstract>> getNormsSanctions();
+	
+	
+	/**
+	 * Update the norms and associated sanctions
+	 * 
+	 * @param normsSanctions
+	 *          Norms and associated sanctions
+	 * @return none
+	 */
+	public abstract void updateNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+	
+	
+	/**
+	 * Get the norm
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @return Norm
+	 */
+	public abstract NormEntityAbstract getNorm(Integer normId);
 	
 	
 	/**

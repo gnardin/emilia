@@ -4,8 +4,15 @@ import emilia.board.NormativeBoardAbstract;
 import emilia.entity.norm.NormEntityAbstract;
 import java.util.ArrayList;
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormativeBoard extends NormativeBoardAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormativeBoard.class);
+	
 	
 	@Override
 	public List<NormEntityAbstract> match(Object info) {

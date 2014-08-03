@@ -37,9 +37,10 @@ public class EmiliaControllerTest implements NormEnforcementListener {
 	public void emiliaControllerTest() {
 		// Create the Emilia agent
 		EmiliaController emilia = new EmiliaController(1,
-				"src/main/resources/conf/emilia.xml",
+				"src/main/resources/conf/pgg/emilia.xml",
 				"src/main/resources/conf/emilia.xsd");
 		
+		emilia.init();
 		emilia.registerNormEnforcement(this);
 		
 		// COOPERATE norm
@@ -70,49 +71,49 @@ public class EmiliaControllerTest implements NormEnforcementListener {
 		// Event entities
 		NormativeEventEntityAbstract eventEntity;
 		
-		System.out.println("A " + emilia.getNormativeDrive(normId));
+		System.out.println("A " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives COMPLIANCE Event
 		eventEntity = new NormativeEvent(Calendar.getInstance().getTimeInMillis(),
 				1, 1, 1, NormativeEventType.COMPLIANCE, normId);
 		emilia.input(eventEntity);
-		System.out.println("B " + emilia.getNormativeDrive(normId));
+		System.out.println("B " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives COMPLIANCE Event
 		eventEntity = new NormativeEvent(Calendar.getInstance().getTimeInMillis(),
 				2, 2, 1, NormativeEventType.COMPLIANCE_INFORMED, normId);
 		emilia.input(eventEntity);
-		System.out.println("C " + emilia.getNormativeDrive(normId));
+		System.out.println("C " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives VIOLATION Event
 		eventEntity = new NormativeEvent(Calendar.getInstance().getTimeInMillis(),
 				1, 1, 1, NormativeEventType.VIOLATION, normId);
 		emilia.input(eventEntity);
-		System.out.println("D " + emilia.getNormativeDrive(normId));
+		System.out.println("D " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives SANCTION Event
 		eventEntity = new NormativeEvent(Calendar.getInstance().getTimeInMillis(),
 				1, 2, 1, NormativeEventType.SANCTION, normId);
 		emilia.input(eventEntity);
-		System.out.println("E " + emilia.getNormativeDrive(normId));
+		System.out.println("E " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives VIOLATION INVOCATION Event
 		eventEntity = new NormativeEvent(Calendar.getInstance().getTimeInMillis(),
 				1, 2, 1, NormativeEventType.VIOLATION_INVOCATION, normId);
 		emilia.input(eventEntity);
-		System.out.println("F " + emilia.getNormativeDrive(normId));
+		System.out.println("F " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives COMPLIANCE ACTION Event
 		eventEntity = new ActionEvent(Calendar.getInstance().getTimeInMillis(), 1,
 				2, 1, new CooperateAction());
 		emilia.input(eventEntity);
-		System.out.println("G " + emilia.getNormativeDrive(normId));
+		System.out.println("G " + emilia.getNormSalience(normId));
 		
 		// EMILIA receives VIOLATION ACTION Event
 		eventEntity = new ActionEvent(Calendar.getInstance().getTimeInMillis(), 1,
 				2, 1, new DefectAction());
 		emilia.input(eventEntity);
-		System.out.println("H " + emilia.getNormativeDrive(normId));
+		System.out.println("H " + emilia.getNormSalience(normId));
 	}
 	
 	

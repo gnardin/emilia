@@ -1,9 +1,16 @@
 package examples.pgg.modules.classifier;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.modules.classifier.EventClassifierAbstract;
 
 public class EventClassifier extends EventClassifierAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(EventClassifier.class);
+	
 	
 	public EventClassifier(Integer agentId) {
 		super(agentId);

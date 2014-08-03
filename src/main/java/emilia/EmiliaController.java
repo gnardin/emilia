@@ -28,29 +28,31 @@ import org.slf4j.LoggerFactory;
 public class EmiliaController extends EmiliaAbstract implements
 		NormEnforcementListener {
 	
-	private static final Logger			logger	= LoggerFactory
-																							.getLogger(EmiliaController.class);
+	private static final Logger				logger	= LoggerFactory
+																								.getLogger(EmiliaController.class);
 	
 	// Event Classifier module
-	private EventClassifierAbstract	eventClassifier;
+	protected EventClassifierAbstract	eventClassifier;
 	
 	// Norm Recognition module
-	private NormRecognitionAbstract	normRecognition;
+	protected NormRecognitionAbstract	normRecognition;
 	
 	// Norm Adoption module
-	private NormAdoptionAbstract		normAdoption;
+	protected NormAdoptionAbstract		normAdoption;
 	
 	// Norm Salience module
-	private NormSalienceAbstract		normSalience;
+	protected NormSalienceAbstract		normSalience;
 	
 	// Norm Enforcement module
-	private NormEnforcementAbstract	normEnforcement;
+	protected NormEnforcementAbstract	normEnforcement;
 	
 	// Norm Compliance module
-	private NormComplianceAbstract	normCompliance;
+	protected NormComplianceAbstract	normCompliance;
 	
 	// Normative Board
-	private NormativeBoardInterface	normativeBoard;
+	protected NormativeBoardInterface	normativeBoard;
+	
+	protected EmiliaConf							conf;
 	
 	
 	/**
@@ -68,30 +70,40 @@ public class EmiliaController extends EmiliaAbstract implements
 			String xsdFilename) {
 		super(agentId);
 		
-		EmiliaConf conf = EmiliaConfParser.getInstance().getConf(xmlFilename,
-				xsdFilename);
-		
+		this.conf = EmiliaConfParser.getInstance()
+				.getConf(xmlFilename, xsdFilename);
+	}
+	
+	
+	/**
+	 * Initialize the EMILIA controller
+	 * 
+	 * @param none
+	 * @return none
+	 */
+	public void init() {
 		// Event Classifier
 		logger.debug("Initializing [EVENT CLASSIFIER]");
-		this.setEventClassifier((String) conf
+		this.setEventClassifier((String) this.conf
 				.getStrValue(Param.EVENT_CLASSIFIER_CLASS));
 		logger.debug("Initialized [EVENT CLASSIFIER]");
 		
 		// Normative Board
 		logger.debug("Initializing [NORMATIVE BOARD]");
-		this.setNormativeBoard((String) conf
+		this.setNormativeBoard((String) this.conf
 				.getStrValue(Param.NORMATIVE_BOARD_CLASS));
 		logger.debug("Initialized [NORMATIVE BOARD]");
 		
 		// Norm Recognition
 		logger.debug("Initializing [NORM RECOGNITION]");
-		this.setNormRecognition((String) conf
+		this.setNormRecognition((String) this.conf
 				.getStrValue(Param.NORM_RECOGNITION_CLASS));
 		logger.debug("Initialized [NORM RECOGNITION]");
 		
 		// Norm Adoption
 		logger.debug("Initializing [NORM ADOPTION]");
-		this.setNormAdoption((String) conf.getStrValue(Param.NORM_ADOPTION_CLASS));
+		this.setNormAdoption((String) this.conf
+				.getStrValue(Param.NORM_ADOPTION_CLASS));
 		this.normativeBoard.registerCallback(
 				new ArrayList<NormativeBoardEventType>(Arrays.asList(
 						NormativeBoardEventType.INSERT_NORM,
@@ -101,7 +113,8 @@ public class EmiliaController extends EmiliaAbstract implements
 		
 		// Norm Salience
 		logger.debug("Initializing [NORM SALIENCE]");
-		this.setNormSalience((String) conf.getStrValue(Param.NORM_SALIENCE_CLASS));
+		this.setNormSalience((String) this.conf
+				.getStrValue(Param.NORM_SALIENCE_CLASS));
 		this.normRecognition.registerCallback(
 				new ArrayList<Boolean>(Arrays.asList(true)),
 				new ArrayList<NormativeEventType>(Arrays.asList(
@@ -127,7 +140,7 @@ public class EmiliaController extends EmiliaAbstract implements
 		
 		// Norm Enforcement
 		logger.debug("Initializing [NORM ENFORCEMENT]");
-		this.setNormEnforcement((String) conf
+		this.setNormEnforcement((String) this.conf
 				.getStrValue(Param.NORM_ENFORCEMENT_CLASS));
 		this.normRecognition.registerCallback(
 				new ArrayList<Boolean>(Arrays.asList(true)),
@@ -166,7 +179,7 @@ public class EmiliaController extends EmiliaAbstract implements
 		
 		// Norm Compliance
 		logger.debug("Initializing [NORM COMPLIANCE]");
-		this.setNormCompliance((String) conf
+		this.setNormCompliance((String) this.conf
 				.getStrValue(Param.NORM_COMPLIANCE_CLASS));
 		logger.debug("Initialized [NORM COMPLIANCE]");
 	}
@@ -179,7 +192,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Event Classifier class name
 	 * @return none
 	 */
-	private void setEventClassifier(String eventClassifierClass) {
+	protected void setEventClassifier(String eventClassifierClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<EventClassifierAbstract> nbClass = (Class<EventClassifierAbstract>) Class
@@ -211,7 +224,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Normative Board class name
 	 * @return none
 	 */
-	private void setNormativeBoard(String normativeBoardClass) {
+	protected void setNormativeBoard(String normativeBoardClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormativeBoardInterface> nbClass = (Class<NormativeBoardInterface>) Class
@@ -243,7 +256,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Norm Recognition class name
 	 * @return none
 	 */
-	private void setNormRecognition(String normRecognitionClass) {
+	protected void setNormRecognition(String normRecognitionClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormRecognitionAbstract> nrClass = (Class<NormRecognitionAbstract>) Class
@@ -276,7 +289,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Norm Adoption class name
 	 * @return none
 	 */
-	private void setNormAdoption(String normAdoptionClass) {
+	protected void setNormAdoption(String normAdoptionClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormAdoptionAbstract> naClass = (Class<NormAdoptionAbstract>) Class
@@ -309,7 +322,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Norm Salience class name
 	 * @return none
 	 */
-	private void setNormSalience(String normSalienceClass) {
+	protected void setNormSalience(String normSalienceClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormSalienceAbstract> nsClass = (Class<NormSalienceAbstract>) Class
@@ -342,7 +355,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Norm Enforcement class name
 	 * @return none
 	 */
-	private void setNormEnforcement(String normEnforcementClass) {
+	protected void setNormEnforcement(String normEnforcementClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormEnforcementAbstract> neClass = (Class<NormEnforcementAbstract>) Class
@@ -374,7 +387,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Norm Compliance class name
 	 * @return none
 	 */
-	private void setNormCompliance(String normComplianceClass) {
+	protected void setNormCompliance(String normComplianceClass) {
 		try {
 			@SuppressWarnings("unchecked")
 			Class<NormComplianceAbstract> ncClass = (Class<NormComplianceAbstract>) Class
@@ -411,32 +424,53 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	
 	@Override
-	public Double getNormativeDrive(Integer normId) {
+	public void update() {
+		for(NormEntityAbstract norm : this.normativeBoard.getNorms()) {
+			this.normSalience.updateSalience(norm.getId());
+		}
+		this.normEnforcement.update();
+	}
+	
+	
+	@Override
+	public Double getNormSalience(Integer normId) {
 		return this.normCompliance.getNormativeDrive(normId);
+	}
+	
+	
+	@Override
+	public NormEntityAbstract getNorm(Integer normId) {
+		NormEntityAbstract norm = null;
+		
+		if (this.normativeBoard.hasNorm(normId)) {
+			norm = this.normativeBoard.getNorm(normId);
+		}
+		
+		return norm;
 	}
 	
 	
 	@Override
 	public void addNormsSanctions(
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions) {
+		this.normativeBoard.addNormsSanctions(normsSanctions);
+	}
+	
+	
+	@Override
+	public Map<NormEntityAbstract, List<SanctionEntityAbstract>> getNormsSanctions() {
 		
-		List<SanctionEntityAbstract> sanctions;
-		Integer normId;
-		Integer sanctionId;
-		for(NormEntityAbstract norm : normsSanctions.keySet()) {
-			normId = norm.getId();
-			if (!this.normativeBoard.hasNorm(normId)) {
-				sanctions = normsSanctions.get(norm);
-				this.normativeBoard.setNorm(norm);
-				for(SanctionEntityAbstract sanction : sanctions) {
-					sanctionId = sanction.getId();
-					if (!this.normativeBoard.hasSanction(sanctionId)) {
-						this.normativeBoard.setSanction(sanction);
-					}
-					this.normativeBoard.setNormSanction(normId, sanctionId);
-				}
-			}
-		}
+		Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = this.normativeBoard
+				.getNormsSanctions();
+		
+		return normsSanctions;
+	}
+	
+	
+	@Override
+	public void updateNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions) {
+		this.updateNormsSanctions(normsSanctions);
 	}
 	
 	

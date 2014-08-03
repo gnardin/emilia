@@ -53,13 +53,25 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	
 	@Override
+	public List<NormEntityAbstract> getNorms() {
+		List<NormEntityAbstract> normList = new ArrayList<NormEntityAbstract>();
+		
+		if (!this.norms.isEmpty()) {
+			normList.addAll(this.norms.values());
+		}
+		
+		return normList;
+	}
+	
+	
+	@Override
 	public void setNorm(NormEntityAbstract norm) {
 		Integer normId = norm.getId();
 		
 		NormEntityAbstract oldNorm;
 		// Update a norm
 		if (this.norms.containsKey(normId)) {
-			oldNorm = this.norms.replace(normId, norm);
+			oldNorm = this.norms.put(normId, norm);
 			
 			this.processNormativeEvent(NormativeBoardEventType.UPDATE_NORM, oldNorm,
 					norm);
@@ -139,16 +151,20 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	
 	@Override
-	public void setSanction(SanctionEntityAbstract sanction) {
-		Integer sanctionId = sanction.getId();
+	public List<SanctionEntityAbstract> getSanctions() {
+		List<SanctionEntityAbstract> sanctionList = new ArrayList<SanctionEntityAbstract>();
 		
-		// Update a sanction
-		if (this.sanctions.containsKey(sanctionId)) {
-			this.sanctions.replace(sanctionId, sanction);
-			// Insert a sanction
-		} else {
-			this.sanctions.put(sanctionId, sanction);
+		if (!this.sanctions.isEmpty()) {
+			sanctionList.addAll(this.sanctions.values());
 		}
+		
+		return sanctionList;
+	}
+	
+	
+	@Override
+	public void setSanction(SanctionEntityAbstract sanction) {
+		this.sanctions.put(sanction.getId(), sanction);
 	}
 	
 	
@@ -163,7 +179,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 				
 				if (sanctions.contains(sanctionId)) {
 					sanctions.remove(sanctionId);
-					this.normSanctions.replace(normId, sanctions);
+					this.normSanctions.put(normId, sanctions);
 				}
 			}
 		}
@@ -209,7 +225,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 			if (!sanctions.contains(sanctionId)) {
 				sanctions.add(sanctionId);
 			}
-			this.normSanctions.replace(normId, sanctions);
+			this.normSanctions.put(normId, sanctions);
 		} else {
 			sanctions = new ArrayList<Integer>();
 			sanctions.add(sanctionId);
@@ -226,7 +242,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 			if (sanctions.contains(sanctionId)) {
 				sanctions.remove(sanctionId);
 			}
-			this.normSanctions.replace(normId, sanctions);
+			this.normSanctions.put(normId, sanctions);
 		}
 	}
 	
@@ -255,6 +271,70 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		}
 		
 		return sanctions;
+	}
+	
+	
+	@Override
+	public void addNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions) {
+		
+		List<SanctionEntityAbstract> sanctions;
+		Integer normId;
+		Integer sanctionId;
+		for(NormEntityAbstract norm : normsSanctions.keySet()) {
+			normId = norm.getId();
+			if (!this.hasNorm(normId)) {
+				sanctions = normsSanctions.get(norm);
+				this.setNorm(norm);
+				for(SanctionEntityAbstract sanction : sanctions) {
+					sanctionId = sanction.getId();
+					if (!this.hasSanction(sanctionId)) {
+						this.setSanction(sanction);
+					}
+					this.setNormSanction(normId, sanctionId);
+				}
+			}
+		}
+	}
+	
+	
+	@Override
+	public Map<NormEntityAbstract, List<SanctionEntityAbstract>> getNormsSanctions() {
+		Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
+		
+		List<SanctionEntityAbstract> sanctions;
+		for(NormEntityAbstract norm : this.getNorms()) {
+			sanctions = new ArrayList<SanctionEntityAbstract>();
+			for(Integer sanctionId : this.getNormSanctions(norm.getId())) {
+				sanctions.add(this.getSanction(sanctionId));
+			}
+			
+			normsSanctions.put(norm, sanctions);
+		}
+		
+		return normsSanctions;
+	}
+	
+	
+	@Override
+	public void updateNormsSanctions(
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions) {
+		
+		Integer normId;
+		Integer sanctionId;
+		for(NormEntityAbstract norm : normsSanctions.keySet()) {
+			this.setNorm(norm);
+			normId = norm.getId();
+			
+			for(SanctionEntityAbstract sanction : normsSanctions.get(norm)) {
+				this.setSanction(sanction);
+				sanctionId = sanction.getId();
+				
+				if (!this.getNormSanctions(normId).contains(sanctionId)) {
+					this.setNormSanction(normId, sanctionId);
+				}
+			}
+		}
 	}
 	
 	
