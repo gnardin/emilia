@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<emilia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:noNamespaceSchemaLocation="emilia.xsd">
+
+	<eventClassifierClass>examples.ijcai11.modules.classifier.EventClassifier</eventClassifierClass>
+	<normRecognitionClass>examples.ijcai11.modules.recognition.NormRecognitionController</normRecognitionClass>
+	<normAdoptionClass>examples.ijcai11.modules.adoption.NormAdoptionController</normAdoptionClass>
+	<normSalienceClass>examples.ijcai11.modules.salience.NormSalienceController</normSalienceClass>
+	<normEnforcementClass>examples.ijcai11.modules.enforcement.NormEnforcementController</normEnforcementClass>
+	<normComplianceClass>examples.ijcai11.modules.compliance.NormComplianceController</normComplianceClass>
+	<normativeBoardClass>examples.ijcai11.board.NormativeBoard</normativeBoardClass>
+</emilia>
