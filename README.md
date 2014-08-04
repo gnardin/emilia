@@ -1,7 +1,7 @@
 Extended EMIL-A
 ===============
 
-Instructions in Linux to download and run the test examples created to validate each component of the architecture
+(Linux) Instructions to download and run the tests created to validate each EMIL-A Normative Architecture's component (Norm Recognition, Norm Adoption, Norm Salience, Norm Enforcement, and Norm Compliance)
 
 1. Software Requisites
   Git
@@ -20,3 +20,19 @@ $ mvn compile
 4. Test it
 
 $ mvn test
+
+
+Examples
+========
+
+Public-Goods Game (pgg)
+-----------------------
+Implements a simple Public-Goods Game in which the individuals that do not contribute to the common poll can be sanctioned by those that contributed. The selection between different types of sanctions is done randomly.
+
+
+
+Prisoner Dilemma Game with Sanction (ijcai11)
+---------------------------------------------
+Reproduces the scenarios described in the paper
+
+Villatoro, D.; Andrighetto, G.; Sabater-Mir, J.; Conte, R. (2011_ Dynamic Sanctioning for Robust and Cost-Efficient Norm Compliance. In Proceedings of the Twenty-Second Internation Joint Conference on Artificial Intelligence (IJCAI 2011).
