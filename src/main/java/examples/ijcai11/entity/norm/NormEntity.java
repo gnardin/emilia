@@ -1,9 +1,9 @@
 package examples.ijcai11.entity.norm;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import emilia.entity.norm.NormContentInterface;
 import emilia.entity.norm.NormEntityAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormEntity extends NormEntityAbstract {
 	

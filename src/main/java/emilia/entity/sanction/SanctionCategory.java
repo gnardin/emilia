@@ -1,35 +1,37 @@
 package emilia.entity.sanction;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 public class SanctionCategory {
+	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(SanctionCategory.class);
 	
 	// Source types
 	public enum Source {
-		FORMAL,
-		INFORMAL;
+		FORMAL, INFORMAL;
 	}
 	
 	// Locus types
 	public enum Locus {
-		SELF_DIRECTED,
-		OTHER_DIRECTED;
+		SELF_DIRECTED, OTHER_DIRECTED;
 	}
 	
 	// Mode types
 	public enum Mode {
-		DIRECT,
-		INDIRECT;
+		DIRECT, INDIRECT;
 	}
 	
 	// Polarity types
 	public enum Polarity {
-		POSITIVE,
-		NEGATIVE;
+		POSITIVE, NEGATIVE;
 	}
 	
 	// Discernibility types
 	public enum Discernibility {
-		OBSTRUSIVE,
-		UNOBSTRUSIVE;
+		OBSTRUSIVE, UNOBSTRUSIVE;
 	}
 	
 	// Source type
@@ -137,19 +139,19 @@ public class SanctionCategory {
 	public Integer getCategory() {
 		Integer category = source.ordinal() - 1;
 		
-		if ((locus.ordinal() - 1) > 0) {
+		if((locus.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 1);
 		}
 		
-		if ((mode.ordinal() - 1) > 0) {
+		if((mode.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 2);
 		}
 		
-		if ((polarity.ordinal() - 1) > 0) {
+		if((polarity.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 3);
 		}
 		
-		if ((discernibility.ordinal() - 1) > 0) {
+		if((discernibility.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 4);
 		}
 		
@@ -161,10 +163,10 @@ public class SanctionCategory {
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if (this == obj)
+		if(this == obj)
 			return true;
 		
-		if ((obj != null) && (this.getClass() == obj.getClass())) {
+		if((obj != null) && (this.getClass() == obj.getClass())) {
 			SanctionCategory other = (SanctionCategory) obj;
 			
 			result = ((this.source.equals(other.source))

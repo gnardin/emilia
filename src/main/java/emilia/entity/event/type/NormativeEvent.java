@@ -2,11 +2,17 @@ package emilia.entity.event.type;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormativeEvent extends NormativeEventEntityAbstract {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormativeEvent.class);
+	
 	// Norm identification
-	protected Integer	normId;
+	protected Integer						normId;
 	
 	
 	/**

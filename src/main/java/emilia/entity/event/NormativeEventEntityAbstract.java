@@ -2,8 +2,14 @@ package emilia.entity.event;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class NormativeEventEntityAbstract {
+	
+	@SuppressWarnings("unused")
+	private static final Logger		logger	= LoggerFactory
+																						.getLogger(NormativeEventEntityAbstract.class);
 	
 	// Time in milliseconds
 	protected Long								time;
@@ -167,7 +173,7 @@ public abstract class NormativeEventEntityAbstract {
 	public Object getContextAttribute(String attr) {
 		Object result = null;
 		
-		if (this.contextAttrs.containsKey(attr)) {
+		if(this.contextAttrs.containsKey(attr)) {
 			result = this.contextAttrs.get(attr);
 		}
 		

@@ -1,9 +1,9 @@
 package examples.pgg.modules.compliance;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.compliance.NormComplianceAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormComplianceController extends NormComplianceAbstract {
 	
@@ -35,7 +35,7 @@ public class NormComplianceController extends NormComplianceAbstract {
 	 */
 	@Override
 	public Double getNormativeDrive(Integer normId) {
-		if (this.normativeBoard.hasNorm(normId)) {
+		if(this.normativeBoard.hasNorm(normId)) {
 			return this.normativeBoard.getSalience(normId);
 		}
 		

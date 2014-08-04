@@ -1,28 +1,28 @@
 package examples.ijcai11;
 
-import cern.jet.random.Uniform;
-import cern.jet.random.engine.MersenneTwister;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.entity.sanction.SanctionCategory;
-import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionCategory.Discernibility;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
 import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import examples.ijcai11.entity.action.CooperateAction;
 import examples.ijcai11.entity.action.DefectAction;
 import examples.ijcai11.entity.norm.NormContent;
 import examples.ijcai11.entity.norm.NormEntity;
 import examples.ijcai11.entity.sanction.SanctionContent;
-import examples.ijcai11.entity.sanction.SanctionEntity;
 import examples.ijcai11.entity.sanction.SanctionContent.Sanction;
+import examples.ijcai11.entity.sanction.SanctionEntity;
 import examples.ijcai11.network.LatticeGraphGenerator;
+import cern.jet.random.Uniform;
+import cern.jet.random.engine.MersenneTwister;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -41,9 +41,7 @@ public class PDGSim {
 	private static final Logger	logger	= LoggerFactory.getLogger(PDGSim.class);
 	
 	public enum Network {
-		COMPLETE,
-		LATTICE,
-		SCALE_FREE
+		COMPLETE, LATTICE, SCALE_FREE
 	};
 	
 	// Constants
@@ -137,7 +135,7 @@ public class PDGSim {
 			
 			// TODO
 			// Which agent to activate
-			if (this.rnd.nextDouble() < 0.5) {
+			if(this.rnd.nextDouble() < 0.5) {
 				normStatus = NormStatus.BELIEF;
 			} else {
 				normStatus = NormStatus.GOAL;
@@ -217,17 +215,17 @@ public class PDGSim {
 			source = (Integer) v;
 			for(DefaultEdge e : this.mGraph.edgesOf(v)) {
 				target = (Integer) this.mGraph.getEdgeSource(e);
-				if (target == source) {
+				if(target == source) {
 					target = (Integer) this.mGraph.getEdgeTarget(e);
 				}
 				
-				if (this.neighbors.containsKey(source)) {
+				if(this.neighbors.containsKey(source)) {
 					neighbor = this.neighbors.get(source);
 				} else {
 					neighbor = new ArrayList<Integer>();
 				}
 				
-				if (!neighbor.contains(target)) {
+				if(!neighbor.contains(target)) {
 					neighbor.add(target);
 				}
 				
@@ -284,7 +282,7 @@ public class PDGSim {
 			for(Object v : this.mGraph.vertexSet()) {
 				source = (Integer) v;
 				
-				if ((!paired.containsKey(source)) && (!paired.containsValue(source))) {
+				if((!paired.containsKey(source)) && (!paired.containsValue(source))) {
 					found = false;
 					neighbors = ni.neighborListOf(v);
 					neighbor = new ArrayList<Integer>();
@@ -292,13 +290,12 @@ public class PDGSim {
 						index = this.rnd.nextIntFromTo(0, neighbors.size() - 1);
 						target = (Integer) neighbors.get(index);
 						
-						if ((!paired.containsKey(target))
-								&& (!paired.containsValue(target))) {
+						if((!paired.containsKey(target)) && (!paired.containsValue(target))) {
 							paired.put(source, target);
 							found = true;
 						}
 						
-						if (!neighbor.contains(target)) {
+						if(!neighbor.contains(target)) {
 							neighbor.add(target);
 						}
 					}
@@ -327,7 +324,7 @@ public class PDGSim {
 				neighbors = ni.neighborListOf(i);
 				nActions = new HashMap<Integer, ActionAbstract>();
 				for(Object n : neighbors) {
-					if (actions.containsKey((Integer) n)) {
+					if(actions.containsKey((Integer) n)) {
 						nActions.put((Integer) n, actions.get((Integer) n));
 					}
 				}

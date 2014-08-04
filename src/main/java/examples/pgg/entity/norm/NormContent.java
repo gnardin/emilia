@@ -1,9 +1,9 @@
 package examples.pgg.entity.norm;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormContentInterface;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormContent implements NormContentInterface {
 	
@@ -59,8 +59,8 @@ public class NormContent implements NormContentInterface {
 	public Boolean match(Object value) {
 		Boolean result = false;
 		
-		if (value instanceof String) {
-			if ((this.action.getDescription().equalsIgnoreCase((String) value))
+		if(value instanceof String) {
+			if((this.action.getDescription().equalsIgnoreCase((String) value))
 					|| (this.notAction.getDescription().equalsIgnoreCase((String) value))) {
 				return true;
 			}

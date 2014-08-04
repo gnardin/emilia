@@ -62,7 +62,7 @@ public class EmiliaConfParser {
 	public EmiliaConf getConf(String xmlFilename, String xsdFilename) {
 		EmiliaConf conf = new EmiliaConf();
 		
-		if (isValid(xmlFilename, xsdFilename)) {
+		if(isValid(xmlFilename, xsdFilename)) {
 			try {
 				// First create a new XMLInputFactory
 				XMLInputFactory inputFactory = XMLInputFactory.newInstance();
@@ -77,11 +77,11 @@ public class EmiliaConfParser {
 				while(eventReader.hasNext()) {
 					event = eventReader.nextEvent();
 					
-					if (event.isStartElement()) {
+					if(event.isStartElement()) {
 						startElement = event.asStartElement();
 						
 						// Set eventClassifierClass
-						if (startElement.getName().getLocalPart()
+						if(startElement.getName().getLocalPart()
 								.equals(Param.EVENT_CLASSIFIER_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.EVENT_CLASSIFIER_CLASS, event.asCharacters()
@@ -89,7 +89,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normRecognitionClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORM_RECOGNITION_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_RECOGNITION_CLASS, event.asCharacters()
@@ -97,7 +97,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normAdoptionClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORM_ADOPTION_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_ADOPTION_CLASS, event.asCharacters()
@@ -105,7 +105,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normSalienceClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORM_SALIENCE_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_SALIENCE_CLASS, event.asCharacters()
@@ -113,7 +113,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normEnforcementClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORM_ENFORCEMENT_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_ENFORCEMENT_CLASS, event.asCharacters()
@@ -121,7 +121,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normComplianceClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORM_COMPLIANCE_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORM_COMPLIANCE_CLASS, event.asCharacters()
@@ -129,7 +129,7 @@ public class EmiliaConfParser {
 							continue;
 							
 							// Set normativeBoardClass
-						} else if (startElement.getName().getLocalPart()
+						} else if(startElement.getName().getLocalPart()
 								.equals(Param.NORMATIVE_BOARD_CLASS.getName())) {
 							event = eventReader.nextEvent();
 							conf.setValue(Param.NORMATIVE_BOARD_CLASS, event.asCharacters()
@@ -170,7 +170,7 @@ public class EmiliaConfParser {
 	private Boolean isValid(String xmlFilename, String xsdFilename) {
 		Boolean result = false;
 		
-		if ((new File(xmlFilename)).exists() && ((new File(xsdFilename).exists()))) {
+		if((new File(xmlFilename)).exists() && ((new File(xsdFilename).exists()))) {
 			try {
 				Source xmlFile = new StreamSource(new File(xmlFilename));
 				

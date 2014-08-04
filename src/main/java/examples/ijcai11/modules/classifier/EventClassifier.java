@@ -19,7 +19,7 @@ public class EventClassifier extends EventClassifierAbstract {
 	
 	@Override
 	public NormativeEventEntityAbstract classify(Object event) {
-		if (event instanceof NormativeEventEntityAbstract) {
+		if(event instanceof NormativeEventEntityAbstract) {
 			return (NormativeEventEntityAbstract) event;
 		} else {
 			return null;

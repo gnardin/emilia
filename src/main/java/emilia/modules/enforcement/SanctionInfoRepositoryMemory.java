@@ -2,9 +2,15 @@ package emilia.modules.enforcement;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class SanctionInfoRepositoryMemory implements
 		SanctionInfoRepositoryInterface {
+	
+	@SuppressWarnings("unused")
+	private static final Logger																			logger	= LoggerFactory
+																																							.getLogger(SanctionInfoRepositoryMemory.class);
 	
 	// Norm information repository <NormId, NormEvaluation>
 	private Map<Integer, NormInfoEntityInterface>										normInfoRep;
@@ -35,7 +41,7 @@ public class SanctionInfoRepositoryMemory implements
 	public NormInfoEntityInterface getNormInfo(Integer normId) {
 		NormInfoEntityInterface normInfo = null;
 		
-		if (this.normInfoRep.containsKey(normId)) {
+		if(this.normInfoRep.containsKey(normId)) {
 			normInfo = this.normInfoRep.get(normId);
 		}
 		
@@ -60,11 +66,11 @@ public class SanctionInfoRepositoryMemory implements
 			Integer sanctionId) {
 		
 		SanctionInfoEntityInterface sanctionEval = null;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			Map<Integer, SanctionInfoEntityInterface> sanctionInfo = this.sanctionInfoRep
 					.get(normId);
 			
-			if (sanctionInfo.containsKey(sanctionId)) {
+			if(sanctionInfo.containsKey(sanctionId)) {
 				sanctionEval = sanctionInfo.get(sanctionId);
 			}
 		}
@@ -78,7 +84,7 @@ public class SanctionInfoRepositoryMemory implements
 			Integer normId) {
 		
 		Map<Integer, SanctionInfoEntityInterface> sanctionInfo = null;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		}
 		
@@ -91,7 +97,7 @@ public class SanctionInfoRepositoryMemory implements
 			SanctionInfoEntityInterface evaluation) {
 		
 		Map<Integer, SanctionInfoEntityInterface> sanctionInfo;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		} else {
 			sanctionInfo = new HashMap<Integer, SanctionInfoEntityInterface>();

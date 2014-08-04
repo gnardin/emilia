@@ -417,7 +417,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public void input(Object event) {
 		NormativeEventEntityAbstract normativeEvent = this.eventClassifier
 				.classify(event);
-		if (normativeEvent != null) {
+		if(normativeEvent != null) {
 			this.normRecognition.matchEvent(normativeEvent);
 		}
 	}
@@ -442,7 +442,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public NormEntityAbstract getNorm(Integer normId) {
 		NormEntityAbstract norm = null;
 		
-		if (this.normativeBoard.hasNorm(normId)) {
+		if(this.normativeBoard.hasNorm(normId)) {
 			norm = this.normativeBoard.getNorm(normId);
 		}
 		

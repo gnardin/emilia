@@ -3,11 +3,17 @@ package emilia.entity.event.type;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class ActionEvent extends NormativeEventEntityAbstract {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(ActionEvent.class);
+	
 	// Action performed
-	protected ActionAbstract	action;
+	protected ActionAbstract		action;
 	
 	
 	/**

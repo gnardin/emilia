@@ -1,14 +1,19 @@
 package emilia.entity.sanction;
 
 import emilia.entity.EntityAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class SanctionEntityAbstract extends EntityAbstract implements
 		Cloneable {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(SanctionEntityAbstract.class);
+	
 	// Sanction status
 	public enum SanctionStatus {
-		ACTIVE,
-		INACTIVE;
+		ACTIVE, INACTIVE;
 	}
 	
 	// Sanction identification
@@ -120,11 +125,11 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if (this == obj) {
+		if(this == obj) {
 			result = true;
-		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+		} else if((obj != null) && (obj.getClass() == this.getClass())) {
 			SanctionEntityAbstract sanction = (SanctionEntityAbstract) obj;
-			if (this.getId().intValue() == sanction.getId().intValue()) {
+			if(this.getId().intValue() == sanction.getId().intValue()) {
 				result = true;
 			}
 		}

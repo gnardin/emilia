@@ -1,11 +1,5 @@
 package emilia;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
 import emilia.entity.event.type.ActionEvent;
@@ -14,12 +8,12 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.entity.sanction.SanctionCategory;
-import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionCategory.Discernibility;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
 import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import emilia.modules.EventListener;
 import emilia.modules.enforcement.NormEnforcementListener;
@@ -28,9 +22,15 @@ import examples.pgg.entity.action.DefectAction;
 import examples.pgg.entity.norm.NormContent;
 import examples.pgg.entity.norm.NormEntity;
 import examples.pgg.entity.sanction.SanctionContent;
-import examples.pgg.entity.sanction.SanctionEntity;
 import examples.pgg.entity.sanction.SanctionContent.Sanction;
+import examples.pgg.entity.sanction.SanctionEntity;
 import examples.pgg.modules.enforcement.NormEnforcementController;
+import java.util.ArrayList;
+import java.util.Arrays;
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 import org.junit.Before;
 import org.junit.Test;
 
@@ -115,7 +115,7 @@ class EventHandler implements EventListener, NormEnforcementListener {
 	public void receive(NormativeEventEntityAbstract entity,
 			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		
-		if (sanction.getContent() instanceof SanctionContent) {
+		if(sanction.getContent() instanceof SanctionContent) {
 			SanctionContent sanctionContent = (SanctionContent) sanction.getContent();
 			
 			System.out.println("EMILIA Controller receive "

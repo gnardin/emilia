@@ -2,8 +2,14 @@ package emilia.modules.salience;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormInfoEntity {
+	
+	@SuppressWarnings("unused")
+	private static final Logger			logger	= LoggerFactory
+																							.getLogger(NormInfoEntity.class);
 	
 	// <Type, Quantity>
 	private Map<DataType, Integer>	normInfo;
@@ -34,7 +40,7 @@ public class NormInfoEntity {
 	 * @return none
 	 */
 	public void increment(DataType dataType, Integer increment) {
-		if (this.normInfo.containsKey(dataType)) {
+		if(this.normInfo.containsKey(dataType)) {
 			this.normInfo.put(dataType, this.normInfo.get(dataType) + increment);
 		} else {
 			this.normInfo.put(dataType, 1);
@@ -52,7 +58,7 @@ public class NormInfoEntity {
 	public Integer getNumber(DataType dataType) {
 		Integer result = 0;
 		
-		if (this.normInfo.containsKey(dataType)) {
+		if(this.normInfo.containsKey(dataType)) {
 			result = this.normInfo.get(dataType);
 		}
 		
@@ -70,7 +76,7 @@ public class NormInfoEntity {
 	 * @return none
 	 */
 	public void setNumber(DataType dataType, Integer number) {
-		if (number < 0) {
+		if(number < 0) {
 			number = 0;
 		}
 		this.normInfo.put(dataType, number);

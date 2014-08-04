@@ -10,13 +10,10 @@ public class EmiliaConf {
 	
 	// Configuration Parameters
 	public enum Param {
-		EVENT_CLASSIFIER_CLASS("eventClassifierClass"),
-		NORM_RECOGNITION_CLASS("normRecognitionClass"),
-		NORM_ADOPTION_CLASS("normAdoptionClass"),
-		NORM_SALIENCE_CLASS("normSalienceClass"),
-		NORM_ENFORCEMENT_CLASS("normEnforcementClass"),
-		NORM_COMPLIANCE_CLASS("normComplianceClass"),
-		NORMATIVE_BOARD_CLASS("normativeBoardClass");
+		EVENT_CLASSIFIER_CLASS("eventClassifierClass"), NORM_RECOGNITION_CLASS(
+				"normRecognitionClass"), NORM_ADOPTION_CLASS("normAdoptionClass"), NORM_SALIENCE_CLASS(
+				"normSalienceClass"), NORM_ENFORCEMENT_CLASS("normEnforcementClass"), NORM_COMPLIANCE_CLASS(
+				"normComplianceClass"), NORMATIVE_BOARD_CLASS("normativeBoardClass");
 		
 		private String	name;
 		
@@ -70,7 +67,7 @@ public class EmiliaConf {
 	 * @return String parameter value
 	 */
 	public String getStrValue(Param param) {
-		if (this.paramValues[param.ordinal()] instanceof String) {
+		if(this.paramValues[param.ordinal()] instanceof String) {
 			return (String) this.paramValues[param.ordinal()];
 		}
 		
@@ -86,7 +83,7 @@ public class EmiliaConf {
 	 * @return Integer parameter value
 	 */
 	public Integer getIntValue(Param param) {
-		if (this.paramValues[param.ordinal()] instanceof Integer) {
+		if(this.paramValues[param.ordinal()] instanceof Integer) {
 			return (Integer) this.paramValues[param.ordinal()];
 		}
 		
@@ -102,7 +99,7 @@ public class EmiliaConf {
 	 * @return Double parameter value
 	 */
 	public Double getDoubleValue(Param param) {
-		if (this.paramValues[param.ordinal()] instanceof Double) {
+		if(this.paramValues[param.ordinal()] instanceof Double) {
 			return (Double) this.paramValues[param.ordinal()];
 		}
 		
@@ -123,11 +120,11 @@ public class EmiliaConf {
 		this.paramValues[param.ordinal()] = value;
 		
 		String strValue = "";
-		if (value instanceof Integer) {
+		if(value instanceof Integer) {
 			strValue = ((Integer) value).toString();
-		} else if (value instanceof Double) {
+		} else if(value instanceof Double) {
 			strValue = ((Double) value).toString();
-		} else if (value instanceof String) {
+		} else if(value instanceof String) {
 			strValue = (String) value;
 		}
 		logger.debug("[" + param.getName() + "] = [" + strValue + "]");

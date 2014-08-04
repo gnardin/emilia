@@ -2,8 +2,14 @@ package emilia.modules.salience;
 
 import java.util.HashMap;
 import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
+	
+	@SuppressWarnings("unused")
+	private static final Logger						logger	= LoggerFactory
+																										.getLogger(NormInfoRepositoryMemory.class);
 	
 	// <NormId, Normative Information>
 	private Map<Integer, NormInfoEntity>	normativeInfoRep;
@@ -24,7 +30,7 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	public Integer getNormInfo(Integer normId, DataType dataType) {
 		Integer result = 0;
 		
-		if (this.normativeInfoRep.containsKey(normId)) {
+		if(this.normativeInfoRep.containsKey(normId)) {
 			NormInfoEntity normInfoEntity = this.normativeInfoRep.get(normId);
 			result = normInfoEntity.getNumber(dataType);
 		}
@@ -37,7 +43,7 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	public void increment(Integer normId, DataType dataType) {
 		
 		NormInfoEntity normInfoEntity;
-		if (this.normativeInfoRep.containsKey(normId)) {
+		if(this.normativeInfoRep.containsKey(normId)) {
 			normInfoEntity = this.normativeInfoRep.get(normId);
 		} else {
 			normInfoEntity = new NormInfoEntity();

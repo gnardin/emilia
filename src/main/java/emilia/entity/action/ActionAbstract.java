@@ -1,17 +1,23 @@
 package emilia.entity.action;
 
 import java.util.List;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class ActionAbstract {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(ActionAbstract.class);
+	
 	// Action identification
-	protected Integer				id;
+	protected Integer						id;
 	
 	// Action description
-	protected String				description;
+	protected String						description;
 	
 	// Action parameters
-	protected List<Object>	params;
+	protected List<Object>			params;
 	
 	
 	/**
@@ -91,7 +97,7 @@ public abstract class ActionAbstract {
 	public Object getParam(Integer index) {
 		Object param = null;
 		
-		if ((this.params != null) && (index < this.params.size())) {
+		if((this.params != null) && (index < this.params.size())) {
 			param = this.params.get(index);
 		}
 		
@@ -109,7 +115,7 @@ public abstract class ActionAbstract {
 	 * @return none
 	 */
 	public void setParam(Integer index, Object param) {
-		if ((this.params != null) && (index < this.params.size())) {
+		if((this.params != null) && (index < this.params.size())) {
 			this.params.set(index, param);
 		}
 	}
@@ -119,11 +125,11 @@ public abstract class ActionAbstract {
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if (this == obj) {
+		if(this == obj) {
 			result = true;
-		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+		} else if((obj != null) && (obj.getClass() == this.getClass())) {
 			ActionAbstract action = (ActionAbstract) obj;
-			if (this.getId().intValue() == action.getId().intValue()) {
+			if(this.getId().intValue() == action.getId().intValue()) {
 				result = true;
 			}
 		}

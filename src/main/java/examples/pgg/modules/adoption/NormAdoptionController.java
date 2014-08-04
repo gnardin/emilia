@@ -35,7 +35,7 @@ public class NormAdoptionController extends NormAdoptionAbstract {
 		
 		String str = new String();
 		
-		if ((newNorm != null) && (newNorm.getStatus() != NormStatus.GOAL)) {
+		if((newNorm != null) && (newNorm.getStatus() != NormStatus.GOAL)) {
 			
 			str = type.name() + " " + newNorm.getContent().toString() + " "
 					+ newNorm.getStatus().name();

@@ -1,13 +1,13 @@
 package examples.ijcai11.network;
 
+import java.util.ArrayList;
+import java.util.List;
+import java.util.Map;
 import org.jgrapht.Graph;
 import org.jgrapht.VertexFactory;
 import org.jgrapht.generate.GraphGenerator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
 
 public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
 	
@@ -32,11 +32,11 @@ public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
 	 */
 	public LatticeGraphGenerator(int numAgents, int numNeighbors) {
 		
-		if (numAgents < 0) {
+		if(numAgents < 0) {
 			throw new IllegalArgumentException(
 					"Network must contain positive number of nodes.");
 		}
-		if ((numNeighbors % 2) != 0) {
+		if((numNeighbors % 2) != 0) {
 			throw new IllegalArgumentException("All nodes must have an even degree.");
 		}
 		

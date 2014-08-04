@@ -10,8 +10,7 @@ public abstract class DeviationAbstract {
 																					.getLogger(DeviationAbstract.class);
 	
 	public enum Type {
-		COMPLIANCE,
-		VIOLATION;
+		COMPLIANCE, VIOLATION;
 	}
 	
 	// Deviation type

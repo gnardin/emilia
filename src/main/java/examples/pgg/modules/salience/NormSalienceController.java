@@ -1,11 +1,11 @@
 package examples.pgg.modules.salience;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardInterface;
 import emilia.modules.salience.DataType;
 import emilia.modules.salience.NormInfoRepositoryMemory;
 import emilia.modules.salience.NormSalienceAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public class NormSalienceController extends NormSalienceAbstract {
 	
@@ -15,12 +15,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 	
 	// Weight values
 	public enum Weight {
-		WC(0.99),
-		WO(0.33),
-		WNPV(-0.66),
-		WP(0.33),
-		WS(0.99),
-		WE(0.99);
+		WC(0.99), WO(0.33), WNPV(-0.66), WP(0.33), WS(0.99), WE(0.99);
 		
 		private final Double	value;
 		
@@ -84,7 +79,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 		double denominator = 0;
 		
 		double own = 0;
-		if ((compliance + violation) > 0) {
+		if((compliance + violation) > 0) {
 			own = (double) (compliance - violation)
 					/ (double) (compliance + violation);
 			
@@ -93,7 +88,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 		}
 		
 		double obs = 0;
-		if ((obsCompliance + obsViolation) > 0) {
+		if((obsCompliance + obsViolation) > 0) {
 			obs = (double) (obsCompliance - obsViolation)
 					/ (double) (obsCompliance + obsViolation);
 			
@@ -102,7 +97,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 		}
 		
 		double npv = 0;
-		if ((obsViolation + violation) > 0) {
+		if((obsViolation + violation) > 0) {
 			npv = (double) Math.max(0, (obsViolation + violation) - punishment
 					- sanction)
 					/ (double) (obsViolation + violation);
@@ -113,15 +108,15 @@ public class NormSalienceController extends NormSalienceAbstract {
 		
 		double p = 0;
 		double s = 0;
-		if ((Math.max(punishment + sanction, obsViolation + violation)) > 0) {
+		if((Math.max(punishment + sanction, obsViolation + violation)) > 0) {
 			
-			if (punishment > 0) {
+			if(punishment > 0) {
 				p = (double) punishment
 						/ (double) (Math.max(punishment, obsViolation + violation));
 				denominator += 0.33;
 			}
 			
-			if (sanction > 0) {
+			if(sanction > 0) {
 				s = (double) sanction
 						/ (double) (Math.max(sanction, obsViolation + violation));
 				denominator += 0.99;
@@ -129,7 +124,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 		}
 		
 		double e = 0;
-		if ((normInvocationCompliance + normInvocationViolation) > 0) {
+		if((normInvocationCompliance + normInvocationViolation) > 0) {
 			e = (double) (normInvocationCompliance - normInvocationViolation)
 					/ (double) (normInvocationCompliance + normInvocationViolation);
 			
@@ -137,7 +132,7 @@ public class NormSalienceController extends NormSalienceAbstract {
 			denominator += 1.98;
 		}
 		
-		if (denominator > 0) {
+		if(denominator > 0) {
 			salience = (double) (nominator + ((own * Weight.WC.getValue())
 					+ (obs * Weight.WO.getValue()) + (npv * Weight.WNPV.getValue())
 					+ (p * Weight.WP.getValue()) + (s * Weight.WS.getValue()) + (e * Weight.WE

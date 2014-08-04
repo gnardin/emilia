@@ -1,8 +1,8 @@
 package examples.pgg.modules.enforcement;
 
+import emilia.modules.enforcement.DeviationAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import emilia.modules.enforcement.DeviationAbstract;
 
 public class ComplianceDeviation extends DeviationAbstract {
 	

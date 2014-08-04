@@ -63,14 +63,14 @@ public abstract class NormRecognitionAbstract {
 		List<EventListener> listener;
 		for(Boolean match : matches) {
 			
-			if (this.callbacks.containsKey(match)) {
+			if(this.callbacks.containsKey(match)) {
 				eventListeners = this.callbacks.get(match);
 			} else {
 				eventListeners = new HashMap<NormativeEventType, List<EventListener>>();
 			}
 			
 			for(NormativeEventType type : types) {
-				if (eventListeners.containsKey(type)) {
+				if(eventListeners.containsKey(type)) {
 					listener = eventListeners.get(type);
 				} else {
 					listener = new ArrayList<EventListener>();
@@ -108,10 +108,10 @@ public abstract class NormRecognitionAbstract {
 			eventListeners = this.callbacks.get(match);
 			
 			for(NormativeEventType type : types) {
-				if (eventListeners.containsKey(type)) {
+				if(eventListeners.containsKey(type)) {
 					listener = eventListeners.get(type);
 					
-					if (listener.contains(eventListener)) {
+					if(listener.contains(eventListener)) {
 						listener.remove(eventListener);
 						eventListeners.put(type, listener);
 						this.callbacks.put(match, eventListeners);
@@ -138,16 +138,16 @@ public abstract class NormRecognitionAbstract {
 		Boolean found = false;
 		
 		Boolean matches = false;
-		if ((normSanctions != null) && (normSanctions.size() > 0)) {
+		if((normSanctions != null) && (normSanctions.size() > 0)) {
 			matches = true;
 		}
 		
-		if (this.callbacks.containsKey(matches)) {
+		if(this.callbacks.containsKey(matches)) {
 			
 			Map<NormativeEventType, List<EventListener>> eventListeners = this.callbacks
 					.get(matches);
 			
-			if (eventListeners.containsKey(event.getType())) {
+			if(eventListeners.containsKey(event.getType())) {
 				List<EventListener> listener = eventListeners.get(event.getType());
 				
 				for(EventListener eventListener : listener) {
@@ -157,7 +157,7 @@ public abstract class NormRecognitionAbstract {
 			}
 		}
 		
-		if (!found) {
+		if(!found) {
 			logger.debug("EVENT NOT PROCESSED [" + event.toString() + "]");
 		}
 	}

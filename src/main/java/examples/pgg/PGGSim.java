@@ -1,27 +1,27 @@
 package examples.pgg;
 
-import cern.jet.random.Uniform;
-import cern.jet.random.engine.MersenneTwister;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.entity.sanction.SanctionCategory;
-import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionCategory.Discernibility;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
 import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import examples.pgg.entity.action.CooperateAction;
 import examples.pgg.entity.action.DefectAction;
 import examples.pgg.entity.norm.NormContent;
 import examples.pgg.entity.norm.NormEntity;
 import examples.pgg.entity.sanction.SanctionContent;
-import examples.pgg.entity.sanction.SanctionEntity;
 import examples.pgg.entity.sanction.SanctionContent.Sanction;
+import examples.pgg.entity.sanction.SanctionEntity;
+import cern.jet.random.Uniform;
+import cern.jet.random.engine.MersenneTwister;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
@@ -162,7 +162,7 @@ public class PGGSim {
 				agent = this.agents.get(i);
 				agent.init();
 				action = agent.decideAction();
-				if (action instanceof CooperateAction) {
+				if(action instanceof CooperateAction) {
 					payoff += contribution;
 				}
 				actions.put(i, action);
@@ -189,7 +189,7 @@ public class PGGSim {
 				punishment = agent.decidePunish();
 				
 				for(Integer punished : punishment.keySet()) {
-					if (punishments.containsKey(punished)) {
+					if(punishments.containsKey(punished)) {
 						punish = punishments.get(punished);
 					} else {
 						punish = new HashMap<Integer, SanctionEntityAbstract>();

@@ -1,8 +1,8 @@
 package examples.ijcai11.entity.sanction;
 
+import emilia.entity.sanction.SanctionContentInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import emilia.entity.sanction.SanctionContentInterface;
 
 public class SanctionContent implements SanctionContentInterface {
 	
@@ -11,9 +11,7 @@ public class SanctionContent implements SanctionContentInterface {
 																					.getLogger(SanctionContent.class);
 	
 	public enum Sanction {
-		MESSAGE,
-		PUNISHMENT,
-		SANCTION;
+		MESSAGE, PUNISHMENT, SANCTION;
 	}
 	
 	// Sanction action

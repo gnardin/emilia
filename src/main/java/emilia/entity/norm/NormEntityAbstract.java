@@ -1,24 +1,26 @@
 package emilia.entity.norm;
 
 import emilia.entity.EntityAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class NormEntityAbstract extends EntityAbstract implements
 		Cloneable {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(NormEntityAbstract.class);
+	
 	public enum NormType {
-		LEGAL,
-		SOCIAL;
+		LEGAL, SOCIAL;
 	}
 	
 	public enum NormSource {
-		AUTHORITY,
-		DISTRIBUTED;
+		AUTHORITY, DISTRIBUTED;
 	}
 	
 	public enum NormStatus {
-		INACTIVE,
-		BELIEF,
-		GOAL;
+		INACTIVE, BELIEF, GOAL;
 	}
 	
 	protected Integer								id;
@@ -176,11 +178,11 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if (this == obj) {
+		if(this == obj) {
 			result = true;
-		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+		} else if((obj != null) && (obj.getClass() == this.getClass())) {
 			NormEntityAbstract norm = (NormEntityAbstract) obj;
-			if (this.getId().intValue() == norm.getId().intValue()) {
+			if(this.getId().intValue() == norm.getId().intValue()) {
 				result = true;
 			}
 		}

@@ -1,11 +1,17 @@
 package emilia.modules.classifier;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 
 public abstract class EventClassifierAbstract {
 	
+	@SuppressWarnings("unused")
+	private static final Logger	logger	= LoggerFactory
+																					.getLogger(EventClassifierAbstract.class);
+	
 	// Agent identification
-	protected Integer	agentId;
+	protected Integer						agentId;
 	
 	
 	/**
