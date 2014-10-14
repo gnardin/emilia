@@ -1,23 +1,23 @@
 package emilia.entity.action;
 
-import java.util.List;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public abstract class ActionAbstract {
 	
 	@SuppressWarnings("unused")
-	private static final Logger	logger	= LoggerFactory
-																					.getLogger(ActionAbstract.class);
+	private static final Logger		logger	= LoggerFactory
+																						.getLogger(ActionAbstract.class);
 	
 	// Action identification
-	protected Integer						id;
+	protected Integer							id;
 	
 	// Action description
-	protected String						description;
+	protected String							description;
 	
 	// Action parameters
-	protected List<Object>			params;
+	protected Map<Object, Object>	params;
 	
 	
 	/**
@@ -47,7 +47,8 @@ public abstract class ActionAbstract {
 	 *          Action parameters
 	 * @return none
 	 */
-	public ActionAbstract(Integer id, String description, List<Object> params) {
+	public ActionAbstract(Integer id, String description,
+			Map<Object, Object> params) {
 		this.id = id;
 		this.description = description;
 		this.params = params;
@@ -82,7 +83,7 @@ public abstract class ActionAbstract {
 	 * @param none
 	 * @return Action parameters
 	 */
-	public List<Object> getParams() {
+	public Map<Object, Object> getParams() {
 		return this.params;
 	}
 	
@@ -91,13 +92,13 @@ public abstract class ActionAbstract {
 	 * Get a specific action parameter value
 	 * 
 	 * @param index
-	 *          Parameter index
+	 *          Parameter index. It can be a String or an Integer.
 	 * @return Parameter value
 	 */
-	public Object getParam(Integer index) {
+	public Object getParam(Object index) {
 		Object param = null;
 		
-		if((this.params != null) && (index < this.params.size())) {
+		if((this.params != null) && (index != null)) {
 			param = this.params.get(index);
 		}
 		
@@ -109,14 +110,14 @@ public abstract class ActionAbstract {
 	 * Set a specific action parameter value
 	 * 
 	 * @param index
-	 *          Parameter index
+	 *          Parameter index. It can be a String or an Integer.
 	 * @param param
 	 *          Parameter value
 	 * @return none
 	 */
-	public void setParam(Integer index, Object param) {
-		if((this.params != null) && (index < this.params.size())) {
-			this.params.set(index, param);
+	public void setParam(Object index, Object param) {
+		if((this.params != null) && (index != null)) {
+			this.params.put(index, param);
 		}
 	}
 	
@@ -142,5 +143,22 @@ public abstract class ActionAbstract {
 	public int hashCode() {
 		int hash = 217 + this.id;
 		return hash;
+	}
+	
+	
+	@Override
+	public String toString() {
+		String str = new String();
+		
+		if(this.params != null) {
+			Object value;
+			for(Object param : this.params.keySet()) {
+				value = this.params.get(param).toString();
+				
+				str += value.toString() + " ";
+			}
+		}
+		
+		return str;
 	}
 }

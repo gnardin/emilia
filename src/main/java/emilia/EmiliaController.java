@@ -3,8 +3,6 @@ package emilia;
 import emilia.board.NormativeBoardEventType;
 import emilia.board.NormativeBoardInterface;
 import emilia.conf.EmiliaConf;
-import emilia.conf.EmiliaConf.Param;
-import emilia.conf.EmiliaConfParser;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
 import emilia.entity.norm.NormEntityAbstract;
@@ -30,6 +28,10 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	private static final Logger				logger	= LoggerFactory
 																								.getLogger(EmiliaController.class);
+	
+	private String										xmlFilename;
+	
+	private String										xsdFilename;
 	
 	// Event Classifier module
 	protected EventClassifierAbstract	eventClassifier;
@@ -70,8 +72,8 @@ public class EmiliaController extends EmiliaAbstract implements
 			String xsdFilename) {
 		super(agentId);
 		
-		this.conf = EmiliaConfParser.getInstance()
-				.getConf(xmlFilename, xsdFilename);
+		this.xmlFilename = xmlFilename;
+		this.xsdFilename = xsdFilename;
 	}
 	
 	
@@ -79,109 +81,114 @@ public class EmiliaController extends EmiliaAbstract implements
 	 * Initialize the EMILIA controller
 	 * 
 	 * @param none
-	 * @return none
+	 * @return True if initialized successfully, False otherwise
 	 */
-	public void init() {
-		// Event Classifier
-		logger.debug("Initializing [EVENT CLASSIFIER]");
-		this.setEventClassifier((String) this.conf
-				.getStrValue(Param.EVENT_CLASSIFIER_CLASS));
-		logger.debug("Initialized [EVENT CLASSIFIER]");
+	public Boolean init() {
+		Boolean initialize = false;
 		
-		// Normative Board
-		logger.debug("Initializing [NORMATIVE BOARD]");
-		this.setNormativeBoard((String) this.conf
-				.getStrValue(Param.NORMATIVE_BOARD_CLASS));
-		logger.debug("Initialized [NORMATIVE BOARD]");
+		if(EmiliaConf.isValid(xmlFilename, xsdFilename)) {
+			this.conf = EmiliaConf.getConf(xmlFilename, xsdFilename);
+			// Event Classifier
+			logger.debug("Initializing [EVENT CLASSIFIER]");
+			this.setEventClassifier(this.conf.getEventClassifierClass());
+			logger.debug("Initialized [EVENT CLASSIFIER]");
+			
+			// Normative Board
+			logger.debug("Initializing [NORMATIVE BOARD]");
+			this.setNormativeBoard(this.conf.getNormativeBoardClass());
+			logger.debug("Initialized [NORMATIVE BOARD]");
+			
+			// Norm Recognition
+			logger.debug("Initializing [NORM RECOGNITION]");
+			this.setNormRecognition(this.conf.getNormRecognitionClass());
+			logger.debug("Initialized [NORM RECOGNITION]");
+			
+			// Norm Adoption
+			logger.debug("Initializing [NORM ADOPTION]");
+			this.setNormAdoption(this.conf.getNormAdoptionClass());
+			this.normativeBoard.registerCallback(
+					new ArrayList<NormativeBoardEventType>(Arrays.asList(
+							NormativeBoardEventType.INSERT_NORM,
+							NormativeBoardEventType.UPDATE_NORM,
+							NormativeBoardEventType.UPDATE_SALIENCE)), this.normAdoption);
+			logger.debug("Initialized [NORM ADOPTION]");
+			
+			// Norm Salience
+			logger.debug("Initializing [NORM SALIENCE]");
+			this.setNormSalience(this.conf.getNormSalienceClass());
+			this.normRecognition.registerCallback(
+					new ArrayList<Boolean>(Arrays.asList(true)),
+					new ArrayList<NormativeEventType>(Arrays.asList(
+							NormativeEventType.COMPLIANCE,
+							NormativeEventType.COMPLIANCE_OBSERVED,
+							NormativeEventType.COMPLIANCE_INFORMED,
+							NormativeEventType.VIOLATION,
+							NormativeEventType.VIOLATION_OBSERVED,
+							NormativeEventType.VIOLATION_INFORMED,
+							NormativeEventType.PUNISHMENT,
+							NormativeEventType.PUNISHMENT_OBSERVED,
+							NormativeEventType.PUNISHMENT_INFORMED,
+							NormativeEventType.SANCTION,
+							NormativeEventType.SANCTION_OBSERVED,
+							NormativeEventType.SANCTION_INFORMED,
+							NormativeEventType.COMPLIANCE_INVOCATION,
+							NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
+							NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
+							NormativeEventType.VIOLATION_INVOCATION,
+							NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
+							NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
+					this.normSalience);
+			logger.debug("Initialized [NORM SALIENCE]");
+			
+			// Norm Enforcement
+			logger.debug("Initializing [NORM ENFORCEMENT]");
+			this.setNormEnforcement(this.conf.getNormEnforcementClass());
+			this.normRecognition.registerCallback(
+					new ArrayList<Boolean>(Arrays.asList(true)),
+					new ArrayList<NormativeEventType>(Arrays.asList(
+							NormativeEventType.ACTION, NormativeEventType.ACTION_OBSERVED,
+							NormativeEventType.ACTION_INFORMED,
+							NormativeEventType.COMPLIANCE,
+							NormativeEventType.COMPLIANCE_OBSERVED,
+							NormativeEventType.COMPLIANCE_INFORMED,
+							NormativeEventType.VIOLATION,
+							NormativeEventType.VIOLATION_OBSERVED,
+							NormativeEventType.VIOLATION_INFORMED,
+							NormativeEventType.PUNISHMENT,
+							NormativeEventType.PUNISHMENT_OBSERVED,
+							NormativeEventType.PUNISHMENT_INFORMED,
+							NormativeEventType.SANCTION,
+							NormativeEventType.SANCTION_OBSERVED,
+							NormativeEventType.SANCTION_INFORMED,
+							NormativeEventType.COMPLIANCE_INVOCATION,
+							NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
+							NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
+							NormativeEventType.VIOLATION_INVOCATION,
+							NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
+							NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
+					this.normEnforcement);
+			
+			this.normEnforcement.registerCallback(
+					new ArrayList<NormativeEventType>(Arrays.asList(
+							NormativeEventType.COMPLIANCE,
+							NormativeEventType.COMPLIANCE_OBSERVED,
+							NormativeEventType.COMPLIANCE_INFORMED,
+							NormativeEventType.VIOLATION,
+							NormativeEventType.VIOLATION_OBSERVED,
+							NormativeEventType.VIOLATION_INFORMED)), this.normSalience);
+			
+			this.normEnforcement.registerNormEnforcement(this);
+			logger.debug("Initialized [NORM ENFORCEMENT]");
+			
+			// Norm Compliance
+			logger.debug("Initializing [NORM COMPLIANCE]");
+			this.setNormCompliance(this.conf.getNormComplianceClass());
+			logger.debug("Initialized [NORM COMPLIANCE]");
+			
+			initialize = true;
+		}
 		
-		// Norm Recognition
-		logger.debug("Initializing [NORM RECOGNITION]");
-		this.setNormRecognition((String) this.conf
-				.getStrValue(Param.NORM_RECOGNITION_CLASS));
-		logger.debug("Initialized [NORM RECOGNITION]");
-		
-		// Norm Adoption
-		logger.debug("Initializing [NORM ADOPTION]");
-		this.setNormAdoption((String) this.conf
-				.getStrValue(Param.NORM_ADOPTION_CLASS));
-		this.normativeBoard.registerCallback(
-				new ArrayList<NormativeBoardEventType>(Arrays.asList(
-						NormativeBoardEventType.INSERT_NORM,
-						NormativeBoardEventType.UPDATE_NORM,
-						NormativeBoardEventType.UPDATE_SALIENCE)), this.normAdoption);
-		logger.debug("Initialized [NORM ADOPTION]");
-		
-		// Norm Salience
-		logger.debug("Initializing [NORM SALIENCE]");
-		this.setNormSalience((String) this.conf
-				.getStrValue(Param.NORM_SALIENCE_CLASS));
-		this.normRecognition.registerCallback(
-				new ArrayList<Boolean>(Arrays.asList(true)),
-				new ArrayList<NormativeEventType>(Arrays.asList(
-						NormativeEventType.COMPLIANCE,
-						NormativeEventType.COMPLIANCE_OBSERVED,
-						NormativeEventType.COMPLIANCE_INFORMED,
-						NormativeEventType.VIOLATION,
-						NormativeEventType.VIOLATION_OBSERVED,
-						NormativeEventType.VIOLATION_INFORMED,
-						NormativeEventType.PUNISHMENT,
-						NormativeEventType.PUNISHMENT_OBSERVED,
-						NormativeEventType.PUNISHMENT_INFORMED,
-						NormativeEventType.SANCTION, NormativeEventType.SANCTION_OBSERVED,
-						NormativeEventType.SANCTION_INFORMED,
-						NormativeEventType.COMPLIANCE_INVOCATION,
-						NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
-						NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
-						NormativeEventType.VIOLATION_INVOCATION,
-						NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
-						NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
-				this.normSalience);
-		logger.debug("Initialized [NORM SALIENCE]");
-		
-		// Norm Enforcement
-		logger.debug("Initializing [NORM ENFORCEMENT]");
-		this.setNormEnforcement((String) this.conf
-				.getStrValue(Param.NORM_ENFORCEMENT_CLASS));
-		this.normRecognition.registerCallback(
-				new ArrayList<Boolean>(Arrays.asList(true)),
-				new ArrayList<NormativeEventType>(Arrays.asList(
-						NormativeEventType.ACTION, NormativeEventType.ACTION_OBSERVED,
-						NormativeEventType.ACTION_INFORMED, NormativeEventType.COMPLIANCE,
-						NormativeEventType.COMPLIANCE_OBSERVED,
-						NormativeEventType.COMPLIANCE_INFORMED,
-						NormativeEventType.VIOLATION,
-						NormativeEventType.VIOLATION_OBSERVED,
-						NormativeEventType.VIOLATION_INFORMED,
-						NormativeEventType.PUNISHMENT,
-						NormativeEventType.PUNISHMENT_OBSERVED,
-						NormativeEventType.PUNISHMENT_INFORMED,
-						NormativeEventType.SANCTION, NormativeEventType.SANCTION_OBSERVED,
-						NormativeEventType.SANCTION_INFORMED,
-						NormativeEventType.COMPLIANCE_INVOCATION,
-						NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED,
-						NormativeEventType.COMPLIANCE_INVOCATION_INFORMED,
-						NormativeEventType.VIOLATION_INVOCATION,
-						NormativeEventType.VIOLATION_INVOCATION_OBSERVED,
-						NormativeEventType.VIOLATION_INVOCATION_INFORMED)),
-				this.normEnforcement);
-		
-		this.normEnforcement.registerCallback(
-				new ArrayList<NormativeEventType>(Arrays.asList(
-						NormativeEventType.COMPLIANCE,
-						NormativeEventType.COMPLIANCE_OBSERVED,
-						NormativeEventType.COMPLIANCE_INFORMED,
-						NormativeEventType.VIOLATION,
-						NormativeEventType.VIOLATION_OBSERVED,
-						NormativeEventType.VIOLATION_INFORMED)), this.normSalience);
-		
-		this.normEnforcement.registerNormEnforcement(this);
-		logger.debug("Initialized [NORM ENFORCEMENT]");
-		
-		// Norm Compliance
-		logger.debug("Initializing [NORM COMPLIANCE]");
-		this.setNormCompliance((String) this.conf
-				.getStrValue(Param.NORM_COMPLIANCE_CLASS));
-		logger.debug("Initialized [NORM COMPLIANCE]");
+		return initialize;
 	}
 	
 	
