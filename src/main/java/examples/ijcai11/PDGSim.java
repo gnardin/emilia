@@ -1,5 +1,10 @@
 package examples.ijcai11;
 
+import emilia.defaultImpl.entity.norm.NormContent;
+import emilia.defaultImpl.entity.norm.NormEntity;
+import emilia.defaultImpl.entity.sanction.SanctionContent;
+import emilia.defaultImpl.entity.sanction.SanctionContent.Sanction;
+import emilia.defaultImpl.entity.sanction.SanctionEntity;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
@@ -13,13 +18,8 @@ import emilia.entity.sanction.SanctionCategory.Polarity;
 import emilia.entity.sanction.SanctionCategory.Source;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
-import examples.ijcai11.entity.action.CooperateAction;
-import examples.ijcai11.entity.action.DefectAction;
-import examples.ijcai11.entity.norm.NormContent;
-import examples.ijcai11.entity.norm.NormEntity;
-import examples.ijcai11.entity.sanction.SanctionContent;
-import examples.ijcai11.entity.sanction.SanctionContent.Sanction;
-import examples.ijcai11.entity.sanction.SanctionEntity;
+import examples.ijcai11.actions.CooperateAction;
+import examples.ijcai11.actions.DefectAction;
 import examples.ijcai11.network.LatticeGraphGenerator;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
@@ -41,35 +41,37 @@ public class PDGSim {
 	private static final Logger	logger	= LoggerFactory.getLogger(PDGSim.class);
 	
 	public enum Network {
-		COMPLETE, LATTICE, SCALE_FREE
+		COMPLETE,
+		LATTICE,
+		SCALE_FREE
 	};
 	
 	// Constants
-	public final static Integer								timeSteps				= 10;
+	public final static int										timeSteps				= 10;
 	
-	public final static Integer								xDim						= 10;
+	public final static int										xDim						= 10;
 	
-	public final static Integer								yDim						= 10;
+	public final static int										yDim						= 10;
 	
-	public final static Integer								numAgents				= xDim * yDim;
+	public final static int										numAgents				= xDim * yDim;
 	
 	public final static Network								network					= Network.SCALE_FREE;
 	
-	public final static Long									seed						= new Long(1234);
+	public final static long									seed						= new Long(1234);
 	
-	public final static Integer								numNeighbors		= 4;
+	public final static int										numNeighbors		= 4;
 	
-	public final static Integer								pdMatrix[][]		= {{3, 0}, {5, 1}};
+	public final static int										pdMatrix[][]		= {{3, 0}, {5, 1}};
 	
-	public final static Double								costPunish			= 3.0;
+	public final static double								costPunish			= 3.0;
 	
-	public final static Double								costSanction		= 1.5;
+	public final static double								costSanction		= 1.5;
 	
-	public final static Double								costPunisher		= 1.0;
+	public final static double								costPunisher		= 1.0;
 	
-	public final static Double								costSanctioner	= 1.0;
+	public final static double								costSanctioner	= 1.0;
 	
-	public final static Double								initSalience		= 0.1;
+	public final static double								initSalience		= 0.1;
 	
 	public final static String								xmlFile					= "src/main/resources/conf/ijcai11/emilia.xml";
 	
@@ -95,7 +97,7 @@ public class PDGSim {
 		this.agents = new HashMap<Integer, PDGAgent>();
 		this.neighbors = new HashMap<Integer, List<Integer>>();
 		this.mGraph = new SimpleGraph<Object, DefaultEdge>(DefaultEdge.class);
-		this.rnd = new Uniform(0.0, 1.0, new MersenneTwister(seed.intValue()));
+		this.rnd = new Uniform(0.0, 1.0, new MersenneTwister((int) seed));
 	}
 	
 	/**
@@ -119,23 +121,15 @@ public class PDGSim {
 	 * @return none
 	 */
 	public void init() {
-		NormContent normContent;
-		NormEntityAbstract norm;
-		
-		SanctionContent sanctionContent;
-		SanctionCategory sanctionCategory;
-		SanctionEntityAbstract sanction;
-		Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions;
-		List<SanctionEntityAbstract> sanctions;
 		
 		// Initialize agents
 		PDGAgent agent;
-		NormStatus normStatus;
 		for(Integer i = 0; i < numAgents; i++) {
 			
 			// TODO
 			// Which agent to activate
-			if(this.rnd.nextDouble() < 0.5) {
+			NormStatus normStatus;
+			if (this.rnd.nextDouble() < 0.5) {
 				normStatus = NormStatus.BELIEF;
 			} else {
 				normStatus = NormStatus.GOAL;
@@ -143,20 +137,21 @@ public class PDGSim {
 			logger.debug(normStatus.name());
 			
 			// COOPERATE norm
-			normContent = new NormContent(new CooperateAction(), new DefectAction());
-			norm = new NormEntity(1, NormType.SOCIAL, NormSource.DISTRIBUTED,
-					normStatus, normContent, initSalience);
+			NormContent normContent = new NormContent(new CooperateAction(),
+					new DefectAction());
+			NormEntityAbstract norm = new NormEntity(1, NormType.SOCIAL,
+					NormSource.DISTRIBUTED, normStatus, normContent, initSalience);
 			
-			sanctions = new ArrayList<SanctionEntityAbstract>();
+			List<SanctionEntityAbstract> sanctions = new ArrayList<SanctionEntityAbstract>();
 			
 			// PUNISHMENT sanction
-			sanctionContent = new SanctionContent(Sanction.PUNISHMENT, costPunish,
-					costPunisher);
-			sanctionCategory = new SanctionCategory(Source.INFORMAL,
+			SanctionContent sanctionContent = new SanctionContent(
+					Sanction.PUNISHMENT, costPunish, costPunisher);
+			SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 					Discernibility.UNOBSTRUSIVE);
-			sanction = new SanctionEntity(1, sanctionCategory, SanctionStatus.ACTIVE,
-					sanctionContent);
+			SanctionEntityAbstract sanction = new SanctionEntity(1, sanctionCategory,
+					SanctionStatus.ACTIVE, sanctionContent);
 			sanctions.add(sanction);
 			
 			// SANCTION sanction
@@ -179,7 +174,7 @@ public class PDGSim {
 			sanctions.add(sanction);
 			
 			// Norms X Sanctions
-			normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
 			normsSanctions.put(norm, sanctions);
 			
 			agent = new PDGAgent(i, xmlFile, xsdFile, normsSanctions, this.rnd,
@@ -208,24 +203,22 @@ public class PDGSim {
 		}
 		
 		// Identify the neighbors
-		Integer source;
-		Integer target;
 		List<Integer> neighbor;
 		for(Object v : this.mGraph.vertexSet()) {
-			source = (Integer) v;
+			int source = (Integer) v;
 			for(DefaultEdge e : this.mGraph.edgesOf(v)) {
-				target = (Integer) this.mGraph.getEdgeSource(e);
-				if(target == source) {
+				int target = (Integer) this.mGraph.getEdgeSource(e);
+				if (target == source) {
 					target = (Integer) this.mGraph.getEdgeTarget(e);
 				}
 				
-				if(this.neighbors.containsKey(source)) {
+				if (this.neighbors.containsKey(source)) {
 					neighbor = this.neighbors.get(source);
 				} else {
 					neighbor = new ArrayList<Integer>();
 				}
 				
-				if(!neighbor.contains(target)) {
+				if (!neighbor.contains(target)) {
 					neighbor.add(target);
 				}
 				
@@ -244,58 +237,38 @@ public class PDGSim {
 	public void run() {
 		PDGAgent agent;
 		
-		Map<Integer, ActionAbstract> actions;
-		ActionAbstract action;
-		
-		Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments;
-		Map<Integer, SanctionEntityAbstract> punishment;
-		
-		Integer source;
-		Integer target;
-		Integer index;
-		Boolean found;
-		NeighborIndex<Object, DefaultEdge> ni;
-		List<Object> neighbors;
-		List<Integer> neighbor;
-		Map<Integer, Integer> paired;
-		
-		Map<Integer, ActionAbstract> nActions;
-		Map<Integer, Map<Integer, ActionAbstract>> neighborActions;
-		
-		ActionAbstract actionS;
-		ActionAbstract actionT;
-		Map<Integer, ActionAbstract> playersActions;
-		
 		// Run the simulation by a certain number of timesteps
 		for(Integer r = 0; r < timeSteps; r++) {
-			actions = new HashMap<Integer, ActionAbstract>();
-			punishments = new HashMap<Integer, Map<Integer, SanctionEntityAbstract>>();
+			Map<Integer, ActionAbstract> actions = new HashMap<Integer, ActionAbstract>();
+			Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments = new HashMap<Integer, Map<Integer, SanctionEntityAbstract>>();
 			
 			logger.debug("");
 			logger.debug("------ ITERATION " + (r + 1) + " ------");
 			logger.debug("");
 			
 			// Paired Selection
-			paired = new HashMap<Integer, Integer>();
+			Map<Integer, Integer> paired = new HashMap<Integer, Integer>();
 			
-			ni = new NeighborIndex<Object, DefaultEdge>(this.mGraph);
+			NeighborIndex<Object, DefaultEdge> ni = new NeighborIndex<Object, DefaultEdge>(
+					this.mGraph);
 			for(Object v : this.mGraph.vertexSet()) {
-				source = (Integer) v;
+				int source = (Integer) v;
 				
-				if((!paired.containsKey(source)) && (!paired.containsValue(source))) {
-					found = false;
-					neighbors = ni.neighborListOf(v);
-					neighbor = new ArrayList<Integer>();
+				if ((!paired.containsKey(source)) && (!paired.containsValue(source))) {
+					boolean found = false;
+					List<Object> neighbors = ni.neighborListOf(v);
+					List<Integer> neighbor = new ArrayList<Integer>();
 					while((!found) && (neighbor.size() < neighbors.size())) {
-						index = this.rnd.nextIntFromTo(0, neighbors.size() - 1);
-						target = (Integer) neighbors.get(index);
+						int index = this.rnd.nextIntFromTo(0, neighbors.size() - 1);
+						int target = (Integer) neighbors.get(index);
 						
-						if((!paired.containsKey(target)) && (!paired.containsValue(target))) {
+						if ((!paired.containsKey(target))
+								&& (!paired.containsValue(target))) {
 							paired.put(source, target);
 							found = true;
 						}
 						
-						if(!neighbor.contains(target)) {
+						if (!neighbor.contains(target)) {
 							neighbor.add(target);
 						}
 					}
@@ -310,7 +283,7 @@ public class PDGSim {
 			for(Integer i = 0; i < numAgents; i++) {
 				agent = this.agents.get(i);
 				agent.init();
-				action = agent.decideAction();
+				ActionAbstract action = agent.decideAction();
 				actions.put(i, action);
 				
 				logger.debug("AgentId [" + i + "] ACTION [" + action.getDescription()
@@ -319,12 +292,12 @@ public class PDGSim {
 			logger.debug("");
 			
 			// Neighbors actions
-			neighborActions = new HashMap<Integer, Map<Integer, ActionAbstract>>();
+			Map<Integer, Map<Integer, ActionAbstract>> neighborActions = new HashMap<Integer, Map<Integer, ActionAbstract>>();
 			for(Integer i = 0; i < numAgents; i++) {
-				neighbors = ni.neighborListOf(i);
-				nActions = new HashMap<Integer, ActionAbstract>();
+				List<Object> neighbors = ni.neighborListOf(i);
+				Map<Integer, ActionAbstract> nActions = new HashMap<Integer, ActionAbstract>();
 				for(Object n : neighbors) {
-					if(actions.containsKey((Integer) n)) {
+					if (actions.containsKey((Integer) n)) {
 						nActions.put((Integer) n, actions.get((Integer) n));
 					}
 				}
@@ -333,13 +306,13 @@ public class PDGSim {
 			
 			// Set payoff
 			for(Integer s : paired.keySet()) {
-				source = s;
-				actionS = actions.get(source);
-				target = paired.get(source);
-				actionT = actions.get(target);
+				int source = s;
+				ActionAbstract actionS = actions.get(source);
+				int target = paired.get(source);
+				ActionAbstract actionT = actions.get(target);
 				
 				// Source and Target actions
-				playersActions = new HashMap<Integer, ActionAbstract>();
+				Map<Integer, ActionAbstract> playersActions = new HashMap<Integer, ActionAbstract>();
 				playersActions.put(target, actionT);
 				playersActions.put(source, actionS);
 				
@@ -362,7 +335,7 @@ public class PDGSim {
 			// Second Stage
 			for(Integer agentId = 0; agentId < numAgents; agentId++) {
 				agent = this.agents.get(agentId);
-				punishment = agent.decidePunish();
+				Map<Integer, SanctionEntityAbstract> punishment = agent.decidePunish();
 				punishments.put(agentId, punishment);
 			}
 			

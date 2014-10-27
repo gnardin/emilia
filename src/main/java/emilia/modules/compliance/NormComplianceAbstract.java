@@ -11,7 +11,7 @@ public abstract class NormComplianceAbstract {
 																								.getLogger(NormComplianceAbstract.class);
 	
 	// Agent identification
-	protected Integer									agentId;
+	protected int											agentId;
 	
 	// Normative Board
 	protected NormativeBoardInterface	normativeBoard;
@@ -40,5 +40,5 @@ public abstract class NormComplianceAbstract {
 	 *          Norm identification
 	 * @return Normative drive
 	 */
-	public abstract Double getNormativeDrive(Integer normId);
+	public abstract double getNormativeDrive(int normId);
 }

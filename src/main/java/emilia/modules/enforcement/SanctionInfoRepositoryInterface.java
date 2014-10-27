@@ -11,7 +11,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm identification
 	 * @return True Norm information exist, False otherwise
 	 */
-	public Boolean hasNormInfo(Integer normId);
+	public boolean hasNormInfo(int normId);
 	
 	
 	/**
@@ -21,7 +21,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm identification
 	 * @return Norm evaluation information
 	 */
-	public NormInfoEntityInterface getNormInfo(Integer normId);
+	public NormInfoEntityInterface getNormInfo(int normId);
 	
 	
 	/**
@@ -42,7 +42,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm evaluation information
 	 * @return none
 	 */
-	public void setNormInfo(Integer normId, NormInfoEntityInterface evaluation);
+	public void setNormInfo(int normId, NormInfoEntityInterface evaluation);
 	
 	
 	/**
@@ -54,8 +54,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Sanction identification
 	 * @return Norm x sanction evaluation information
 	 */
-	public SanctionInfoEntityInterface getSanctionInfo(Integer normId,
-			Integer sanctionId);
+	public SanctionInfoEntityInterface getSanctionInfo(int normId, int sanctionId);
 	
 	
 	/**
@@ -65,8 +64,7 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm identification
 	 * @return Sanctions evaluation information
 	 */
-	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(
-			Integer normId);
+	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(int normId);
 	
 	
 	/**
@@ -80,6 +78,6 @@ public interface SanctionInfoRepositoryInterface {
 	 *          Norm x sanction evaluation information
 	 * @return none
 	 */
-	public void setSanctionInfo(Integer normId, Integer sanctionId,
+	public void setSanctionInfo(int normId, int sanctionId,
 			SanctionInfoEntityInterface evaluation);
 }

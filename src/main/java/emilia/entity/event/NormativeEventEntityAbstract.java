@@ -12,16 +12,16 @@ public abstract class NormativeEventEntityAbstract {
 																						.getLogger(NormativeEventEntityAbstract.class);
 	
 	// Time in milliseconds
-	protected Long								time;
+	protected long								time;
 	
 	// Agent source identification of the reported action
-	protected Integer							sourceId;
+	protected int									sourceId;
 	
 	// Agent target identification of the reported action
-	protected Integer							targetId;
+	protected int									targetId;
 	
 	// Agent identification informing the event
-	protected Integer							informerId;
+	protected int									informerId;
 	
 	// Type of the content
 	protected NormativeEventType	type;
@@ -45,8 +45,8 @@ public abstract class NormativeEventEntityAbstract {
 	 *          Type of the Event
 	 * @return none
 	 */
-	public NormativeEventEntityAbstract(Long time, Integer sourceId,
-			Integer targetId, Integer informerId, NormativeEventType type) {
+	public NormativeEventEntityAbstract(long time, int sourceId, int targetId,
+			int informerId, NormativeEventType type) {
 		this.time = time;
 		this.sourceId = sourceId;
 		this.targetId = targetId;
@@ -73,9 +73,8 @@ public abstract class NormativeEventEntityAbstract {
 	 *          Context attributes and values
 	 * @return none
 	 */
-	public NormativeEventEntityAbstract(Long time, Integer sourceId,
-			Integer targetId, Integer informerId, NormativeEventType type,
-			Map<String, Object> contextAttrs) {
+	public NormativeEventEntityAbstract(long time, int sourceId, int targetId,
+			int informerId, NormativeEventType type, Map<String, Object> contextAttrs) {
 		this.time = time;
 		this.sourceId = sourceId;
 		this.targetId = targetId;
@@ -91,7 +90,7 @@ public abstract class NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Event time
 	 */
-	public Long getTime() {
+	public long getTime() {
 		return this.time;
 	}
 	
@@ -102,7 +101,7 @@ public abstract class NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Agent source identification of the reported action
 	 */
-	public Integer getSource() {
+	public int getSource() {
 		return this.sourceId;
 	}
 	
@@ -113,7 +112,7 @@ public abstract class NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Agent target identification of the reported action
 	 */
-	public Integer getTarget() {
+	public int getTarget() {
 		return this.targetId;
 	}
 	
@@ -124,7 +123,7 @@ public abstract class NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Agent identification informing the event
 	 */
-	public Integer getInformer() {
+	public int getInformer() {
 		return this.informerId;
 	}
 	
@@ -158,7 +157,7 @@ public abstract class NormativeEventEntityAbstract {
 	 *          Attribute name
 	 * @return True if the attribute exists, False otherwise
 	 */
-	public Boolean hasContextAttr(String attr) {
+	public boolean hasContextAttr(String attr) {
 		return this.contextAttrs.containsKey(attr);
 	}
 	
@@ -173,7 +172,7 @@ public abstract class NormativeEventEntityAbstract {
 	public Object getContextAttribute(String attr) {
 		Object result = null;
 		
-		if(this.contextAttrs.containsKey(attr)) {
+		if (this.contextAttrs.containsKey(attr)) {
 			result = this.contextAttrs.get(attr);
 		}
 		

@@ -13,11 +13,12 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	
 	// Sanction status
 	public enum SanctionStatus {
-		ACTIVE, INACTIVE;
+		ACTIVE,
+		INACTIVE;
 	}
 	
 	// Sanction identification
-	protected Integer										id;
+	protected int												id;
 	
 	// Sanction category
 	protected SanctionCategory					category;
@@ -35,7 +36,7 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Sanction identification
 	 */
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 	
@@ -47,7 +48,7 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	 *          Sanction identification
 	 * @return none
 	 */
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -123,18 +124,17 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	
 	@Override
 	public boolean equals(Object obj) {
-		boolean result = false;
 		
-		if(this == obj) {
-			result = true;
-		} else if((obj != null) && (obj.getClass() == this.getClass())) {
+		if (this == obj) {
+			return true;
+		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
 			SanctionEntityAbstract sanction = (SanctionEntityAbstract) obj;
-			if(this.getId().intValue() == sanction.getId().intValue()) {
-				result = true;
+			if (this.getId() == sanction.getId()) {
+				return true;
 			}
 		}
 		
-		return result;
+		return false;
 	}
 	
 	

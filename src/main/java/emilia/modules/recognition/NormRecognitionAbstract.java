@@ -19,7 +19,7 @@ public abstract class NormRecognitionAbstract {
 																																										.getLogger(NormRecognitionAbstract.class);
 	
 	// Agent identification
-	protected Integer																											agentId;
+	protected int																													agentId;
 	
 	// Normative Board
 	protected NormativeBoardInterface																			normativeBoard;
@@ -59,18 +59,18 @@ public abstract class NormRecognitionAbstract {
 	public void registerCallback(List<Boolean> matches,
 			List<NormativeEventType> types, EventListener eventListener) {
 		
-		Map<NormativeEventType, List<EventListener>> eventListeners;
-		List<EventListener> listener;
 		for(Boolean match : matches) {
 			
-			if(this.callbacks.containsKey(match)) {
+			Map<NormativeEventType, List<EventListener>> eventListeners;
+			if (this.callbacks.containsKey(match)) {
 				eventListeners = this.callbacks.get(match);
 			} else {
 				eventListeners = new HashMap<NormativeEventType, List<EventListener>>();
 			}
 			
 			for(NormativeEventType type : types) {
-				if(eventListeners.containsKey(type)) {
+				List<EventListener> listener;
+				if (eventListeners.containsKey(type)) {
 					listener = eventListeners.get(type);
 				} else {
 					listener = new ArrayList<EventListener>();
@@ -101,17 +101,16 @@ public abstract class NormRecognitionAbstract {
 	public void unregisterCallback(List<Boolean> matches,
 			List<NormativeEventType> types, EventListener eventListener) {
 		
-		Map<NormativeEventType, List<EventListener>> eventListeners;
-		List<EventListener> listener;
 		for(Boolean match : matches) {
 			
-			eventListeners = this.callbacks.get(match);
+			Map<NormativeEventType, List<EventListener>> eventListeners = this.callbacks
+					.get(match);
 			
 			for(NormativeEventType type : types) {
-				if(eventListeners.containsKey(type)) {
-					listener = eventListeners.get(type);
+				if (eventListeners.containsKey(type)) {
+					List<EventListener> listener = eventListeners.get(type);
 					
-					if(listener.contains(eventListener)) {
+					if (listener.contains(eventListener)) {
 						listener.remove(eventListener);
 						eventListeners.put(type, listener);
 						this.callbacks.put(match, eventListeners);
@@ -135,19 +134,19 @@ public abstract class NormRecognitionAbstract {
 	 */
 	protected void processEvent(NormativeEventEntityAbstract event,
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions) {
-		Boolean found = false;
+		boolean found = false;
 		
-		Boolean matches = false;
-		if((normSanctions != null) && (normSanctions.size() > 0)) {
+		boolean matches = false;
+		if ((normSanctions != null) && (normSanctions.size() > 0)) {
 			matches = true;
 		}
 		
-		if(this.callbacks.containsKey(matches)) {
+		if (this.callbacks.containsKey(matches)) {
 			
 			Map<NormativeEventType, List<EventListener>> eventListeners = this.callbacks
 					.get(matches);
 			
-			if(eventListeners.containsKey(event.getType())) {
+			if (eventListeners.containsKey(event.getType())) {
 				List<EventListener> listener = eventListeners.get(event.getType());
 				
 				for(EventListener eventListener : listener) {
@@ -157,7 +156,7 @@ public abstract class NormRecognitionAbstract {
 			}
 		}
 		
-		if(!found) {
+		if (!found) {
 			logger.debug("EVENT NOT PROCESSED [" + event.toString() + "]");
 		}
 	}

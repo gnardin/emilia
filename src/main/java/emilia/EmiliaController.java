@@ -68,8 +68,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	 *          Schema configuration filename
 	 * @return EMILIA controller
 	 */
-	public EmiliaController(Integer agentId, String xmlFilename,
-			String xsdFilename) {
+	public EmiliaController(int agentId, String xmlFilename, String xsdFilename) {
 		super(agentId);
 		
 		this.xmlFilename = xmlFilename;
@@ -83,10 +82,10 @@ public class EmiliaController extends EmiliaAbstract implements
 	 * @param none
 	 * @return True if initialized successfully, False otherwise
 	 */
-	public Boolean init() {
-		Boolean initialize = false;
+	public boolean init() {
+		boolean initialize = false;
 		
-		if(EmiliaConf.isValid(xmlFilename, xsdFilename)) {
+		if (EmiliaConf.isValid(xmlFilename, xsdFilename)) {
 			this.conf = EmiliaConf.getConf(xmlFilename, xsdFilename);
 			// Event Classifier
 			logger.debug("Initializing [EVENT CLASSIFIER]");
@@ -424,7 +423,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public void input(Object event) {
 		NormativeEventEntityAbstract normativeEvent = this.eventClassifier
 				.classify(event);
-		if(normativeEvent != null) {
+		if (normativeEvent != null) {
 			this.normRecognition.matchEvent(normativeEvent);
 		}
 	}
@@ -440,16 +439,16 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	
 	@Override
-	public Double getNormSalience(Integer normId) {
+	public double getNormSalience(int normId) {
 		return this.normCompliance.getNormativeDrive(normId);
 	}
 	
 	
 	@Override
-	public NormEntityAbstract getNorm(Integer normId) {
+	public NormEntityAbstract getNorm(int normId) {
 		NormEntityAbstract norm = null;
 		
-		if(this.normativeBoard.hasNorm(normId)) {
+		if (this.normativeBoard.hasNorm(normId)) {
 			norm = this.normativeBoard.getNorm(normId);
 		}
 		

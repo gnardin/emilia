@@ -18,13 +18,13 @@ public class EmiliaControllerPDG extends EmiliaController {
 	private static final Logger	logger	= LoggerFactory
 																					.getLogger(EmiliaControllerPDG.class);
 	
-	private Integer							tolerance;
+	private int									tolerance;
 	
-	private Double							delta_cost;
+	private double							delta_cost;
 	
 	
-	public EmiliaControllerPDG(Integer agentId, String xmlFilename,
-			String xsdFilename, Integer tolerance, Double delta_cost) {
+	public EmiliaControllerPDG(int agentId, String xmlFilename,
+			String xsdFilename, int tolerance, double delta_cost) {
 		super(agentId, xmlFilename, xsdFilename);
 		
 		this.tolerance = tolerance;

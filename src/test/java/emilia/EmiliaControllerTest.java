@@ -1,5 +1,10 @@
 package emilia;
 
+import emilia.defaultImpl.entity.norm.NormContent;
+import emilia.defaultImpl.entity.norm.NormEntity;
+import emilia.defaultImpl.entity.sanction.SanctionContent;
+import emilia.defaultImpl.entity.sanction.SanctionContent.Sanction;
+import emilia.defaultImpl.entity.sanction.SanctionEntity;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
 import emilia.entity.event.type.ActionEvent;
@@ -17,13 +22,8 @@ import emilia.entity.sanction.SanctionCategory.Source;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import emilia.modules.enforcement.NormEnforcementListener;
-import examples.pgg.entity.action.CooperateAction;
-import examples.pgg.entity.action.DefectAction;
-import examples.pgg.entity.norm.NormContent;
-import examples.pgg.entity.norm.NormEntity;
-import examples.pgg.entity.sanction.SanctionContent;
-import examples.pgg.entity.sanction.SanctionContent.Sanction;
-import examples.pgg.entity.sanction.SanctionEntity;
+import examples.pgg.actions.CooperateAction;
+import examples.pgg.actions.DefectAction;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.HashMap;

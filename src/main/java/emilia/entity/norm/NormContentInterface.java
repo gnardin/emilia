@@ -9,5 +9,5 @@ public interface NormContentInterface {
 	 *          Value to check whether it matches the norm content
 	 * @return True if it matches, False otherwise
 	 */
-	public Boolean match(Object value);
+	public boolean match(Object value);
 }

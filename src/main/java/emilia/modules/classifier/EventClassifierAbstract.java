@@ -11,7 +11,7 @@ public abstract class EventClassifierAbstract {
 																					.getLogger(EventClassifierAbstract.class);
 	
 	// Agent identification
-	protected Integer						agentId;
+	protected int								agentId;
 	
 	
 	/**

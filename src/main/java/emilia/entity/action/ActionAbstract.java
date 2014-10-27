@@ -11,7 +11,7 @@ public abstract class ActionAbstract {
 																						.getLogger(ActionAbstract.class);
 	
 	// Action identification
-	protected Integer							id;
+	protected int									id;
 	
 	// Action description
 	protected String							description;
@@ -29,7 +29,7 @@ public abstract class ActionAbstract {
 	 *          Action description
 	 * @return none
 	 */
-	public ActionAbstract(Integer id, String description) {
+	public ActionAbstract(int id, String description) {
 		this.id = id;
 		this.description = description;
 		this.params = null;
@@ -47,8 +47,7 @@ public abstract class ActionAbstract {
 	 *          Action parameters
 	 * @return none
 	 */
-	public ActionAbstract(Integer id, String description,
-			Map<Object, Object> params) {
+	public ActionAbstract(int id, String description, Map<Object, Object> params) {
 		this.id = id;
 		this.description = description;
 		this.params = params;
@@ -61,7 +60,7 @@ public abstract class ActionAbstract {
 	 * @param none
 	 * @return Action identification
 	 */
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 	
@@ -130,7 +129,7 @@ public abstract class ActionAbstract {
 			result = true;
 		} else if((obj != null) && (obj.getClass() == this.getClass())) {
 			ActionAbstract action = (ActionAbstract) obj;
-			if(this.getId().intValue() == action.getId().intValue()) {
+			if(this.id == action.getId()) {
 				result = true;
 			}
 		}

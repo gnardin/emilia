@@ -11,7 +11,7 @@ public abstract class NormAdoptionAbstract implements NormativeBoardListener {
 																								.getLogger(NormAdoptionAbstract.class);
 	
 	// Agent identification
-	protected Integer									agentId;
+	protected int											agentId;
 	
 	// Normative Board
 	protected NormativeBoardInterface	normativeBoard;

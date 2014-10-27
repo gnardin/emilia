@@ -32,8 +32,8 @@ public class NormativeEvent extends NormativeEventEntityAbstract {
 	 *          Norm identification
 	 * @return none
 	 */
-	public NormativeEvent(Long time, Integer sourceId, Integer targetId,
-			Integer informerId, NormativeEventType type, Integer normId) {
+	public NormativeEvent(long time, int sourceId, int targetId, int informerId,
+			NormativeEventType type, int normId) {
 		super(time, sourceId, targetId, informerId, type);
 		
 		this.normId = normId;
@@ -46,7 +46,7 @@ public class NormativeEvent extends NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Norm identification
 	 */
-	public Integer getNormId() {
+	public int getNormId() {
 		return this.normId;
 	}
 }

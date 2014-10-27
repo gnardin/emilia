@@ -14,7 +14,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return Norm entity
 	 */
-	public NormEntityAbstract getNorm(Integer normId);
+	public NormEntityAbstract getNorm(int normId);
 	
 	
 	/**
@@ -43,7 +43,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return none
 	 */
-	public void removeNorm(Integer normId);
+	public void removeNorm(int normId);
 	
 	
 	/**
@@ -53,7 +53,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return True if norm exists, False otherwise
 	 */
-	public Boolean hasNorm(Integer normId);
+	public boolean hasNorm(int normId);
 	
 	
 	/**
@@ -73,7 +73,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return Norm salience
 	 */
-	public Double getSalience(Integer normId);
+	public double getSalience(int normId);
 	
 	
 	/**
@@ -85,7 +85,7 @@ public interface NormativeBoardInterface {
 	 *          Norm salience
 	 * @return none
 	 */
-	public void setSalience(Integer normId, Double salience);
+	public void setSalience(int normId, double salience);
 	
 	
 	/**
@@ -95,7 +95,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return Sanction entity
 	 */
-	public SanctionEntityAbstract getSanction(Integer sanctionId);
+	public SanctionEntityAbstract getSanction(int sanctionId);
 	
 	
 	/**
@@ -124,7 +124,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return none
 	 */
-	public void removeSanction(Integer sanctionId);
+	public void removeSanction(int sanctionId);
 	
 	
 	/**
@@ -134,7 +134,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return True if sanction exists, False otherwise
 	 */
-	public Boolean hasSanction(Integer sanctionId);
+	public boolean hasSanction(int sanctionId);
 	
 	
 	/**
@@ -144,7 +144,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return List of sanctions entities associated to the norm
 	 */
-	public List<SanctionEntityAbstract> getSanctions(Integer normId);
+	public List<SanctionEntityAbstract> getSanctions(int normId);
 	
 	
 	/**
@@ -156,7 +156,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return none
 	 */
-	public void setNormSanction(Integer normId, Integer sanctionId);
+	public void setNormSanction(int normId, int sanctionId);
 	
 	
 	/**
@@ -168,7 +168,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return none
 	 */
-	public void removeNormSanction(Integer normId, Integer sanctionId);
+	public void removeNormSanction(int normId, int sanctionId);
 	
 	
 	/**
@@ -180,7 +180,7 @@ public interface NormativeBoardInterface {
 	 *          Sanction identification
 	 * @return True if association exists, False otherwise
 	 */
-	public Boolean hasNormSanction(Integer normId, Integer sanctionId);
+	public boolean hasNormSanction(int normId, int sanctionId);
 	
 	
 	/**
@@ -190,7 +190,7 @@ public interface NormativeBoardInterface {
 	 *          Norm identification
 	 * @return List of sanctions associated to the norm
 	 */
-	public List<Integer> getNormSanctions(Integer normId);
+	public List<Integer> getNormSanctions(int normId);
 	
 	
 	/**

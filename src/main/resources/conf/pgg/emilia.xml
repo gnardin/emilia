@@ -2,11 +2,11 @@
 <emilia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="emilia.xsd">
 
-	<eventClassifierClass>examples.pgg.modules.classifier.EventClassifier</eventClassifierClass>
-	<normRecognitionClass>examples.pgg.modules.recognition.NormRecognitionController</normRecognitionClass>
-	<normAdoptionClass>examples.pgg.modules.adoption.NormAdoptionController</normAdoptionClass>
-	<normSalienceClass>examples.pgg.modules.salience.NormSalienceController</normSalienceClass>
-	<normEnforcementClass>examples.pgg.modules.enforcement.NormEnforcementController</normEnforcementClass>
-	<normComplianceClass>examples.pgg.modules.compliance.NormComplianceController</normComplianceClass>
-	<normativeBoardClass>examples.pgg.board.NormativeBoard</normativeBoardClass>
+	<eventClassifierClass>examples.pgg.classifier.EventClassifier</eventClassifierClass>
+	<normRecognitionClass>emilia.defaultImpl.modules.recognition.NormRecognitionController</normRecognitionClass>
+	<normAdoptionClass>emilia.defaultImpl.modules.adoption.NormAdoptionController</normAdoptionClass>
+	<normSalienceClass>emilia.defaultImpl.modules.salience.NormSalienceController</normSalienceClass>
+	<normEnforcementClass>emilia.defaultImpl.modules.enforcement.NormEnforcementController</normEnforcementClass>
+	<normComplianceClass>emilia.defaultImpl.modules.compliance.NormComplianceController</normComplianceClass>
+	<normativeBoardClass>emilia.defaultImpl.board.NormativeBoard</normativeBoardClass>
 </emilia>

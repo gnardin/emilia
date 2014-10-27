@@ -11,7 +11,7 @@ public interface NormInfoRepositoryInterface {
 	 *          Data type
 	 * @return none
 	 */
-	public Integer getNormInfo(Integer normId, DataType dataType);
+	public int getNormInfo(int normId, DataType dataType);
 	
 	
 	/**
@@ -22,5 +22,5 @@ public interface NormInfoRepositoryInterface {
 	 *          Event content
 	 * @return none
 	 */
-	public void increment(Integer normId, DataType dataType);
+	public void increment(int normId, DataType dataType);
 }

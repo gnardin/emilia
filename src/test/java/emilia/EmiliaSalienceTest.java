@@ -1,5 +1,9 @@
 package emilia;
 
+import emilia.defaultImpl.board.NormativeBoard;
+import emilia.defaultImpl.entity.norm.NormContent;
+import emilia.defaultImpl.entity.norm.NormEntity;
+import emilia.defaultImpl.modules.salience.NormSalienceController;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
 import emilia.entity.event.type.NormativeEvent;
@@ -7,12 +11,8 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.modules.salience.NormSalienceAbstract;
-import examples.pgg.board.NormativeBoard;
-import examples.pgg.entity.action.CooperateAction;
-import examples.pgg.entity.action.DefectAction;
-import examples.pgg.entity.norm.NormContent;
-import examples.pgg.entity.norm.NormEntity;
-import examples.pgg.modules.salience.NormSalienceController;
+import examples.pgg.actions.CooperateAction;
+import examples.pgg.actions.DefectAction;
 import java.util.Calendar;
 import org.junit.Test;
 

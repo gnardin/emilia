@@ -8,11 +8,11 @@ import org.slf4j.LoggerFactory;
 public class NormInfoEntity {
 	
 	@SuppressWarnings("unused")
-	private static final Logger			logger	= LoggerFactory
-																							.getLogger(NormInfoEntity.class);
+	private static final Logger				logger	= LoggerFactory
+																								.getLogger(NormInfoEntity.class);
 	
 	// <Type, Quantity>
-	private Map<DataType, Integer>	normInfo;
+	protected Map<DataType, Integer>	normInfo;
 	
 	
 	/**
@@ -39,8 +39,8 @@ public class NormInfoEntity {
 	 *          Increment the instances of data type
 	 * @return none
 	 */
-	public void increment(DataType dataType, Integer increment) {
-		if(this.normInfo.containsKey(dataType)) {
+	public void increment(DataType dataType, int increment) {
+		if (this.normInfo.containsKey(dataType)) {
 			this.normInfo.put(dataType, this.normInfo.get(dataType) + increment);
 		} else {
 			this.normInfo.put(dataType, 1);
@@ -55,10 +55,10 @@ public class NormInfoEntity {
 	 *          Data type
 	 * @return Number of data type
 	 */
-	public Integer getNumber(DataType dataType) {
+	public int getNumber(DataType dataType) {
 		Integer result = 0;
 		
-		if(this.normInfo.containsKey(dataType)) {
+		if (this.normInfo.containsKey(dataType)) {
 			result = this.normInfo.get(dataType);
 		}
 		
@@ -75,8 +75,8 @@ public class NormInfoEntity {
 	 *          Number of instances of data type
 	 * @return none
 	 */
-	public void setNumber(DataType dataType, Integer number) {
-		if(number < 0) {
+	public void setNumber(DataType dataType, int number) {
+		if (number < 0) {
 			number = 0;
 		}
 		this.normInfo.put(dataType, number);

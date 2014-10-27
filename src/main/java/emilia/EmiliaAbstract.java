@@ -15,7 +15,7 @@ public abstract class EmiliaAbstract {
 																								.getLogger(EmiliaAbstract.class);
 	
 	// Agent identification
-	protected Integer									agentId;
+	protected int											agentId;
 	
 	// Norm Enforcement callback
 	protected NormEnforcementListener	callback;
@@ -27,7 +27,7 @@ public abstract class EmiliaAbstract {
 	 * @param none
 	 * @return none
 	 */
-	public EmiliaAbstract(Integer agentId) {
+	public EmiliaAbstract(int agentId) {
 		this.agentId = agentId;
 		this.callback = null;
 	}
@@ -39,7 +39,7 @@ public abstract class EmiliaAbstract {
 	 * @param none
 	 * @return none
 	 */
-	public Integer getId() {
+	public int getId() {
 		return this.agentId;
 	}
 	
@@ -70,7 +70,7 @@ public abstract class EmiliaAbstract {
 	 *          Norm identification
 	 * @return Norm salience
 	 */
-	public abstract Double getNormSalience(Integer normId);
+	public abstract double getNormSalience(int normId);
 	
 	
 	/**
@@ -111,7 +111,7 @@ public abstract class EmiliaAbstract {
 	 *          Norm identification
 	 * @return Norm
 	 */
-	public abstract NormEntityAbstract getNorm(Integer normId);
+	public abstract NormEntityAbstract getNorm(int normId);
 	
 	
 	/**
@@ -123,7 +123,7 @@ public abstract class EmiliaAbstract {
 	 */
 	public void sendSanction(NormativeEventEntityAbstract event,
 			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
-		if((this.callback != null) && (sanction != null)) {
+		if ((this.callback != null) && (sanction != null)) {
 			this.callback.receive(event, norm, sanction);
 		}
 	}

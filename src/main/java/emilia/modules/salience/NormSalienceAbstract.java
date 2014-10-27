@@ -18,7 +18,7 @@ public abstract class NormSalienceAbstract implements EventListener {
 																										.getLogger(NormSalienceAbstract.class);
 	
 	// Agent identification
-	protected Integer											agentId;
+	protected int													agentId;
 	
 	// Normative information repository
 	protected NormInfoRepositoryInterface	repository;
@@ -52,7 +52,7 @@ public abstract class NormSalienceAbstract implements EventListener {
 	 *          Data Type
 	 * @return none
 	 */
-	public abstract void updateSalience(Integer normId);
+	public abstract void updateSalience(int normId);
 	
 	
 	@Override
@@ -119,7 +119,7 @@ public abstract class NormSalienceAbstract implements EventListener {
 				dataType = null;
 		}
 		
-		if((dataType != null) && (event instanceof NormativeEvent)) {
+		if ((dataType != null) && (event instanceof NormativeEvent)) {
 			NormativeEvent normativeEvent = (NormativeEvent) event;
 			this.repository.increment(normativeEvent.getNormId(), dataType);
 		}

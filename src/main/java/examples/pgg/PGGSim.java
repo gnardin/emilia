@@ -1,5 +1,10 @@
 package examples.pgg;
 
+import emilia.defaultImpl.entity.norm.NormContent;
+import emilia.defaultImpl.entity.norm.NormEntity;
+import emilia.defaultImpl.entity.sanction.SanctionContent;
+import emilia.defaultImpl.entity.sanction.SanctionContent.Sanction;
+import emilia.defaultImpl.entity.sanction.SanctionEntity;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
@@ -13,13 +18,8 @@ import emilia.entity.sanction.SanctionCategory.Polarity;
 import emilia.entity.sanction.SanctionCategory.Source;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
-import examples.pgg.entity.action.CooperateAction;
-import examples.pgg.entity.action.DefectAction;
-import examples.pgg.entity.norm.NormContent;
-import examples.pgg.entity.norm.NormEntity;
-import examples.pgg.entity.sanction.SanctionContent;
-import examples.pgg.entity.sanction.SanctionContent.Sanction;
-import examples.pgg.entity.sanction.SanctionEntity;
+import examples.pgg.actions.CooperateAction;
+import examples.pgg.actions.DefectAction;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
 import java.util.ArrayList;
@@ -36,23 +36,23 @@ public class PGGSim {
 																										.getLogger(PGGSim.class);
 	
 	// Constants
-	public final static Integer		numAgents				= 10;
+	public final static int				numAgents				= 10;
 	
-	public final static Integer		numIteractions	= 100000;
+	public final static int				numIteractions	= 100000;
 	
-	public final static Integer		contribution		= 20;
+	public final static int				contribution		= 20;
 	
-	public final static Double		costPunisher		= 3.0;
+	public final static double		costPunisher		= 3.0;
 	
-	public final static Double		costSanctioner	= 4.0;
+	public final static double		costSanctioner	= 4.0;
 	
-	public final static Double		costPunish			= 1.0;
+	public final static double		costPunish			= 1.0;
 	
-	public final static Double		costSanction		= 1.5;
+	public final static double		costSanction		= 1.5;
 	
-	public final static Double		multiplier			= 1.3;
+	public final static double		multiplier			= 1.3;
 	
-	public final static Double		initSalience		= 0.5;
+	public final static double		initSalience		= 0.5;
 	
 	public final static String		xmlFile					= "src/main/resources/conf/pgg/emilia.xml";
 	
@@ -83,34 +83,26 @@ public class PGGSim {
 	 * @return none
 	 */
 	public void init() {
-		NormContent normContent;
-		NormEntityAbstract norm;
-		
-		SanctionContent sanctionContent;
-		SanctionCategory sanctionCategory;
-		SanctionEntityAbstract sanction;
-		Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions;
-		List<SanctionEntityAbstract> sanctions;
 		
 		// Initialize agents
-		PGGAgent agent;
 		for(Integer i = 0; i < numAgents; i++) {
 			// COOPERATE norm
 			
-			normContent = new NormContent(new CooperateAction(), new DefectAction());
-			norm = new NormEntity(1, NormType.SOCIAL, NormSource.DISTRIBUTED,
-					NormStatus.GOAL, normContent, initSalience);
+			NormContent normContent = new NormContent(new CooperateAction(),
+					new DefectAction());
+			NormEntityAbstract norm = new NormEntity(1, NormType.SOCIAL,
+					NormSource.DISTRIBUTED, NormStatus.GOAL, normContent, initSalience);
 			
-			sanctions = new ArrayList<SanctionEntityAbstract>();
+			List<SanctionEntityAbstract> sanctions = new ArrayList<SanctionEntityAbstract>();
 			
 			// PUNISHMENT sanction
-			sanctionContent = new SanctionContent(Sanction.PUNISHMENT, costPunish,
-					costPunisher);
-			sanctionCategory = new SanctionCategory(Source.INFORMAL,
+			SanctionContent sanctionContent = new SanctionContent(
+					Sanction.PUNISHMENT, costPunish, costPunisher);
+			SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 					Discernibility.UNOBSTRUSIVE);
-			sanction = new SanctionEntity(1, sanctionCategory, SanctionStatus.ACTIVE,
-					sanctionContent);
+			SanctionEntityAbstract sanction = new SanctionEntity(1, sanctionCategory,
+					SanctionStatus.ACTIVE, sanctionContent);
 			sanctions.add(sanction);
 			
 			// SANCTION sanction
@@ -124,11 +116,11 @@ public class PGGSim {
 			sanctions.add(sanction);
 			
 			// Norms X Sanctions
-			normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
+			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
 			normsSanctions.put(norm, sanctions);
 			
-			agent = new PGGAgent(i, xmlFile, xsdFile, normsSanctions, this.rnd,
-					costPunish);
+			PGGAgent agent = new PGGAgent(i, xmlFile, xsdFile, normsSanctions,
+					this.rnd, costPunish);
 			this.agents.put(i, agent);
 		}
 	}
@@ -141,28 +133,22 @@ public class PGGSim {
 	 * @return none
 	 */
 	public void run() {
-		PGGAgent agent;
-		ActionAbstract action;
-		Map<Integer, SanctionEntityAbstract> punishment;
-		Map<Integer, SanctionEntityAbstract> punish;
-		Map<Integer, ActionAbstract> actions;
-		Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments;
-		Double payoff;
+		
 		for(Integer r = 0; r < numIteractions; r++) {
-			actions = new HashMap<Integer, ActionAbstract>();
-			punishments = new HashMap<Integer, Map<Integer, SanctionEntityAbstract>>();
+			Map<Integer, ActionAbstract> actions = new HashMap<Integer, ActionAbstract>();
+			Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments = new HashMap<Integer, Map<Integer, SanctionEntityAbstract>>();
 			
 			System.out.println();
 			System.out.println("------ ITERATION " + (r + 1) + " ------");
 			System.out.println();
 			
 			// Play PD
-			payoff = 0.0;
+			double payoff = 0.0;
 			for(Integer i = 0; i < numAgents; i++) {
-				agent = this.agents.get(i);
+				PGGAgent agent = this.agents.get(i);
 				agent.init();
-				action = agent.decideAction();
-				if(action instanceof CooperateAction) {
+				ActionAbstract action = agent.decideAction();
+				if (action instanceof CooperateAction) {
 					payoff += contribution;
 				}
 				actions.put(i, action);
@@ -176,7 +162,7 @@ public class PGGSim {
 			payoff *= multiplier;
 			payoff /= numAgents;
 			for(Integer i = 0; i < numAgents; i++) {
-				agent = this.agents.get(i);
+				PGGAgent agent = this.agents.get(i);
 				agent.setPayoff(payoff);
 				
 				// Update agents about everyone's action
@@ -185,11 +171,12 @@ public class PGGSim {
 			
 			// Get punishments
 			for(Integer punisher = 0; punisher < numAgents; punisher++) {
-				agent = this.agents.get(punisher);
-				punishment = agent.decidePunish();
+				PGGAgent agent = this.agents.get(punisher);
+				Map<Integer, SanctionEntityAbstract> punishment = agent.decidePunish();
 				
 				for(Integer punished : punishment.keySet()) {
-					if(punishments.containsKey(punished)) {
+					Map<Integer, SanctionEntityAbstract> punish;
+					if (punishments.containsKey(punished)) {
 						punish = punishments.get(punished);
 					} else {
 						punish = new HashMap<Integer, SanctionEntityAbstract>();
@@ -202,14 +189,14 @@ public class PGGSim {
 			
 			// Punish
 			for(Integer i = 0; i < numAgents; i++) {
-				agent = this.agents.get(i);
+				PGGAgent agent = this.agents.get(i);
 				agent.updatePunishment(punishments);
 			}
 			
 			// Payoff
 			System.out.println();
 			for(Integer i = 0; i < numAgents; i++) {
-				agent = this.agents.get(i);
+				PGGAgent agent = this.agents.get(i);
 				System.out.println("AgentId [" + i + "] SALIENCE ["
 						+ agent.getSalience() + "]");
 			}

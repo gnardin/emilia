@@ -1,6 +1,10 @@
 package examples.ijcai11.modules.enforcement;
 
 import emilia.board.NormativeBoardInterface;
+import emilia.defaultImpl.entity.norm.NormContent;
+import emilia.defaultImpl.entity.sanction.SanctionContent;
+import emilia.defaultImpl.entity.sanction.SanctionContent.Sanction;
+import emilia.defaultImpl.entity.sanction.SanctionEntity;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.type.ActionEvent;
 import emilia.entity.norm.NormEntityAbstract;
@@ -10,10 +14,6 @@ import emilia.modules.enforcement.DeviationAbstract;
 import emilia.modules.enforcement.DeviationAbstract.Type;
 import emilia.modules.enforcement.NormEnforcementAbstract;
 import emilia.modules.enforcement.NormInfoEntityInterface;
-import examples.ijcai11.entity.norm.NormContent;
-import examples.ijcai11.entity.sanction.SanctionContent;
-import examples.ijcai11.entity.sanction.SanctionContent.Sanction;
-import examples.ijcai11.entity.sanction.SanctionEntity;
 import cern.jet.random.Uniform;
 import cern.jet.random.engine.MersenneTwister;
 import java.util.ArrayList;
@@ -33,13 +33,13 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	
 	private Uniform									rnd;
 	
-	private Integer									defectors;
+	private int											defectors;
 	
-	private Integer									lastDefectors;
+	private int											lastDefectors;
 	
-	private Integer									tolerance;
+	private int											tolerance;
 	
-	private Double									delta_cost;
+	private double									delta_cost;
 	
 	private NormativeBoardInterface	normativeBoard;
 	
@@ -70,19 +70,17 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 		
 		Map<NormEntityAbstract, DeviationAbstract> deviations = new HashMap<NormEntityAbstract, DeviationAbstract>();
 		
-		NormContent normContent;
-		ActionEvent actionEvent;
 		for(NormEntityAbstract norm : normSanctions.keySet()) {
-			if(norm.getContent() instanceof NormContent) {
-				normContent = (NormContent) norm.getContent();
+			if (norm.getContent() instanceof NormContent) {
+				NormContent normContent = (NormContent) norm.getContent();
 				
-				if(event instanceof ActionEvent) {
-					actionEvent = (ActionEvent) event;
+				if (event instanceof ActionEvent) {
+					ActionEvent actionEvent = (ActionEvent) event;
 					
-					if(actionEvent.getAction().getDescription()
+					if (actionEvent.getAction().getDescription()
 							.equalsIgnoreCase(normContent.getAction().getDescription())) {
 						deviations.put(norm, new ComplianceDeviation());
-					} else if(actionEvent.getAction().getDescription()
+					} else if (actionEvent.getAction().getDescription()
 							.equalsIgnoreCase(normContent.getNotAction().getDescription())) {
 						deviations.put(norm, new ViolationDeviation());
 					}
@@ -98,62 +96,58 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	public void adapt(NormativeEventEntityAbstract event,
 			NormEntityAbstract norm, DeviationAbstract evaluation) {
 		
-		Integer normId = norm.getId();
+		int normId = norm.getId();
 		
 		NormInfoEntityContent normInfo;
-		if(this.memory.hasNormInfo(normId)) {
+		if (this.memory.hasNormInfo(normId)) {
 			normInfo = (NormInfoEntityContent) this.memory.getNormInfo(normId);
 		} else {
 			normInfo = new NormInfoEntityContent();
 		}
 		
-		if(evaluation.getType().equals(DeviationAbstract.Type.COMPLIANCE)) {
+		if (evaluation.getType().equals(DeviationAbstract.Type.COMPLIANCE)) {
 			normInfo.setCompliants(normInfo.getCompliants() + 1);
-		} else if(evaluation.getType().equals(DeviationAbstract.Type.VIOLATION)) {
+		} else if (evaluation.getType().equals(DeviationAbstract.Type.VIOLATION)) {
 			normInfo.setDefectors(normInfo.getDefectors() + 1);
 		}
 		
 		this.memory.setNormInfo(normId, normInfo);
 		
-		if(event.hasContextAttr(EVALUATE)) {
+		if (event.hasContextAttr(EVALUATE)) {
 			normInfo = (NormInfoEntityContent) this.memory.getNormInfo(normId);
 			
 			this.defectors = normInfo.getDefectors();
-			Double delta = 0.0;
-			if((this.lastDefectors <= this.defectors)
+			double delta = 0.0;
+			if ((this.lastDefectors <= this.defectors)
 					&& (this.defectors > this.tolerance)) {
 				delta = this.delta_cost;
-			} else if((this.lastDefectors > this.defectors)
+			} else if ((this.lastDefectors > this.defectors)
 					|| (this.defectors < this.tolerance)) {
 				delta = (-1) * this.delta_cost;
 			}
 			
-			SanctionEntity newSanction;
-			SanctionContent sanctionContent;
-			SanctionContent newSanctionContent;
-			Double newSanctionAmount;
-			List<SanctionEntityAbstract> newSanctions;
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> update = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions = this.normativeBoard
 					.getNormsSanctions();
 			for(NormEntityAbstract normEntity : normsSanctions.keySet()) {
 				
-				newSanctions = new ArrayList<SanctionEntityAbstract>();
+				List<SanctionEntityAbstract> newSanctions = new ArrayList<SanctionEntityAbstract>();
 				for(SanctionEntityAbstract sanction : normsSanctions.get(normEntity)) {
-					sanctionContent = (SanctionContent) sanction.getContent();
+					SanctionContent sanctionContent = (SanctionContent) sanction
+							.getContent();
 					
 					// Update sanction information, except Message sanction
-					if(!sanctionContent.getAction().equals(Sanction.MESSAGE)) {
-						newSanctionAmount = sanctionContent.getAmount() + delta;
-						if(newSanctionAmount < 0) {
+					if (!sanctionContent.getAction().equals(Sanction.MESSAGE)) {
+						double newSanctionAmount = sanctionContent.getAmount() + delta;
+						if (newSanctionAmount < 0) {
 							newSanctionAmount = 0.0;
 						}
 						
-						newSanctionContent = new SanctionContent(
+						SanctionContent newSanctionContent = new SanctionContent(
 								sanctionContent.getAction(), newSanctionAmount,
 								sanctionContent.getCost());
 						
-						newSanction = new SanctionEntity(sanction.getId(),
+						SanctionEntity newSanction = new SanctionEntity(sanction.getId(),
 								sanction.getCategory(), sanction.getStatus(),
 								newSanctionContent);
 						newSanctions.add(newSanction);
@@ -174,20 +168,20 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 		
 		List<SanctionEntityAbstract> enforceSanctions = new ArrayList<SanctionEntityAbstract>();
 		
-		if(event.hasContextAttr(EVALUATE)) {
-			Integer normId = norm.getId();
+		if (event.hasContextAttr(EVALUATE)) {
+			int normId = norm.getId();
 			NormInfoEntityContent normContent = (NormInfoEntityContent) this.memory
 					.getNormInfo(normId);
 			
-			if((evaluation.getType().equals(Type.VIOLATION))
+			if ((evaluation.getType().equals(Type.VIOLATION))
 					&& (!sanctions.isEmpty())) {
 				
-				if(norm.getStatus().equals(NormStatus.GOAL)) {
+				if (norm.getStatus().equals(NormStatus.GOAL)) {
 					
 					Sanction type;
-					Double normSalience = this.normativeBoard.getSalience(normId);
+					double normSalience = this.normativeBoard.getSalience(normId);
 					// SEND A SANCTION
-					if(this.rnd.nextDouble() < normSalience) {
+					if (this.rnd.nextDouble() < normSalience) {
 						type = Sanction.SANCTION;
 						
 						// SEND A MESSAGE
@@ -195,25 +189,23 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 						type = Sanction.MESSAGE;
 					}
 					
-					SanctionContent content;
 					for(SanctionEntityAbstract sanction : sanctions) {
-						content = (SanctionContent) sanction.getContent();
-						if(content.getAction().equals(type)) {
+						SanctionContent content = (SanctionContent) sanction.getContent();
+						if (content.getAction().equals(type)) {
 							enforceSanctions.add(sanction);
 						}
 					}
 				} else {
 					
-					Double probPunishment = (double) normContent.getDefectors()
+					double probPunishment = (double) normContent.getDefectors()
 							/ (double) (normContent.getCompliants() + normContent
 									.getDefectors());
 					
 					// SELECT A PUNISHMENT
-					if(this.rnd.nextDouble() < probPunishment) {
-						SanctionContent content;
+					if (this.rnd.nextDouble() < probPunishment) {
 						for(SanctionEntityAbstract sanction : sanctions) {
-							content = (SanctionContent) sanction.getContent();
-							if(content.getAction().equals(Sanction.PUNISHMENT)) {
+							SanctionContent content = (SanctionContent) sanction.getContent();
+							if (content.getAction().equals(Sanction.PUNISHMENT)) {
 								enforceSanctions.add(sanction);
 							}
 						}
@@ -235,9 +227,9 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 	@Override
 	public void update() {
 		Map<Integer, NormInfoEntityInterface> normInfo = this.memory.getNormsInfo();
-		NormInfoEntityContent normContent;
 		for(Integer normId : normInfo.keySet()) {
-			normContent = (NormInfoEntityContent) normInfo.get(normId);
+			NormInfoEntityContent normContent = (NormInfoEntityContent) normInfo
+					.get(normId);
 			normContent.reset();
 			this.memory.setNormInfo(normId, normContent);
 		}

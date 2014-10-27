@@ -4,9 +4,9 @@ import emilia.modules.enforcement.NormInfoEntityInterface;
 
 public class NormInfoEntityContent implements NormInfoEntityInterface {
 	
-	private Integer	numCompliants;
+	private int	numCompliants;
 	
-	private Integer	numDefectors;
+	private int	numDefectors;
 	
 	
 	/**
@@ -27,7 +27,7 @@ public class NormInfoEntityContent implements NormInfoEntityInterface {
 	 * @param none
 	 * @return Number of compliants
 	 */
-	public Integer getCompliants() {
+	public int getCompliants() {
 		return this.numCompliants;
 	}
 	
@@ -39,7 +39,7 @@ public class NormInfoEntityContent implements NormInfoEntityInterface {
 	 *          Number of compliants
 	 * @return none
 	 */
-	public void setCompliants(Integer numCompliants) {
+	public void setCompliants(int numCompliants) {
 		this.numCompliants = numCompliants;
 	}
 	
@@ -50,7 +50,7 @@ public class NormInfoEntityContent implements NormInfoEntityInterface {
 	 * @param none
 	 * @return Number of defectors
 	 */
-	public Integer getDefectors() {
+	public int getDefectors() {
 		return this.numDefectors;
 	}
 	
@@ -62,7 +62,7 @@ public class NormInfoEntityContent implements NormInfoEntityInterface {
 	 *          Number of defectors
 	 * @return none
 	 */
-	public void setDefectors(Integer numDefectors) {
+	public void setDefectors(int numDefectors) {
 		this.numDefectors = numDefectors;
 	}
 	

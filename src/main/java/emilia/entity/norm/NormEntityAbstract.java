@@ -12,18 +12,22 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 																					.getLogger(NormEntityAbstract.class);
 	
 	public enum NormType {
-		LEGAL, SOCIAL;
+		LEGAL,
+		SOCIAL;
 	}
 	
 	public enum NormSource {
-		AUTHORITY, DISTRIBUTED;
+		AUTHORITY,
+		DISTRIBUTED;
 	}
 	
 	public enum NormStatus {
-		INACTIVE, BELIEF, GOAL;
+		INACTIVE,
+		BELIEF,
+		GOAL;
 	}
 	
-	protected Integer								id;
+	protected int										id;
 	
 	protected NormType							type;
 	
@@ -33,7 +37,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	
 	protected NormContentInterface	content;
 	
-	protected Double								salience;
+	protected double								salience;
 	
 	
 	/**
@@ -42,7 +46,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Norm identification
 	 */
-	public Integer getId() {
+	public int getId() {
 		return this.id;
 	}
 	
@@ -54,7 +58,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 *          Norm identification
 	 * @return none
 	 */
-	public void setId(Integer id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	
@@ -157,7 +161,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 * @param none
 	 * @return Norm salience
 	 */
-	public Double getSalience() {
+	public double getSalience() {
 		return this.salience;
 	}
 	
@@ -169,7 +173,7 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	 *          Norm salience
 	 * @return none
 	 */
-	public void setSalience(Double salience) {
+	public void setSalience(double salience) {
 		this.salience = salience;
 	}
 	
@@ -178,11 +182,11 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if(this == obj) {
+		if (this == obj) {
 			result = true;
-		} else if((obj != null) && (obj.getClass() == this.getClass())) {
+		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
 			NormEntityAbstract norm = (NormEntityAbstract) obj;
-			if(this.getId().intValue() == norm.getId().intValue()) {
+			if (this.getId() == norm.getId()) {
 				result = true;
 			}
 		}

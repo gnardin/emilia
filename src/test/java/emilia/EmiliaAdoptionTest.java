@@ -3,14 +3,14 @@ package emilia;
 import static org.junit.Assert.assertEquals;
 import emilia.board.NormativeBoardEventType;
 import emilia.board.NormativeBoardInterface;
+import emilia.defaultImpl.board.NormativeBoard;
+import emilia.defaultImpl.modules.adoption.NormAdoptionController;
 import emilia.entity.norm.NormContentInterface;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.modules.adoption.NormAdoptionAbstract;
-import examples.pgg.board.NormativeBoard;
-import examples.pgg.modules.adoption.NormAdoptionController;
 import java.util.ArrayList;
 import java.util.Arrays;
 import org.junit.Before;
@@ -71,16 +71,15 @@ class NormContent implements NormContentInterface {
 	
 	
 	@Override
-	public Boolean match(Object value) {
-		Boolean result = false;
+	public boolean match(Object value) {
 		
-		if(value instanceof String) {
-			if(this.content.equals((String) value)) {
+		if (value instanceof String) {
+			if (this.content.equals((String) value)) {
 				return true;
 			}
 		}
 		
-		return result;
+		return false;
 	}
 	
 	
