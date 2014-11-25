@@ -182,11 +182,11 @@ public abstract class NormEntityAbstract extends EntityAbstract implements
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if (this == obj) {
+		if(this == obj) {
 			result = true;
-		} else if ((obj != null) && (obj.getClass() == this.getClass())) {
+		} else if((obj != null) && (obj.getClass() == this.getClass())) {
 			NormEntityAbstract norm = (NormEntityAbstract) obj;
-			if (this.getId() == norm.getId()) {
+			if(this.getId() == norm.getId()) {
 				result = true;
 			}
 		}

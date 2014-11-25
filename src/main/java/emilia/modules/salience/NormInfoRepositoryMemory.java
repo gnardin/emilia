@@ -30,7 +30,7 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	public int getNormInfo(int normId, DataType dataType) {
 		Integer result = 0;
 		
-		if (this.normativeInfoRep.containsKey(normId)) {
+		if(this.normativeInfoRep.containsKey(normId)) {
 			NormInfoEntity normInfoEntity = this.normativeInfoRep.get(normId);
 			result = normInfoEntity.getNumber(dataType);
 		}
@@ -43,7 +43,7 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 	public void increment(int normId, DataType dataType) {
 		
 		NormInfoEntity normInfoEntity;
-		if (this.normativeInfoRep.containsKey(normId)) {
+		if(this.normativeInfoRep.containsKey(normId)) {
 			normInfoEntity = this.normativeInfoRep.get(normId);
 		} else {
 			normInfoEntity = new NormInfoEntity();

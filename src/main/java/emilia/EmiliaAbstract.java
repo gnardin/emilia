@@ -123,7 +123,7 @@ public abstract class EmiliaAbstract {
 	 */
 	public void sendSanction(NormativeEventEntityAbstract event,
 			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
-		if ((this.callback != null) && (sanction != null)) {
+		if((this.callback != null) && (sanction != null)) {
 			this.callback.receive(event, norm, sanction);
 		}
 	}

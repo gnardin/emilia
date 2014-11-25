@@ -50,7 +50,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public NormEntityAbstract getNorm(int normId) {
 		NormEntityAbstract norm = null;
 		
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			norm = this.norms.get(normId);
 		}
 		
@@ -62,7 +62,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public List<NormEntityAbstract> getNorms() {
 		List<NormEntityAbstract> normList = new ArrayList<NormEntityAbstract>();
 		
-		if (!this.norms.isEmpty()) {
+		if(!this.norms.isEmpty()) {
 			normList.addAll(this.norms.values());
 		}
 		
@@ -76,7 +76,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		
 		NormEntityAbstract oldNorm;
 		// Update a norm
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			oldNorm = this.norms.put(normId, norm);
 			
 			this.processNormativeEvent(NormativeBoardEventType.UPDATE_NORM, oldNorm,
@@ -95,9 +95,9 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	@Override
 	public void removeNorm(int normId) {
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			NormEntityAbstract oldNorm = this.norms.remove(normId);
-			if (this.normSanctions.containsKey(normId)) {
+			if(this.normSanctions.containsKey(normId)) {
 				this.normSanctions.remove(normId);
 			}
 			
@@ -110,7 +110,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	@Override
 	public boolean hasNorm(int normId) {
 		
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			return true;
 		}
 		
@@ -122,7 +122,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public double getSalience(int normId) {
 		double salience = 0.0;
 		
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			salience = this.norms.get(normId).getSalience();
 		}
 		
@@ -132,7 +132,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	@Override
 	public void setSalience(int normId, double salience) {
-		if (this.norms.containsKey(normId)) {
+		if(this.norms.containsKey(normId)) {
 			NormEntityAbstract newNorm = this.norms.get(normId);
 			NormEntityAbstract oldNorm = newNorm.clone();
 			newNorm.setSalience(salience);
@@ -147,7 +147,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public SanctionEntityAbstract getSanction(int sanctionId) {
 		SanctionEntityAbstract sanction = null;
 		
-		if (this.sanctions.containsKey(sanctionId)) {
+		if(this.sanctions.containsKey(sanctionId)) {
 			sanction = this.sanctions.get(sanctionId);
 		}
 		
@@ -159,7 +159,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public List<SanctionEntityAbstract> getSanctions() {
 		List<SanctionEntityAbstract> sanctionList = new ArrayList<SanctionEntityAbstract>();
 		
-		if (!this.sanctions.isEmpty()) {
+		if(!this.sanctions.isEmpty()) {
 			sanctionList.addAll(this.sanctions.values());
 		}
 		
@@ -175,13 +175,13 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	@Override
 	public void removeSanction(int sanctionId) {
-		if (this.sanctions.containsKey(sanctionId)) {
+		if(this.sanctions.containsKey(sanctionId)) {
 			this.sanctions.remove(sanctionId);
 			
 			for(Integer normId : this.normSanctions.keySet()) {
 				List<Integer> sanctions = this.normSanctions.get(normId);
 				
-				if (sanctions.contains(sanctionId)) {
+				if(sanctions.contains(sanctionId)) {
 					sanctions.remove(sanctionId);
 					this.normSanctions.put(normId, sanctions);
 				}
@@ -192,7 +192,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	
 	@Override
 	public boolean hasSanction(int sanctionId) {
-		if (this.sanctions.containsKey(sanctionId)) {
+		if(this.sanctions.containsKey(sanctionId)) {
 			return true;
 		}
 		
@@ -204,11 +204,11 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public List<SanctionEntityAbstract> getSanctions(int normId) {
 		List<SanctionEntityAbstract> sanctionEntities = new ArrayList<SanctionEntityAbstract>();
 		
-		if (this.normSanctions.containsKey(normId)) {
+		if(this.normSanctions.containsKey(normId)) {
 			List<Integer> sanctions = this.normSanctions.get(normId);
 			
 			for(Integer sanctionId : sanctions) {
-				if (this.sanctions.containsKey(sanctionId)) {
+				if(this.sanctions.containsKey(sanctionId)) {
 					sanctionEntities.add(this.sanctions.get(sanctionId));
 				}
 			}
@@ -222,9 +222,9 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	public void setNormSanction(int normId, int sanctionId) {
 		
 		List<Integer> sanctions;
-		if (this.normSanctions.containsKey(normId)) {
+		if(this.normSanctions.containsKey(normId)) {
 			sanctions = this.normSanctions.get(normId);
-			if (!sanctions.contains(sanctionId)) {
+			if(!sanctions.contains(sanctionId)) {
 				sanctions.add(sanctionId);
 			}
 			this.normSanctions.put(normId, sanctions);
@@ -239,9 +239,9 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	@Override
 	public void removeNormSanction(int normId, int sanctionId) {
 		
-		if (this.normSanctions.containsKey(normId)) {
+		if(this.normSanctions.containsKey(normId)) {
 			List<Integer> sanctions = this.normSanctions.get(normId);
-			if (sanctions.contains(sanctionId)) {
+			if(sanctions.contains(sanctionId)) {
 				sanctions.remove(sanctionId);
 			}
 			this.normSanctions.put(normId, sanctions);
@@ -252,9 +252,9 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 	@Override
 	public boolean hasNormSanction(int normId, int sanctionId) {
 		
-		if (this.normSanctions.containsKey(normId)) {
+		if(this.normSanctions.containsKey(normId)) {
 			List<Integer> sanctions = this.normSanctions.get(normId);
-			if (sanctions.contains(sanctionId)) {
+			if(sanctions.contains(sanctionId)) {
 				return true;
 			}
 		}
@@ -268,7 +268,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		
 		List<Integer> sanctions = new ArrayList<Integer>();
 		
-		if (this.normSanctions.containsKey(normId)) {
+		if(this.normSanctions.containsKey(normId)) {
 			sanctions = this.normSanctions.get(normId);
 		}
 		
@@ -282,12 +282,12 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		
 		for(NormEntityAbstract norm : normsSanctions.keySet()) {
 			int normId = norm.getId();
-			if (!this.hasNorm(normId)) {
+			if(!this.hasNorm(normId)) {
 				List<SanctionEntityAbstract> sanctions = normsSanctions.get(norm);
 				this.setNorm(norm);
 				for(SanctionEntityAbstract sanction : sanctions) {
 					int sanctionId = sanction.getId();
-					if (!this.hasSanction(sanctionId)) {
+					if(!this.hasSanction(sanctionId)) {
 						this.setSanction(sanction);
 					}
 					this.setNormSanction(normId, sanctionId);
@@ -326,7 +326,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 				this.setSanction(sanction);
 				int sanctionId = sanction.getId();
 				
-				if (!this.getNormSanctions(normId).contains(sanctionId)) {
+				if(!this.getNormSanctions(normId).contains(sanctionId)) {
 					this.setNormSanction(normId, sanctionId);
 				}
 			}
@@ -340,7 +340,7 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 		
 		List<NormativeBoardListener> listener;
 		for(NormativeBoardEventType type : types) {
-			if (this.callbacks.containsKey(type)) {
+			if(this.callbacks.containsKey(type)) {
 				listener = this.callbacks.get(type);
 			} else {
 				listener = new ArrayList<NormativeBoardListener>();
@@ -357,10 +357,10 @@ public abstract class NormativeBoardAbstract implements NormativeBoardInterface 
 			NormativeBoardListener normListener) {
 		
 		for(NormativeBoardEventType type : types) {
-			if (this.callbacks.containsKey(type)) {
+			if(this.callbacks.containsKey(type)) {
 				List<NormativeBoardListener> listener = this.callbacks.get(type);
 				
-				if (listener.contains(normListener)) {
+				if(listener.contains(normListener)) {
 					listener.remove(normListener);
 					this.callbacks.put(type, listener);
 				}

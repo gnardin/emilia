@@ -172,7 +172,7 @@ public abstract class NormativeEventEntityAbstract {
 	public Object getContextAttribute(String attr) {
 		Object result = null;
 		
-		if (this.contextAttrs.containsKey(attr)) {
+		if(this.contextAttrs.containsKey(attr)) {
 			result = this.contextAttrs.get(attr);
 		}
 		

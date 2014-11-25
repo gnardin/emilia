@@ -41,7 +41,7 @@ public class SanctionInfoRepositoryMemory implements
 	public NormInfoEntityInterface getNormInfo(int normId) {
 		NormInfoEntityInterface normInfo = null;
 		
-		if (this.normInfoRep.containsKey(normId)) {
+		if(this.normInfoRep.containsKey(normId)) {
 			normInfo = this.normInfoRep.get(normId);
 		}
 		
@@ -65,11 +65,11 @@ public class SanctionInfoRepositoryMemory implements
 	public SanctionInfoEntityInterface getSanctionInfo(int normId, int sanctionId) {
 		
 		SanctionInfoEntityInterface sanctionEval = null;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			Map<Integer, SanctionInfoEntityInterface> sanctionInfo = this.sanctionInfoRep
 					.get(normId);
 			
-			if (sanctionInfo.containsKey(sanctionId)) {
+			if(sanctionInfo.containsKey(sanctionId)) {
 				sanctionEval = sanctionInfo.get(sanctionId);
 			}
 		}
@@ -82,7 +82,7 @@ public class SanctionInfoRepositoryMemory implements
 	public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(int normId) {
 		
 		Map<Integer, SanctionInfoEntityInterface> sanctionInfo = null;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		}
 		
@@ -95,7 +95,7 @@ public class SanctionInfoRepositoryMemory implements
 			SanctionInfoEntityInterface evaluation) {
 		
 		Map<Integer, SanctionInfoEntityInterface> sanctionInfo;
-		if (this.sanctionInfoRep.containsKey(normId)) {
+		if(this.sanctionInfoRep.containsKey(normId)) {
 			sanctionInfo = this.sanctionInfoRep.get(normId);
 		} else {
 			sanctionInfo = new HashMap<Integer, SanctionInfoEntityInterface>();

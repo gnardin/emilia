@@ -85,7 +85,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public boolean init() {
 		boolean initialize = false;
 		
-		if (EmiliaConf.isValid(xmlFilename, xsdFilename)) {
+		if(EmiliaConf.isValid(xmlFilename, xsdFilename)) {
 			this.conf = EmiliaConf.getConf(xmlFilename, xsdFilename);
 			// Event Classifier
 			logger.debug("Initializing [EVENT CLASSIFIER]");
@@ -423,7 +423,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public void input(Object event) {
 		NormativeEventEntityAbstract normativeEvent = this.eventClassifier
 				.classify(event);
-		if (normativeEvent != null) {
+		if(normativeEvent != null) {
 			this.normRecognition.matchEvent(normativeEvent);
 		}
 	}
@@ -448,7 +448,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public NormEntityAbstract getNorm(int normId) {
 		NormEntityAbstract norm = null;
 		
-		if (this.normativeBoard.hasNorm(normId)) {
+		if(this.normativeBoard.hasNorm(normId)) {
 			norm = this.normativeBoard.getNorm(normId);
 		}
 		

@@ -148,7 +148,7 @@ public class PGGSim {
 				PGGAgent agent = this.agents.get(i);
 				agent.init();
 				ActionAbstract action = agent.decideAction();
-				if (action instanceof CooperateAction) {
+				if(action instanceof CooperateAction) {
 					payoff += contribution;
 				}
 				actions.put(i, action);
@@ -176,7 +176,7 @@ public class PGGSim {
 				
 				for(Integer punished : punishment.keySet()) {
 					Map<Integer, SanctionEntityAbstract> punish;
-					if (punishments.containsKey(punished)) {
+					if(punishments.containsKey(punished)) {
 						punish = punishments.get(punished);
 					} else {
 						punish = new HashMap<Integer, SanctionEntityAbstract>();

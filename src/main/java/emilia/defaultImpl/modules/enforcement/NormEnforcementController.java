@@ -51,16 +51,16 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 		Map<NormEntityAbstract, DeviationAbstract> deviations = new HashMap<NormEntityAbstract, DeviationAbstract>();
 		
 		for(NormEntityAbstract norm : normSanctions.keySet()) {
-			if (norm.getContent() instanceof NormContent) {
+			if(norm.getContent() instanceof NormContent) {
 				NormContent normContent = (NormContent) norm.getContent();
 				
-				if (event instanceof ActionEvent) {
+				if(event instanceof ActionEvent) {
 					ActionEvent actionEvent = (ActionEvent) event;
 					
-					if (actionEvent.getAction().getDescription()
+					if(actionEvent.getAction().getDescription()
 							.equalsIgnoreCase(normContent.getAction().getDescription())) {
 						deviations.put(norm, new ComplianceDeviation());
-					} else if (actionEvent.getAction().getDescription()
+					} else if(actionEvent.getAction().getDescription()
 							.equalsIgnoreCase(normContent.getNotAction().getDescription())) {
 						deviations.put(norm, new ViolationDeviation());
 					}
@@ -80,7 +80,7 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 		List<SanctionEntityAbstract> enforceSanctions = new ArrayList<SanctionEntityAbstract>();
 		
 		Polarity polarity;
-		if (evaluation.getType().equals(Type.VIOLATION)) {
+		if(evaluation.getType().equals(Type.VIOLATION)) {
 			polarity = Polarity.NEGATIVE;
 		} else {
 			polarity = Polarity.POSITIVE;
@@ -88,12 +88,12 @@ public class NormEnforcementController extends NormEnforcementAbstract {
 		
 		List<SanctionEntityAbstract> newSanctions = new ArrayList<SanctionEntityAbstract>();
 		for(SanctionEntityAbstract sanction : sanctions) {
-			if (sanction.getCategory().getPolarity().equals(polarity)) {
+			if(sanction.getCategory().getPolarity().equals(polarity)) {
 				newSanctions.add(sanction);
 			}
 		}
 		
-		if (newSanctions.size() > 0) {
+		if(newSanctions.size() > 0) {
 			SanctionEntityAbstract sanction = newSanctions.get(this.ufDist
 					.nextIntFromTo(0, (newSanctions.size() - 1)));
 			enforceSanctions.add(sanction);

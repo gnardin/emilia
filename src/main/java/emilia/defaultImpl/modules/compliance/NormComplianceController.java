@@ -35,7 +35,7 @@ public class NormComplianceController extends NormComplianceAbstract {
 	 */
 	@Override
 	public double getNormativeDrive(int normId) {
-		if (this.normativeBoard.hasNorm(normId)) {
+		if(this.normativeBoard.hasNorm(normId)) {
 			return this.normativeBoard.getSalience(normId);
 		}
 		

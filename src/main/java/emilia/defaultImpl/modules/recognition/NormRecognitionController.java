@@ -33,15 +33,15 @@ public class NormRecognitionController extends NormRecognitionAbstract {
 		this.recognizeNorm(event);
 		this.recognizeSanction(event);
 		
-		if (event instanceof ActionEvent) {
+		if(event instanceof ActionEvent) {
 			String action = ((ActionEvent) event).getAction().getDescription();
 			norms = this.normativeBoard.match(action);
-		} else if (event instanceof NormativeEvent) {
+		} else if(event instanceof NormativeEvent) {
 			int normId = ((NormativeEvent) event).getNormId();
 			norms = this.normativeBoard.match(normId);
 		}
 		
-		if (norms != null) {
+		if(norms != null) {
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
 			
 			for(NormEntityAbstract norm : norms) {
@@ -49,7 +49,7 @@ public class NormRecognitionController extends NormRecognitionAbstract {
 						.getSanctions(norm.getId());
 				normSanctions.put(norm, sanctions);
 			}
-			if (normSanctions.size() > 0) {
+			if(normSanctions.size() > 0) {
 				this.processEvent(event, normSanctions);
 			}
 		}

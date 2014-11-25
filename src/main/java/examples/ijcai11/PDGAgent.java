@@ -100,7 +100,7 @@ public class PDGAgent implements NormEnforcementListener {
 		this.punishments = new HashMap<Integer, SanctionEntityAbstract>();
 		this.neighborsAction = new HashMap<Integer, ActionAbstract>();
 		
-		if (this.rnd.nextIntFromTo(0, 1) == 0) {
+		if(this.rnd.nextIntFromTo(0, 1) == 0) {
 			this.action = COOPERATE;
 		} else {
 			this.action = DEFECT;
@@ -185,26 +185,26 @@ public class PDGAgent implements NormEnforcementListener {
 	public ActionAbstract decideAction() {
 		
 		// Cooperation probability
-		if (this.rnd.nextDouble() > NOISE) {
+		if(this.rnd.nextDouble() > NOISE) {
 			double probCooperate = this.selfInterestedDrive;
 			
 			// Include NID
 			NormEntity norm = (NormEntity) this.normative.getNorm(NORMID);
-			if ((norm != null) && (norm.getStatus().equals(NormStatus.GOAL))) {
+			if((norm != null) && (norm.getStatus().equals(NormStatus.GOAL))) {
 				probCooperate += this.normativeDrive;
 			}
 			
 			probCooperate = Math.max(0.0, Math.min(probCooperate, 1.0));
 			
 			// Decide action
-			if (this.rnd.nextDouble() < probCooperate) {
+			if(this.rnd.nextDouble() < probCooperate) {
 				this.action = COOPERATE;
 			} else {
 				this.action = DEFECT;
 			}
 		} else {
 			// Random choice
-			if (this.rnd.nextIntFromTo(0, 1) == 0) {
+			if(this.rnd.nextIntFromTo(0, 1) == 0) {
 				this.action = COOPERATE;
 			} else {
 				this.action = DEFECT;
@@ -236,8 +236,8 @@ public class PDGAgent implements NormEnforcementListener {
 		for(Integer neighborId : this.neighborsAction.keySet()) {
 			act = this.neighborsAction.get(neighborId);
 			
-			if (!player.equals(neighborId)) {
-				if (act.equals(COOPERATE)) {
+			if(!player.equals(neighborId)) {
+				if(act.equals(COOPERATE)) {
 					actEvent = new ActionEvent(Calendar.getInstance().getTimeInMillis(),
 							neighborId, this.agentId, this.agentId, COOPERATE);
 				} else {
@@ -249,10 +249,10 @@ public class PDGAgent implements NormEnforcementListener {
 			}
 		}
 		
-		if (this.neighborsAction.containsKey(player)) {
+		if(this.neighborsAction.containsKey(player)) {
 			act = this.neighborsAction.get(player);
 			
-			if (act.equals(COOPERATE)) {
+			if(act.equals(COOPERATE)) {
 				actEvent = new ActionEvent(Calendar.getInstance().getTimeInMillis(),
 						player, this.agentId, this.agentId, COOPERATE);
 			} else {
@@ -279,7 +279,7 @@ public class PDGAgent implements NormEnforcementListener {
 	 */
 	public Map<Integer, SanctionEntityAbstract> decidePunish() {
 		
-		if (this.action.equals(COOPERATE)) {
+		if(this.action.equals(COOPERATE)) {
 			for(Integer neighborId : this.punishments.keySet()) {
 				SanctionEntityAbstract sanction = this.punishments.get(neighborId);
 				SanctionContent sanctionContent = (SanctionContent) sanction
@@ -313,7 +313,7 @@ public class PDGAgent implements NormEnforcementListener {
 		logger.debug(this.agentId + " " + agentList);
 		
 		for(Integer punisher : agentList) {
-			if (punishments.containsKey(punisher)) {
+			if(punishments.containsKey(punisher)) {
 				Map<Integer, SanctionEntityAbstract> punish = punishments.get(punisher);
 				
 				for(Integer punished : punish.keySet()) {
@@ -323,7 +323,7 @@ public class PDGAgent implements NormEnforcementListener {
 							.getContent();
 					
 					// PUNISHER
-					if (punisher == this.agentId) {
+					if(punisher == this.agentId) {
 						switch(sanctionContent.getAction()) {
 							case PUNISHMENT:
 								normativeEvent = new NormativeEvent(Calendar.getInstance()
@@ -344,7 +344,7 @@ public class PDGAgent implements NormEnforcementListener {
 						
 					} else {
 						// PUNISHED
-						if (punished == this.agentId) {
+						if(punished == this.agentId) {
 							
 							switch(sanctionContent.getAction()) {
 								case PUNISHMENT:
@@ -389,7 +389,7 @@ public class PDGAgent implements NormEnforcementListener {
 						}
 					}
 					
-					if (normativeEvent != null) {
+					if(normativeEvent != null) {
 						this.normative.input(normativeEvent);
 					}
 				}
@@ -407,17 +407,17 @@ public class PDGAgent implements NormEnforcementListener {
 	public void strategyUpdate() {
 		
 		int act;
-		if (this.action.equals(COOPERATE)) {
+		if(this.action.equals(COOPERATE)) {
 			act = 1;
 		} else {
 			act = -1;
 		}
 		
-		if ((this.payoff - this.lastPayoff) == 0) {
+		if((this.payoff - this.lastPayoff) == 0) {
 			this.selfInterestedDrive += act
 					* ((this.payoff - this.lastPayoff) / (MAX_REWARD - MIN_REWARD));
 		} else {
-			if (this.lastAction.equals(COOPERATE)) {
+			if(this.lastAction.equals(COOPERATE)) {
 				act = 1;
 			} else {
 				act = -1;
@@ -437,7 +437,7 @@ public class PDGAgent implements NormEnforcementListener {
 	public void receive(NormativeEventEntityAbstract event,
 			NormEntityAbstract norm, SanctionEntityAbstract sanction) {
 		
-		if (this.action == COOPERATE) {
+		if(this.action == COOPERATE) {
 			logger.debug("PUNISHER [" + event.getTarget() + "] PUNISHED ["
 					+ event.getSource() + "] ENFORCEMENT ["
 					+ sanction.getContent().toString() + "]");

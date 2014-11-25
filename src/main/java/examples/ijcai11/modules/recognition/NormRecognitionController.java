@@ -44,17 +44,18 @@ public class NormRecognitionController extends NormRecognitionAbstract
 		List<NormEntityAbstract> norms = null;
 		this.recognizeNorm(event);
 		this.recognizeSanction(event);
-		if (event instanceof ActionEvent) {
+		if(event instanceof ActionEvent) {
 			String action = ((ActionEvent) event).getAction().getDescription();
 			norms = this.normativeBoard.match(action);
-		} else if (event instanceof NormativeEvent) {
+		} else if(event instanceof NormativeEvent) {
 			int normId = ((NormativeEvent) event).getNormId();
 			norms = this.normativeBoard.match(normId);
 		}
-		if (norms != null) {
+		if(norms != null) {
 			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
 			for(NormEntityAbstract norm : norms) {
-				List<SanctionEntityAbstract> sanctions = this.normativeBoard.getSanctions(norm.getId());
+				List<SanctionEntityAbstract> sanctions = this.normativeBoard
+						.getSanctions(norm.getId());
 				normSanctions.put(norm, sanctions);
 			}
 			this.processEvent(event, normSanctions);
@@ -68,7 +69,7 @@ public class NormRecognitionController extends NormRecognitionAbstract
 		int numMsg = 0;
 		int numCompliance = 0;
 		boolean updated = false;
-		if ((event.getType().equals(NormativeEventType.COMPLIANCE))
+		if((event.getType().equals(NormativeEventType.COMPLIANCE))
 				|| (event.getType().equals(NormativeEventType.COMPLIANCE_INFORMED))
 				|| (event.getType().equals(NormativeEventType.COMPLIANCE_OBSERVED))
 				|| (event.getType().equals(NormativeEventType.PUNISHMENT))
@@ -79,22 +80,21 @@ public class NormRecognitionController extends NormRecognitionAbstract
 				|| (event.getType().equals(NormativeEventType.SANCTION_OBSERVED))) {
 			NormativeEvent ne = (NormativeEvent) event;
 			normId = ne.getNormId();
-			if (this.numCompliances.containsKey(normId)) {
+			if(this.numCompliances.containsKey(normId)) {
 				numCompliance = this.numCompliances.get(normId) + 1;
 			} else {
 				numCompliance = 1;
 			}
 			this.numCompliances.put(normId, numCompliance);
 			updated = true;
-		} else if ((event.getType()
-				.equals(NormativeEventType.COMPLIANCE_INVOCATION))
+		} else if((event.getType().equals(NormativeEventType.COMPLIANCE_INVOCATION))
 				|| (event.getType()
 						.equals(NormativeEventType.COMPLIANCE_INVOCATION_INFORMED))
 				|| (event.getType()
 						.equals(NormativeEventType.COMPLIANCE_INVOCATION_OBSERVED))) {
 			NormativeEvent ne = (NormativeEvent) event;
 			normId = ne.getNormId();
-			if (this.numMessages.containsKey(normId)) {
+			if(this.numMessages.containsKey(normId)) {
 				numMsg = this.numMessages.get(normId) + 1;
 			} else {
 				numMsg = 1;
@@ -102,17 +102,17 @@ public class NormRecognitionController extends NormRecognitionAbstract
 			this.numMessages.put(normId, numMsg);
 			updated = true;
 		}
-		if ((updated)
+		if((updated)
 				&& (this.normativeBoard.getNorm(normId).getStatus()
 						.equals(NormStatus.INACTIVE))) {
-			if (this.numMessages.containsKey(normId)) {
+			if(this.numMessages.containsKey(normId)) {
 				numMsg = this.numMessages.get(normId);
 			}
-			if (this.numCompliances.containsKey(normId)) {
+			if(this.numCompliances.containsKey(normId)) {
 				numCompliance = this.numCompliances.get(normId);
 			}
 			// Check whether the norm should become a BELIEF
-			if ((numMsg >= thresholdMessages)
+			if((numMsg >= thresholdMessages)
 					&& (numCompliance >= thresholdCompliances)) {
 				NormEntityAbstract norm = this.normativeBoard.getNorm(normId);
 				norm.setStatus(NormStatus.BELIEF);

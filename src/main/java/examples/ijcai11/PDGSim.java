@@ -129,7 +129,7 @@ public class PDGSim {
 			// TODO
 			// Which agent to activate
 			NormStatus normStatus;
-			if (this.rnd.nextDouble() < 0.5) {
+			if(this.rnd.nextDouble() < 0.5) {
 				normStatus = NormStatus.BELIEF;
 			} else {
 				normStatus = NormStatus.GOAL;
@@ -208,17 +208,17 @@ public class PDGSim {
 			int source = (Integer) v;
 			for(DefaultEdge e : this.mGraph.edgesOf(v)) {
 				int target = (Integer) this.mGraph.getEdgeSource(e);
-				if (target == source) {
+				if(target == source) {
 					target = (Integer) this.mGraph.getEdgeTarget(e);
 				}
 				
-				if (this.neighbors.containsKey(source)) {
+				if(this.neighbors.containsKey(source)) {
 					neighbor = this.neighbors.get(source);
 				} else {
 					neighbor = new ArrayList<Integer>();
 				}
 				
-				if (!neighbor.contains(target)) {
+				if(!neighbor.contains(target)) {
 					neighbor.add(target);
 				}
 				
@@ -254,7 +254,7 @@ public class PDGSim {
 			for(Object v : this.mGraph.vertexSet()) {
 				int source = (Integer) v;
 				
-				if ((!paired.containsKey(source)) && (!paired.containsValue(source))) {
+				if((!paired.containsKey(source)) && (!paired.containsValue(source))) {
 					boolean found = false;
 					List<Object> neighbors = ni.neighborListOf(v);
 					List<Integer> neighbor = new ArrayList<Integer>();
@@ -262,13 +262,12 @@ public class PDGSim {
 						int index = this.rnd.nextIntFromTo(0, neighbors.size() - 1);
 						int target = (Integer) neighbors.get(index);
 						
-						if ((!paired.containsKey(target))
-								&& (!paired.containsValue(target))) {
+						if((!paired.containsKey(target)) && (!paired.containsValue(target))) {
 							paired.put(source, target);
 							found = true;
 						}
 						
-						if (!neighbor.contains(target)) {
+						if(!neighbor.contains(target)) {
 							neighbor.add(target);
 						}
 					}
@@ -297,7 +296,7 @@ public class PDGSim {
 				List<Object> neighbors = ni.neighborListOf(i);
 				Map<Integer, ActionAbstract> nActions = new HashMap<Integer, ActionAbstract>();
 				for(Object n : neighbors) {
-					if (actions.containsKey((Integer) n)) {
+					if(actions.containsKey((Integer) n)) {
 						nActions.put((Integer) n, actions.get((Integer) n));
 					}
 				}

@@ -40,7 +40,7 @@ public class NormInfoEntity {
 	 * @return none
 	 */
 	public void increment(DataType dataType, int increment) {
-		if (this.normInfo.containsKey(dataType)) {
+		if(this.normInfo.containsKey(dataType)) {
 			this.normInfo.put(dataType, this.normInfo.get(dataType) + increment);
 		} else {
 			this.normInfo.put(dataType, 1);
@@ -58,7 +58,7 @@ public class NormInfoEntity {
 	public int getNumber(DataType dataType) {
 		Integer result = 0;
 		
-		if (this.normInfo.containsKey(dataType)) {
+		if(this.normInfo.containsKey(dataType)) {
 			result = this.normInfo.get(dataType);
 		}
 		
@@ -76,7 +76,7 @@ public class NormInfoEntity {
 	 * @return none
 	 */
 	public void setNumber(DataType dataType, int number) {
-		if (number < 0) {
+		if(number < 0) {
 			number = 0;
 		}
 		this.normInfo.put(dataType, number);
