@@ -15,7 +15,7 @@ import emilia.entity.sanction.SanctionCategory.Discernibility;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
-import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionCategory.Issuer;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import examples.pgg.actions.CooperateAction;
@@ -98,7 +98,7 @@ public class PGGSim {
 			// PUNISHMENT sanction
 			SanctionContent sanctionContent = new SanctionContent(
 					Sanction.PUNISHMENT, costPunish, costPunisher);
-			SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
+			SanctionCategory sanctionCategory = new SanctionCategory(Issuer.INFORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 					Discernibility.UNOBSTRUSIVE);
 			SanctionEntityAbstract sanction = new SanctionEntity(1, sanctionCategory,
@@ -108,7 +108,7 @@ public class PGGSim {
 			// SANCTION sanction
 			sanctionContent = new SanctionContent(Sanction.SANCTION, costSanction,
 					costSanctioner);
-			sanctionCategory = new SanctionCategory(Source.FORMAL,
+			sanctionCategory = new SanctionCategory(Issuer.FORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 					Discernibility.UNOBSTRUSIVE);
 			sanction = new SanctionEntity(2, sanctionCategory, SanctionStatus.ACTIVE,

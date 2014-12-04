@@ -31,7 +31,7 @@ public class ActionEvent extends NormativeEventEntityAbstract {
 	 *          Performed action
 	 * @return none
 	 */
-	public ActionEvent(long time, int sourceId, int targetId, int informerId,
+	public ActionEvent(double time, int sourceId, int targetId, int informerId,
 			ActionAbstract action) {
 		super(time, sourceId, targetId, informerId, NormativeEventType.ACTION);
 		

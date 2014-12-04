@@ -12,7 +12,7 @@ public class NormativeEvent extends NormativeEventEntityAbstract {
 																					.getLogger(NormativeEvent.class);
 	
 	// Norm identification
-	protected Integer						normId;
+	protected int								normId;
 	
 	
 	/**
@@ -32,8 +32,8 @@ public class NormativeEvent extends NormativeEventEntityAbstract {
 	 *          Norm identification
 	 * @return none
 	 */
-	public NormativeEvent(long time, int sourceId, int targetId, int informerId,
-			NormativeEventType type, int normId) {
+	public NormativeEvent(double time, int sourceId, int targetId,
+			int informerId, NormativeEventType type, int normId) {
 		super(time, sourceId, targetId, informerId, type);
 		
 		this.normId = normId;

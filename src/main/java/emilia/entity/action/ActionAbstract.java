@@ -149,13 +149,16 @@ public abstract class ActionAbstract {
 	public String toString() {
 		String str = new String();
 		
+		str += this.id + " " + this.description + " ";
+		
 		if(this.params != null) {
-			Object value;
 			for(Object param : this.params.keySet()) {
-				value = this.params.get(param).toString();
+				Object value = this.params.get(param).toString();
 				
 				str += value.toString() + " ";
 			}
+			
+			str = str.substring(0, (str.length() - 1));
 		}
 		
 		return str;

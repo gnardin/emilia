@@ -10,7 +10,7 @@ public class SanctionCategory {
 																					.getLogger(SanctionCategory.class);
 	
 	// Source types
-	public enum Source {
+	public enum Issuer {
 		FORMAL,
 		INFORMAL;
 	}
@@ -40,7 +40,7 @@ public class SanctionCategory {
 	}
 	
 	// Source type
-	private Source					source;
+	private Issuer					source;
 	
 	// Locus type
 	private Locus						locus;
@@ -70,7 +70,7 @@ public class SanctionCategory {
 	 *          Discernibility type
 	 * @return none
 	 */
-	public SanctionCategory(Source source, Locus locus, Mode mode,
+	public SanctionCategory(Issuer source, Locus locus, Mode mode,
 			Polarity polarity, Discernibility discernibility) {
 		this.source = source;
 		this.locus = locus;
@@ -86,7 +86,7 @@ public class SanctionCategory {
 	 * @param none
 	 * @return Source
 	 */
-	public Source getSource() {
+	public Issuer getSource() {
 		return this.source;
 	}
 	

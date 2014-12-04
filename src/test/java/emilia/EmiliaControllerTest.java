@@ -18,7 +18,7 @@ import emilia.entity.sanction.SanctionCategory.Discernibility;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
-import emilia.entity.sanction.SanctionCategory.Source;
+import emilia.entity.sanction.SanctionCategory.Issuer;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract.SanctionStatus;
 import emilia.modules.enforcement.NormEnforcementListener;
@@ -54,7 +54,7 @@ public class EmiliaControllerTest implements NormEnforcementListener {
 		Integer sanctionId = 1;
 		SanctionContent sanctionContent = new SanctionContent(Sanction.PUNISHMENT,
 				new Double(1.5), new Double(3.0));
-		SanctionCategory sanctionCategory = new SanctionCategory(Source.INFORMAL,
+		SanctionCategory sanctionCategory = new SanctionCategory(Issuer.INFORMAL,
 				Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
 				Discernibility.UNOBSTRUSIVE);
 		SanctionEntityAbstract sanction = new SanctionEntity(sanctionId,

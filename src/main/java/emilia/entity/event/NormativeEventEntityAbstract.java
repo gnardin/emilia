@@ -12,7 +12,7 @@ public abstract class NormativeEventEntityAbstract {
 																						.getLogger(NormativeEventEntityAbstract.class);
 	
 	// Time in milliseconds
-	protected long								time;
+	protected double							time;
 	
 	// Agent source identification of the reported action
 	protected int									sourceId;
@@ -45,7 +45,7 @@ public abstract class NormativeEventEntityAbstract {
 	 *          Type of the Event
 	 * @return none
 	 */
-	public NormativeEventEntityAbstract(long time, int sourceId, int targetId,
+	public NormativeEventEntityAbstract(double time, int sourceId, int targetId,
 			int informerId, NormativeEventType type) {
 		this.time = time;
 		this.sourceId = sourceId;
@@ -73,7 +73,7 @@ public abstract class NormativeEventEntityAbstract {
 	 *          Context attributes and values
 	 * @return none
 	 */
-	public NormativeEventEntityAbstract(long time, int sourceId, int targetId,
+	public NormativeEventEntityAbstract(double time, int sourceId, int targetId,
 			int informerId, NormativeEventType type, Map<String, Object> contextAttrs) {
 		this.time = time;
 		this.sourceId = sourceId;
@@ -90,7 +90,7 @@ public abstract class NormativeEventEntityAbstract {
 	 * @param none
 	 * @return Event time
 	 */
-	public long getTime() {
+	public double getTime() {
 		return this.time;
 	}
 	
