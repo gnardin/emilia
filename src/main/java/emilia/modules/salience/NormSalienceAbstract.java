@@ -44,6 +44,18 @@ public abstract class NormSalienceAbstract implements EventListener {
 	
 	
 	/**
+	 * Set the initial value of each data type
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @param initialValues
+	 *          Initial values
+	 * @return none
+	 */
+	public abstract void setInitialValue(int normId, Object initialValues);
+	
+	
+	/**
 	 * Update salience
 	 * 
 	 * @param normId

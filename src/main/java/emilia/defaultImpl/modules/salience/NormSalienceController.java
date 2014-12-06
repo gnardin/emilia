@@ -4,6 +4,7 @@ import emilia.board.NormativeBoardInterface;
 import emilia.modules.salience.DataType;
 import emilia.modules.salience.NormInfoRepositoryMemory;
 import emilia.modules.salience.NormSalienceAbstract;
+import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -49,6 +50,21 @@ public class NormSalienceController extends NormSalienceAbstract {
 			NormativeBoardInterface normativeBoard) {
 		super(agentId, normativeBoard);
 		this.repository = new NormInfoRepositoryMemory();
+	}
+	
+	
+	@Override
+	public void setInitialValue(int normId, Object initialValues) {
+		
+		if(initialValues instanceof Map) {
+			@SuppressWarnings("unchecked")
+			Map<DataType, Integer> values = (Map<DataType, Integer>) initialValues;
+			
+			for(DataType dataType : values.keySet()) {
+				int value = values.get(dataType);
+				this.repository.setNormInfo(normId, dataType, value);
+			}
+		}
 	}
 	
 	

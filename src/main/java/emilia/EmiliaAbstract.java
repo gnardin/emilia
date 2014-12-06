@@ -64,6 +64,18 @@ public abstract class EmiliaAbstract {
 	
 	
 	/**
+	 * Set initial values to calculate the salience
+	 * 
+	 * @param normId
+	 *          Norm identification
+	 * @param initialValues
+	 *          Initial values
+	 * @return none
+	 */
+	public abstract void setInitialValues(int normId, Object initialValues);
+	
+	
+	/**
 	 * Get the norm salience
 	 * 
 	 * @param normId

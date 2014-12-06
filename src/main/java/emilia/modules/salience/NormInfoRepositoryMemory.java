@@ -32,10 +32,25 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 		
 		if(this.normativeInfoRep.containsKey(normId)) {
 			NormInfoEntity normInfoEntity = this.normativeInfoRep.get(normId);
-			result = normInfoEntity.getNumber(dataType);
+			result = normInfoEntity.getValue(dataType);
 		}
 		
 		return result;
+	}
+	
+	
+	@Override
+	public void setNormInfo(int normId, DataType dataType, int value) {
+		
+		NormInfoEntity normInfoEntity;
+		if(this.normativeInfoRep.containsKey(normId)) {
+			normInfoEntity = this.normativeInfoRep.get(normId);
+		} else {
+			normInfoEntity = new NormInfoEntity();
+		}
+		
+		normInfoEntity.setValue(dataType, value);
+		this.normativeInfoRep.put(normId, normInfoEntity);
 	}
 	
 	
@@ -50,6 +65,21 @@ public class NormInfoRepositoryMemory implements NormInfoRepositoryInterface {
 		}
 		
 		normInfoEntity.increment(dataType, 1);
+		this.normativeInfoRep.put(normId, normInfoEntity);
+	}
+	
+	
+	@Override
+	public void increment(int normId, DataType dataType, int value) {
+		
+		NormInfoEntity normInfoEntity;
+		if(this.normativeInfoRep.containsKey(normId)) {
+			normInfoEntity = this.normativeInfoRep.get(normId);
+		} else {
+			normInfoEntity = new NormInfoEntity();
+		}
+		
+		normInfoEntity.increment(dataType, value);
 		this.normativeInfoRep.put(normId, normInfoEntity);
 	}
 }

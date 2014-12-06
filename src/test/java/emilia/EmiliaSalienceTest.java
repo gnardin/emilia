@@ -24,7 +24,7 @@ public class EmiliaSalienceTest {
 		Integer normId = new Integer(1);
 		NormEntity norm = new NormEntity(normId, NormType.SOCIAL,
 				NormSource.DISTRIBUTED, NormStatus.GOAL, new NormContent(
-						new CooperateAction(), new DefectAction()), new Double(0.0));
+						new CooperateAction(), new DefectAction()), 0.0);
 		normativeBoard.setNorm(norm);
 		
 		NormSalienceAbstract normSalience = new NormSalienceController(1,

@@ -35,13 +35,13 @@ public class NormInfoEntity {
 	 * 
 	 * @param dataType
 	 *          Data type
-	 * @param increment
+	 * @param value
 	 *          Increment the instances of data type
 	 * @return none
 	 */
-	public void increment(DataType dataType, int increment) {
+	public void increment(DataType dataType, int value) {
 		if(this.normInfo.containsKey(dataType)) {
-			this.normInfo.put(dataType, this.normInfo.get(dataType) + increment);
+			this.normInfo.put(dataType, this.normInfo.get(dataType) + value);
 		} else {
 			this.normInfo.put(dataType, 1);
 		}
@@ -55,8 +55,8 @@ public class NormInfoEntity {
 	 *          Data type
 	 * @return Number of data type
 	 */
-	public int getNumber(DataType dataType) {
-		Integer result = 0;
+	public int getValue(DataType dataType) {
+		int result = 0;
 		
 		if(this.normInfo.containsKey(dataType)) {
 			result = this.normInfo.get(dataType);
@@ -71,14 +71,11 @@ public class NormInfoEntity {
 	 * 
 	 * @param dataType
 	 *          Data type
-	 * @param number
+	 * @param value
 	 *          Number of instances of data type
 	 * @return none
 	 */
-	public void setNumber(DataType dataType, int number) {
-		if(number < 0) {
-			number = 0;
-		}
-		this.normInfo.put(dataType, number);
+	public void setValue(DataType dataType, int value) {
+		this.normInfo.put(dataType, Math.max(0, value));
 	}
 }

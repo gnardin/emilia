@@ -430,6 +430,12 @@ public class EmiliaController extends EmiliaAbstract implements
 	
 	
 	@Override
+	public void setInitialValues(int normId, Object initialValues) {
+		this.normSalience.setInitialValue(normId, initialValues);
+	}
+	
+	
+	@Override
 	public void update() {
 		for(NormEntityAbstract norm : this.normativeBoard.getNorms()) {
 			this.normSalience.updateSalience(norm.getId());
