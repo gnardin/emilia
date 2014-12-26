@@ -14,7 +14,7 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.entity.sanction.SanctionCategory;
-import emilia.entity.sanction.SanctionCategory.Discernibility;
+import emilia.entity.sanction.SanctionCategory.Discernability;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
@@ -60,7 +60,7 @@ public class EmiliaEnforcementTest {
 				new Double(1.5), new Double(3.0));
 		SanctionCategory sanctionCategory = new SanctionCategory(Issuer.INFORMAL,
 				Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
-				Discernibility.UNOBSTRUSIVE);
+				Discernability.UNOBSTRUSIVE);
 		this.sanction = new SanctionEntity(sanctionId, sanctionCategory,
 				SanctionStatus.ACTIVE, sanctionContent);
 		

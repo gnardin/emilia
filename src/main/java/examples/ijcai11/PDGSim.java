@@ -11,7 +11,7 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.entity.sanction.SanctionCategory;
-import emilia.entity.sanction.SanctionCategory.Discernibility;
+import emilia.entity.sanction.SanctionCategory.Discernability;
 import emilia.entity.sanction.SanctionCategory.Locus;
 import emilia.entity.sanction.SanctionCategory.Mode;
 import emilia.entity.sanction.SanctionCategory.Polarity;
@@ -149,7 +149,7 @@ public class PDGSim {
 					Sanction.PUNISHMENT, costPunish, costPunisher);
 			SanctionCategory sanctionCategory = new SanctionCategory(Issuer.INFORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
-					Discernibility.UNOBSTRUSIVE);
+					Discernability.UNOBSTRUSIVE);
 			SanctionEntityAbstract sanction = new SanctionEntity(1, sanctionCategory,
 					SanctionStatus.ACTIVE, sanctionContent);
 			sanctions.add(sanction);
@@ -159,7 +159,7 @@ public class PDGSim {
 					costSanctioner);
 			sanctionCategory = new SanctionCategory(Issuer.FORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
-					Discernibility.UNOBSTRUSIVE);
+					Discernability.UNOBSTRUSIVE);
 			sanction = new SanctionEntity(2, sanctionCategory, SanctionStatus.ACTIVE,
 					sanctionContent);
 			sanctions.add(sanction);
@@ -168,7 +168,7 @@ public class PDGSim {
 			sanctionContent = new SanctionContent(Sanction.MESSAGE, 0.0, 0.0);
 			sanctionCategory = new SanctionCategory(Issuer.FORMAL,
 					Locus.OTHER_DIRECTED, Mode.DIRECT, Polarity.NEGATIVE,
-					Discernibility.UNOBSTRUSIVE);
+					Discernability.UNOBSTRUSIVE);
 			sanction = new SanctionEntity(3, sanctionCategory, SanctionStatus.ACTIVE,
 					sanctionContent);
 			sanctions.add(sanction);

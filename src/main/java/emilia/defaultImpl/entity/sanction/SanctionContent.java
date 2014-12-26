@@ -77,6 +77,17 @@ public class SanctionContent implements SanctionContentInterface {
 	
 	
 	@Override
+	public void execute(Object input) {
+	}
+	
+	
+	@Override
+	public Object getSanction() {
+		return null;
+	}
+	
+	
+	@Override
 	public String toString() {
 		return this.action.toString();
 	}

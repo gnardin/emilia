@@ -20,11 +20,11 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	// Sanction identification
 	protected int												id;
 	
-	// Sanction category
-	protected SanctionCategory					category;
-	
 	// Sanction status
 	protected SanctionStatus						status;
+	
+	// Sanction category
+	protected SanctionCategory					category;
 	
 	// Sanction content
 	protected SanctionContentInterface	content;
@@ -54,29 +54,6 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	
 	
 	/**
-	 * Get sanction category
-	 * 
-	 * @param none
-	 * @return Sanction category
-	 */
-	public SanctionCategory getCategory() {
-		return this.category;
-	}
-	
-	
-	/**
-	 * Set sanction category
-	 * 
-	 * @param category
-	 *          Sanction category
-	 * @return none
-	 */
-	public void setCategory(SanctionCategory category) {
-		this.category = category;
-	}
-	
-	
-	/**
 	 * Get sanction status
 	 * 
 	 * @param none
@@ -96,6 +73,29 @@ public abstract class SanctionEntityAbstract extends EntityAbstract implements
 	 */
 	public void setStatus(SanctionStatus status) {
 		this.status = status;
+	}
+	
+	
+	/**
+	 * Get sanction category
+	 * 
+	 * @param none
+	 * @return Sanction category
+	 */
+	public SanctionCategory getCategory() {
+		return this.category;
+	}
+	
+	
+	/**
+	 * Set sanction category
+	 * 
+	 * @param category
+	 *          Sanction category
+	 * @return none
+	 */
+	public void setCategory(SanctionCategory category) {
+		this.category = category;
 	}
 	
 	

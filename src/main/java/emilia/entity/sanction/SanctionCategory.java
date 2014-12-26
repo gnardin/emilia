@@ -33,8 +33,8 @@ public class SanctionCategory {
 		NEGATIVE;
 	}
 	
-	// Discernibility types
-	public enum Discernibility {
+	// Discernability types
+	public enum Discernability {
 		OBSTRUSIVE,
 		UNOBSTRUSIVE;
 	}
@@ -52,7 +52,7 @@ public class SanctionCategory {
 	private Polarity				polarity;
 	
 	// Discernibility type
-	private Discernibility	discernibility;
+	private Discernability	discernibility;
 	
 	
 	/**
@@ -71,7 +71,7 @@ public class SanctionCategory {
 	 * @return none
 	 */
 	public SanctionCategory(Issuer source, Locus locus, Mode mode,
-			Polarity polarity, Discernibility discernibility) {
+			Polarity polarity, Discernability discernibility) {
 		this.source = source;
 		this.locus = locus;
 		this.mode = mode;
@@ -130,7 +130,7 @@ public class SanctionCategory {
 	 * @param none
 	 * @return Discernibility
 	 */
-	public Discernibility getDiscernibility() {
+	public Discernability getDiscernibility() {
 		return this.discernibility;
 	}
 	
