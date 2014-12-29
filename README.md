@@ -3,22 +3,29 @@ Extended EMIL-A
 
 (Linux) Instructions to download and run the tests created to validate each EMIL-A Normative Architecture's component (Norm Recognition, Norm Adoption, Norm Salience, Norm Enforcement, and Norm Compliance)
 
-1. Software Requisites
+1. Software Pre-Requisites
+--------------------------
   Git
+
   Maven
-  Java SE 8 (If this is a problem, I will need to do some small adjustments to work with Java 7)
+  
+  Oracle Java SE 8
+
 
 2. Download project from Git
-
+----------------------------
 $ git clone git@github.com:gnardin/emilia.git
 
-3. Compile and install the project
 
+3. Compile and install the project
+----------------------------------
 $ cd emilia
+
 $ mvn compile
 
-4. Test it
 
+4. Test it
+----------
 $ mvn test
 
 
