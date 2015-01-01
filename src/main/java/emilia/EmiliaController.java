@@ -85,7 +85,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public boolean init() {
 		boolean initialize = false;
 		
-		if(EmiliaConf.isValid(xmlFilename, xsdFilename)) {
+		if (EmiliaConf.isValid(xmlFilename, xsdFilename)) {
 			this.conf = EmiliaConf.getConf(xmlFilename, xsdFilename);
 			// Event Classifier
 			logger.debug("Initializing [EVENT CLASSIFIER]");
@@ -210,16 +210,27 @@ public class EmiliaController extends EmiliaAbstract implements
 			this.eventClassifier = nbConstructor.newInstance(this.agentId);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Event Classifier class
+	 * 
+	 * @param none
+	 * @return Event Classifier class
+	 */
+	public EventClassifierAbstract getEventClassifier() {
+		return this.eventClassifier;
 	}
 	
 	
@@ -242,16 +253,27 @@ public class EmiliaController extends EmiliaAbstract implements
 			this.normativeBoard = nbConstructor.newInstance();
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Normative Board class
+	 * 
+	 * @param none
+	 * @return Normative Board class
+	 */
+	public NormativeBoardInterface getNormativeBoard() {
+		return this.normativeBoard;
 	}
 	
 	
@@ -275,16 +297,27 @@ public class EmiliaController extends EmiliaAbstract implements
 					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Norm Recognition class
+	 * 
+	 * @param none
+	 * @return Norm Recognition class
+	 */
+	public NormRecognitionAbstract getNormRecognition() {
+		return this.normRecognition;
 	}
 	
 	
@@ -308,16 +341,27 @@ public class EmiliaController extends EmiliaAbstract implements
 					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Norm Adoption class
+	 * 
+	 * @param none
+	 * @return Norm Adoption class
+	 */
+	public NormAdoptionAbstract getNormAdoption() {
+		return this.normAdoption;
 	}
 	
 	
@@ -341,16 +385,27 @@ public class EmiliaController extends EmiliaAbstract implements
 					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Norm Salience class
+	 * 
+	 * @param none
+	 * @return Norm Salience class
+	 */
+	public NormSalienceAbstract getNormSalience() {
+		return this.normSalience;
 	}
 	
 	
@@ -373,16 +428,27 @@ public class EmiliaController extends EmiliaAbstract implements
 			this.normEnforcement = neConstructor.newInstance(this.agentId);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Norm Enforcement class
+	 * 
+	 * @param none
+	 * @return Norm Enforcement class
+	 */
+	public NormEnforcementAbstract getNormEnforcement() {
+		return this.normEnforcement;
 	}
 	
 	
@@ -406,16 +472,27 @@ public class EmiliaController extends EmiliaAbstract implements
 					this.normativeBoard);
 			
 		} catch(ClassNotFoundException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(NoSuchMethodException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InvocationTargetException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(IllegalAccessException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		} catch(InstantiationException e) {
-			e.printStackTrace();
+			logger.debug(e.getMessage());
 		}
+	}
+	
+	
+	/**
+	 * Get Norm Compliance class
+	 * 
+	 * @param none
+	 * @return Norm Compliance class
+	 */
+	public NormComplianceAbstract getNormCompliance() {
+		return this.normCompliance;
 	}
 	
 	
@@ -423,7 +500,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public void input(Object event) {
 		NormativeEventEntityAbstract normativeEvent = this.eventClassifier
 				.classify(event);
-		if(normativeEvent != null) {
+		if (normativeEvent != null) {
 			this.normRecognition.matchEvent(normativeEvent);
 		}
 	}
@@ -454,7 +531,7 @@ public class EmiliaController extends EmiliaAbstract implements
 	public NormEntityAbstract getNorm(int normId) {
 		NormEntityAbstract norm = null;
 		
-		if(this.normativeBoard.hasNorm(normId)) {
+		if (this.normativeBoard.hasNorm(normId)) {
 			norm = this.normativeBoard.getNorm(normId);
 		}
 		

@@ -144,19 +144,19 @@ public class SanctionCategory {
 	public int getCategory() {
 		int category = source.ordinal() - 1;
 		
-		if((locus.ordinal() - 1) > 0) {
+		if ((locus.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 1);
 		}
 		
-		if((mode.ordinal() - 1) > 0) {
+		if ((mode.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 2);
 		}
 		
-		if((polarity.ordinal() - 1) > 0) {
+		if ((polarity.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 3);
 		}
 		
-		if((discernibility.ordinal() - 1) > 0) {
+		if ((discernibility.ordinal() - 1) > 0) {
 			category += (int) Math.pow(2, 4);
 		}
 		
@@ -168,10 +168,10 @@ public class SanctionCategory {
 	public boolean equals(Object obj) {
 		boolean result = false;
 		
-		if(this == obj)
+		if (this == obj)
 			return true;
 		
-		if((obj != null) && (this.getClass() == obj.getClass())) {
+		if ((obj != null) && (this.getClass() == obj.getClass())) {
 			SanctionCategory other = (SanctionCategory) obj;
 			
 			result = ((this.source.equals(other.source))
@@ -196,5 +196,15 @@ public class SanctionCategory {
 		result = prime * result + (this.discernibility.hashCode());
 		
 		return result;
+	}
+	
+	
+	@Override
+	public SanctionCategory clone() {
+		try {
+			return (SanctionCategory) super.clone();
+		} catch(CloneNotSupportedException e) {
+			throw new IllegalStateException(e);
+		}
 	}
 }

@@ -13,7 +13,6 @@ import org.slf4j.LoggerFactory;
 
 public abstract class NormSalienceAbstract implements EventListener {
 	
-	@SuppressWarnings("unused")
 	private static final Logger						logger	= LoggerFactory
 																										.getLogger(NormSalienceAbstract.class);
 	
@@ -131,9 +130,11 @@ public abstract class NormSalienceAbstract implements EventListener {
 				dataType = null;
 		}
 		
-		if((dataType != null) && (event instanceof NormativeEvent)) {
+		if ((dataType != null) && (event instanceof NormativeEvent)) {
 			NormativeEvent normativeEvent = (NormativeEvent) event;
 			this.repository.increment(normativeEvent.getNormId(), dataType);
 		}
+		
+		logger.debug("[NORM_SALIENCE_ABSTRACT] RECEIVED" + dataType.name());
 	}
 }
