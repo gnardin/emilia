@@ -2,6 +2,8 @@ package examples.ijcai11.modules.classifier;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.modules.classifier.EventClassifierAbstract;
+import java.util.ArrayList;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -18,11 +20,13 @@ public class EventClassifier extends EventClassifierAbstract {
 	
 	
 	@Override
-	public NormativeEventEntityAbstract classify(Object event) {
+	public List<NormativeEventEntityAbstract> classify(Object event) {
+		List<NormativeEventEntityAbstract> normativeEvents = new ArrayList<NormativeEventEntityAbstract>();
+		
 		if(event instanceof NormativeEventEntityAbstract) {
-			return (NormativeEventEntityAbstract) event;
-		} else {
-			return null;
+			normativeEvents.add((NormativeEventEntityAbstract) event);
 		}
+		
+		return normativeEvents;
 	}
 }

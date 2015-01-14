@@ -1,6 +1,7 @@
 package emilia.modules.classifier;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
+import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
@@ -33,5 +34,5 @@ public abstract class EventClassifierAbstract {
 	 *          Event to classify
 	 * @return Classified event
 	 */
-	public abstract NormativeEventEntityAbstract classify(Object event);
+	public abstract List<NormativeEventEntityAbstract> classify(Object event);
 }

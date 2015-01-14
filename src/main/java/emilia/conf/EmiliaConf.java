@@ -68,7 +68,7 @@ public class EmiliaConf {
 					}
 					
 				} catch(JAXBException e) {
-					logger.debug(e.getMessage());
+					logger.debug(e.toString());
 				}
 				
 			}
@@ -101,9 +101,9 @@ public class EmiliaConf {
 			valid = true;
 			
 		} catch(SAXException e) {
-			logger.debug(e.getMessage());
+			logger.debug(e.toString());
 		} catch(Exception e) {
-			logger.debug(e.getMessage());
+			logger.debug(e.toString());
 		}
 		
 		return valid;
