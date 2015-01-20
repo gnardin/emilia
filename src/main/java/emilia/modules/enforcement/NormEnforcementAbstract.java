@@ -150,7 +150,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
 		for(NormEntityAbstract norm : normDeviations.keySet()) {
 			DeviationAbstract deviation = normDeviations.get(norm);
 			NormativeEvent normativeEvent = null;
-			
+						
 			NormativeEventType type;
 			if(deviation.getType().equals(DeviationAbstract.Type.COMPLIANCE)) {
 				

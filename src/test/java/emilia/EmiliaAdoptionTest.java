@@ -71,15 +71,29 @@ class NormContent implements NormContentInterface {
 	
 	
 	@Override
-	public boolean match(Object value) {
+	public boolean match(Object content) {
 		
-		if(value instanceof String) {
-			if(this.content.equals((String) value)) {
+		if (content instanceof String) {
+			if (this.content.equals((String) content)) {
 				return true;
 			}
 		}
 		
 		return false;
+	}
+	
+	
+	@Override
+	public boolean comply(Object content) {
+		boolean comply = false;
+		
+		if (content instanceof String) {
+			if (this.content.equalsIgnoreCase((String) content)) {
+				comply = true;
+			}
+		}
+		
+		return comply;
 	}
 	
 	
