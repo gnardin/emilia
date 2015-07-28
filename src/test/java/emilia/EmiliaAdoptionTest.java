@@ -73,8 +73,8 @@ class NormContent implements NormContentInterface {
 	@Override
 	public boolean match(Object content) {
 		
-		if (content instanceof String) {
-			if (this.content.equals((String) content)) {
+		if(content instanceof String) {
+			if(this.content.equals((String) content)) {
 				return true;
 			}
 		}
@@ -87,8 +87,8 @@ class NormContent implements NormContentInterface {
 	public boolean comply(Object content) {
 		boolean comply = false;
 		
-		if (content instanceof String) {
-			if (this.content.equalsIgnoreCase((String) content)) {
+		if(content instanceof String) {
+			if(this.content.equalsIgnoreCase((String) content)) {
 				comply = true;
 			}
 		}

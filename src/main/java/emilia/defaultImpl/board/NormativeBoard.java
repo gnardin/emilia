@@ -20,15 +20,15 @@ public class NormativeBoard extends NormativeBoardAbstract {
 		List<NormEntityAbstract> result = new ArrayList<NormEntityAbstract>();
 		
 		// Norm identification
-		if (info instanceof Integer) {
+		if(info instanceof Integer) {
 			NormEntityAbstract norm = this.norms.get((Integer) info);
 			result.add(norm);
 			
 			// Norm content
-		} else if (info instanceof String) {
+		} else if(info instanceof String) {
 			for(Integer normId : this.norms.keySet()) {
 				NormEntityAbstract norm = this.norms.get(normId);
-				if (norm.getContent().match((String) info)) {
+				if(norm.getContent().match((String) info)) {
 					result.add(norm);
 				}
 			}
