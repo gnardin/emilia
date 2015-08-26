@@ -2,7 +2,7 @@
 <emilia xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
 	xsi:noNamespaceSchemaLocation="emilia.xsd">
 
-	<eventClassifierClass>examples.pgg.classifier.EventClassifier</eventClassifierClass>
+	<eventClassifierClass>emilia.defaultImpl.modules.classifier.EventClassifier</eventClassifierClass>
 	<normRecognitionClass>emilia.defaultImpl.modules.recognition.NormRecognitionController</normRecognitionClass>
 	<normAdoptionClass>emilia.defaultImpl.modules.adoption.NormAdoptionController</normAdoptionClass>
 	<normSalienceClass>emilia.defaultImpl.modules.salience.NormSalienceController</normSalienceClass>

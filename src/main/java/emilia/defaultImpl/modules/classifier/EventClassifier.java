@@ -1,4 +1,4 @@
-package examples.pgg.classifier;
+package emilia.defaultImpl.modules.classifier;
 
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.modules.classifier.EventClassifierAbstract;
