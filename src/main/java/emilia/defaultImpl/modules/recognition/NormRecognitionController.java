@@ -14,56 +14,57 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 public class NormRecognitionController extends NormRecognitionAbstract {
-	
-	@SuppressWarnings("unused")
-	private static final Logger	logger	= LoggerFactory
-																					.getLogger(NormRecognitionController.class);
-	
-	
-	public NormRecognitionController(Integer agentId,
-			NormativeBoardInterface normativeBoard) {
-		super(agentId, normativeBoard);
-	}
-	
-	
-	@Override
-	public void matchEvent(NormativeEventEntityAbstract event) {
-		List<NormEntityAbstract> norms = null;
-		
-		this.recognizeNorm(event);
-		this.recognizeSanction(event);
-		
-		if(event instanceof ActionEvent) {
-			String action = ((ActionEvent) event).getAction().getDescription();
-			norms = this.normativeBoard.match(action);
-		} else if(event instanceof NormativeEvent) {
-			int normId = ((NormativeEvent) event).getNormId();
-			norms = this.normativeBoard.match(normId);
-		}
-		
-		if(norms != null) {
-			Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
-			
-			for(NormEntityAbstract norm : norms) {
-				List<SanctionEntityAbstract> sanctions = this.normativeBoard
-						.getSanctions(norm.getId());
-				normSanctions.put(norm, sanctions);
-			}
-			if(normSanctions.size() > 0) {
-				this.processEvent(event, normSanctions);
-			}
-		}
-	}
-	
-	
-	@Override
-	public void recognizeNorm(NormativeEventEntityAbstract event) {
-		// Intended to do nothing in this implementation
-	}
-	
-	
-	@Override
-	public void recognizeSanction(NormativeEventEntityAbstract event) {
-		// Intended to do nothing in this implementation
-	}
+  
+  
+  @SuppressWarnings("unused")
+  private static final Logger logger = LoggerFactory
+      .getLogger(NormRecognitionController.class);
+  
+  
+  public NormRecognitionController(Integer agentId,
+      NormativeBoardInterface normativeBoard) {
+    super(agentId, normativeBoard);
+  }
+  
+  
+  @Override
+  public void matchEvent(NormativeEventEntityAbstract event) {
+    List<NormEntityAbstract> norms = null;
+    
+    this.recognizeNorm(event);
+    this.recognizeSanction(event);
+    
+    if(event instanceof ActionEvent) {
+      String action = ((ActionEvent) event).getAction().getDescription();
+      norms = this.normativeBoard.match(action);
+    } else if(event instanceof NormativeEvent) {
+      int normId = ((NormativeEvent) event).getNormId();
+      norms = this.normativeBoard.match(normId);
+    }
+    
+    if(norms != null) {
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions = new HashMap<NormEntityAbstract, List<SanctionEntityAbstract>>();
+      
+      for(NormEntityAbstract norm : norms) {
+        List<SanctionEntityAbstract> sanctions = this.normativeBoard
+            .getSanctions(norm.getId());
+        normSanctions.put(norm, sanctions);
+      }
+      if(normSanctions.size() > 0) {
+        this.processEvent(event, normSanctions);
+      }
+    }
+  }
+  
+  
+  @Override
+  public void recognizeNorm(NormativeEventEntityAbstract event) {
+    // Intended to do nothing in this implementation
+  }
+  
+  
+  @Override
+  public void recognizeSanction(NormativeEventEntityAbstract event) {
+    // Intended to do nothing in this implementation
+  }
 }
