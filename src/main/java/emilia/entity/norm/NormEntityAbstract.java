@@ -1,16 +1,15 @@
 package emilia.entity.norm;
 
-import emilia.entity.EntityAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.EntityAbstract;
 
 public abstract class NormEntityAbstract extends EntityAbstract
     implements Cloneable {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(NormEntityAbstract.class);
+      .getLogger( NormEntityAbstract.class );
   
   public enum NormType {
     LEGAL,
@@ -59,7 +58,7 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Norm identification
    * @return none
    */
-  public void setId(int id) {
+  public void setId( int id ) {
     this.id = id;
   }
   
@@ -82,7 +81,7 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Norm type
    * @return none
    */
-  public void setType(NormType type) {
+  public void setType( NormType type ) {
     this.type = type;
   }
   
@@ -105,7 +104,7 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Source type
    * @return none
    */
-  public void setSource(NormSource source) {
+  public void setSource( NormSource source ) {
     this.source = source;
   }
   
@@ -128,7 +127,7 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Norm status
    * @return none
    */
-  public void setStatus(NormStatus status) {
+  public void setStatus( NormStatus status ) {
     this.status = status;
   }
   
@@ -151,7 +150,7 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Norm content
    * @return none
    */
-  public void setContent(NormContentInterface content) {
+  public void setContent( NormContentInterface content ) {
     this.content = content;
   }
   
@@ -174,20 +173,20 @@ public abstract class NormEntityAbstract extends EntityAbstract
    *          Norm salience
    * @return none
    */
-  public void setSalience(double salience) {
+  public void setSalience( double salience ) {
     this.salience = salience;
   }
   
   
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals( Object obj ) {
     boolean result = false;
     
-    if(this == obj) {
+    if ( this == obj ) {
       result = true;
-    } else if((obj != null) && (obj.getClass() == this.getClass())) {
+    } else if ( (obj != null) && (obj.getClass() == this.getClass()) ) {
       NormEntityAbstract norm = (NormEntityAbstract) obj;
-      if(this.getId() == norm.getId()) {
+      if ( this.getId() == norm.getId() ) {
         result = true;
       }
     }
@@ -207,8 +206,8 @@ public abstract class NormEntityAbstract extends EntityAbstract
   public NormEntityAbstract clone() {
     try {
       return (NormEntityAbstract) super.clone();
-    } catch(CloneNotSupportedException e) {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 }

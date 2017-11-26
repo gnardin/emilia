@@ -2,7 +2,6 @@ package emilia.modules.salience;
 
 public interface NormInfoRepositoryInterface {
   
-  
   /**
    * Get normative information about a data type from a norm
    * 
@@ -12,7 +11,7 @@ public interface NormInfoRepositoryInterface {
    *          Data type
    * @return none
    */
-  public int getNormInfo(int normId, DataType dataType);
+  public int getNormInfo( int normId, DataType dataType );
   
   
   /**
@@ -26,7 +25,7 @@ public interface NormInfoRepositoryInterface {
    *          Value to set
    * @return none
    */
-  public void setNormInfo(int normId, DataType dataType, int value);
+  public void setNormInfo( int normId, DataType dataType, int value );
   
   
   /**
@@ -39,7 +38,7 @@ public interface NormInfoRepositoryInterface {
    *          Data type
    * @return none
    */
-  public void increment(int normId, DataType dataType);
+  public void increment( int normId, DataType dataType );
   
   
   /**
@@ -54,5 +53,5 @@ public interface NormInfoRepositoryInterface {
    *          Value to increment
    * @return none
    */
-  public void increment(int normId, DataType dataType, int value);
+  public void increment( int normId, DataType dataType, int value );
 }

@@ -7,10 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public class NormInfoEntity {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger      logger = LoggerFactory
-      .getLogger(NormInfoEntity.class);
+      .getLogger( NormInfoEntity.class );
   
   // <Type, Quantity>
   protected Map<DataType, Integer> normInfo;
@@ -25,8 +24,8 @@ public class NormInfoEntity {
   public NormInfoEntity() {
     this.normInfo = new HashMap<DataType, Integer>();
     
-    for(DataType dataType : DataType.values()) {
-      this.normInfo.put(dataType, 0);
+    for ( DataType dataType : DataType.values() ) {
+      this.normInfo.put( dataType, 0 );
     }
   }
   
@@ -40,11 +39,11 @@ public class NormInfoEntity {
    *          Increment the instances of data type
    * @return none
    */
-  public void increment(DataType dataType, int value) {
-    if(this.normInfo.containsKey(dataType)) {
-      this.normInfo.put(dataType, this.normInfo.get(dataType) + value);
+  public void increment( DataType dataType, int value ) {
+    if ( this.normInfo.containsKey( dataType ) ) {
+      this.normInfo.put( dataType, this.normInfo.get( dataType ) + value );
     } else {
-      this.normInfo.put(dataType, 1);
+      this.normInfo.put( dataType, 1 );
     }
   }
   
@@ -56,11 +55,11 @@ public class NormInfoEntity {
    *          Data type
    * @return Number of data type
    */
-  public int getValue(DataType dataType) {
+  public int getValue( DataType dataType ) {
     int result = 0;
     
-    if(this.normInfo.containsKey(dataType)) {
-      result = this.normInfo.get(dataType);
+    if ( this.normInfo.containsKey( dataType ) ) {
+      result = this.normInfo.get( dataType );
     }
     
     return result;
@@ -76,7 +75,7 @@ public class NormInfoEntity {
    *          Number of instances of data type
    * @return none
    */
-  public void setValue(DataType dataType, int value) {
-    this.normInfo.put(dataType, Math.max(0, value));
+  public void setValue( DataType dataType, int value ) {
+    this.normInfo.put( dataType, Math.max( 0, value ) );
   }
 }

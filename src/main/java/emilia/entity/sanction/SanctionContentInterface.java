@@ -2,7 +2,6 @@ package emilia.entity.sanction;
 
 public interface SanctionContentInterface {
   
-  
   /**
    * Instantiates a sanction based on the input provided
    * 
@@ -10,7 +9,7 @@ public interface SanctionContentInterface {
    *          Set of parameters to instantiate a sanction
    * @return none
    */
-  public void execute(Object input);
+  public void execute( Object input );
   
   
   /**

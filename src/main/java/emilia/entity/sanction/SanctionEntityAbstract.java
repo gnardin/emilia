@@ -1,16 +1,15 @@
 package emilia.entity.sanction;
 
-import emilia.entity.EntityAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.EntityAbstract;
 
 public abstract class SanctionEntityAbstract extends EntityAbstract
     implements Cloneable {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(SanctionEntityAbstract.class);
+      .getLogger( SanctionEntityAbstract.class );
   
   // Sanction status
   public enum SanctionStatus {
@@ -49,7 +48,7 @@ public abstract class SanctionEntityAbstract extends EntityAbstract
    *          Sanction identification
    * @return none
    */
-  public void setId(int id) {
+  public void setId( int id ) {
     this.id = id;
   }
   
@@ -72,7 +71,7 @@ public abstract class SanctionEntityAbstract extends EntityAbstract
    *          Sanction status
    * @return none
    */
-  public void setStatus(SanctionStatus status) {
+  public void setStatus( SanctionStatus status ) {
     this.status = status;
   }
   
@@ -95,7 +94,7 @@ public abstract class SanctionEntityAbstract extends EntityAbstract
    *          Sanction category
    * @return none
    */
-  public void setCategory(SanctionCategory category) {
+  public void setCategory( SanctionCategory category ) {
     this.category = category;
   }
   
@@ -118,19 +117,19 @@ public abstract class SanctionEntityAbstract extends EntityAbstract
    *          Norm content
    * @return none
    */
-  public void setContent(SanctionContentInterface content) {
+  public void setContent( SanctionContentInterface content ) {
     this.content = content;
   }
   
   
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals( Object obj ) {
     
-    if(this == obj) {
+    if ( this == obj ) {
       return true;
-    } else if((obj != null) && (obj.getClass() == this.getClass())) {
+    } else if ( (obj != null) && (obj.getClass() == this.getClass()) ) {
       SanctionEntityAbstract sanction = (SanctionEntityAbstract) obj;
-      if(this.getId() == sanction.getId()) {
+      if ( this.getId() == sanction.getId() ) {
         return true;
       }
     }
@@ -150,8 +149,8 @@ public abstract class SanctionEntityAbstract extends EntityAbstract
   public SanctionEntityAbstract clone() {
     try {
       return (SanctionEntityAbstract) super.clone();
-    } catch(CloneNotSupportedException e) {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 }

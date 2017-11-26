@@ -4,7 +4,6 @@ import emilia.entity.norm.NormEntityAbstract;
 
 public interface NormativeBoardListener {
   
-  
   /**
    * Submit a norm to the listener
    * 
@@ -16,6 +15,6 @@ public interface NormativeBoardListener {
    *          New norm entity
    * @return none
    */
-  public void receive(NormativeBoardEventType type, NormEntityAbstract oldNorm,
-      NormEntityAbstract newNorm);
+  public void receive( NormativeBoardEventType type, NormEntityAbstract oldNorm,
+      NormEntityAbstract newNorm );
 }

@@ -1,19 +1,18 @@
 package emilia;
 
-import emilia.entity.event.NormativeEventEntityAbstract;
-import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.sanction.SanctionEntityAbstract;
-import emilia.modules.enforcement.NormEnforcementListener;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
+import emilia.modules.enforcement.NormEnforcementListener;
 
 public abstract class EmiliaAbstract {
   
-  
   private static final Logger       logger = LoggerFactory
-      .getLogger(EmiliaAbstract.class);
+      .getLogger( EmiliaAbstract.class );
   
   // Agent identification
   protected int                     agentId;
@@ -28,7 +27,7 @@ public abstract class EmiliaAbstract {
    * @param none
    * @return none
    */
-  public EmiliaAbstract(int agentId) {
+  public EmiliaAbstract( int agentId ) {
     this.agentId = agentId;
     this.callback = null;
   }
@@ -52,7 +51,7 @@ public abstract class EmiliaAbstract {
    *          Event message
    * @return none
    */
-  public abstract void input(Object event);
+  public abstract void input( Object event );
   
   
   /**
@@ -73,7 +72,7 @@ public abstract class EmiliaAbstract {
    *          Initial values
    * @return none
    */
-  public abstract void setInitialValues(int normId, Object initialValues);
+  public abstract void setInitialValues( int normId, Object initialValues );
   
   
   /**
@@ -83,7 +82,7 @@ public abstract class EmiliaAbstract {
    *          Norm identification
    * @return Norm salience
    */
-  public abstract double getNormSalience(int normId);
+  public abstract double getNormSalience( int normId );
   
   
   /**
@@ -94,7 +93,7 @@ public abstract class EmiliaAbstract {
    * @return none
    */
   public abstract void addNormsSanctions(
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions );
   
   
   /**
@@ -115,7 +114,7 @@ public abstract class EmiliaAbstract {
    * @return none
    */
   public abstract void updateNormsSanctions(
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions );
   
   
   /**
@@ -125,7 +124,7 @@ public abstract class EmiliaAbstract {
    *          Norm identification
    * @return Norm
    */
-  public abstract NormEntityAbstract getNorm(int normId);
+  public abstract NormEntityAbstract getNorm( int normId );
   
   
   /**
@@ -135,10 +134,10 @@ public abstract class EmiliaAbstract {
    *          Sanction object
    * @return none
    */
-  public void sendSanction(NormativeEventEntityAbstract event,
-      NormEntityAbstract norm, SanctionEntityAbstract sanction) {
-    if((this.callback != null) && (sanction != null)) {
-      this.callback.receive(event, norm, sanction);
+  public void sendSanction( NormativeEventEntityAbstract event,
+      NormEntityAbstract norm, SanctionEntityAbstract sanction ) {
+    if ( (this.callback != null) && (sanction != null) ) {
+      this.callback.receive( event, norm, sanction );
     }
   }
   
@@ -150,10 +149,10 @@ public abstract class EmiliaAbstract {
    *          Method to be called
    * @return none
    */
-  public void registerNormEnforcement(NormEnforcementListener listener) {
+  public void registerNormEnforcement( NormEnforcementListener listener ) {
     this.callback = listener;
     
-    logger.debug("CALLBACK REGISTERED [ Norm Enforcement ]");
+    logger.debug( "CALLBACK REGISTERED [ Norm Enforcement ]" );
   }
   
   
@@ -166,6 +165,6 @@ public abstract class EmiliaAbstract {
   public void unregisterNormEnforcement() {
     this.callback = null;
     
-    logger.debug("CALLBACK UNREGISTERED [ Norm Enforcement ]");
+    logger.debug( "CALLBACK UNREGISTERED [ Norm Enforcement ]" );
   }
 }

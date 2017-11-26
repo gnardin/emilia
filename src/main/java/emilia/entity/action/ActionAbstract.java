@@ -6,10 +6,9 @@ import org.slf4j.LoggerFactory;
 
 public abstract class ActionAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger   logger = LoggerFactory
-      .getLogger(ActionAbstract.class);
+      .getLogger( ActionAbstract.class );
   
   // Action identification
   protected int                 id;
@@ -30,7 +29,7 @@ public abstract class ActionAbstract {
    *          Action description
    * @return none
    */
-  public ActionAbstract(int id, String description) {
+  public ActionAbstract( int id, String description ) {
     this.id = id;
     this.description = description;
     this.params = null;
@@ -48,8 +47,7 @@ public abstract class ActionAbstract {
    *          Action parameters
    * @return none
    */
-  public ActionAbstract(int id, String description,
-      Map<Object, Object> params) {
+  public ActionAbstract( int id, String description, Map<Object, Object> params ) {
     this.id = id;
     this.description = description;
     this.params = params;
@@ -96,11 +94,11 @@ public abstract class ActionAbstract {
    *          Parameter index. It can be a String or an Integer.
    * @return Parameter value
    */
-  public Object getParam(Object index) {
+  public Object getParam( Object index ) {
     Object param = null;
     
-    if((this.params != null) && (index != null)) {
-      param = this.params.get(index);
+    if ( (this.params != null) && (index != null) ) {
+      param = this.params.get( index );
     }
     
     return param;
@@ -116,22 +114,22 @@ public abstract class ActionAbstract {
    *          Parameter value
    * @return none
    */
-  public void setParam(Object index, Object param) {
-    if((this.params != null) && (index != null)) {
-      this.params.put(index, param);
+  public void setParam( Object index, Object param ) {
+    if ( (this.params != null) && (index != null) ) {
+      this.params.put( index, param );
     }
   }
   
   
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals( Object obj ) {
     boolean result = false;
     
-    if(this == obj) {
+    if ( this == obj ) {
       result = true;
-    } else if((obj != null) && (obj.getClass() == this.getClass())) {
+    } else if ( (obj != null) && (obj.getClass() == this.getClass()) ) {
       ActionAbstract action = (ActionAbstract) obj;
-      if(this.id == action.getId()) {
+      if ( this.id == action.getId() ) {
         result = true;
       }
     }
@@ -153,14 +151,14 @@ public abstract class ActionAbstract {
     
     str += this.id + " " + this.description + " ";
     
-    if(this.params != null) {
-      for(Object param : this.params.keySet()) {
-        Object value = this.params.get(param).toString();
+    if ( this.params != null ) {
+      for ( Object param : this.params.keySet() ) {
+        Object value = this.params.get( param ).toString();
         
         str += value.toString() + " ";
       }
       
-      str = str.substring(0, (str.length() - 1));
+      str = str.substring( 0, (str.length() - 1) );
     }
     
     return str;

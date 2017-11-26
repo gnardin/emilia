@@ -1,6 +1,10 @@
 package emilia;
 
 import static org.junit.Assert.assertEquals;
+import java.util.ArrayList;
+import java.util.Arrays;
+import org.junit.Before;
+import org.junit.Test;
 import emilia.board.NormativeBoardEventType;
 import emilia.board.NormativeBoardInterface;
 import emilia.defaultImpl.board.NormativeBoard;
@@ -11,13 +15,8 @@ import emilia.entity.norm.NormEntityAbstract.NormSource;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.entity.norm.NormEntityAbstract.NormType;
 import emilia.modules.adoption.NormAdoptionAbstract;
-import java.util.ArrayList;
-import java.util.Arrays;
-import org.junit.Before;
-import org.junit.Test;
 
 public class EmiliaAdoptionTest {
-  
   
   NormativeBoardInterface normtiveBoard;
   
@@ -27,25 +26,25 @@ public class EmiliaAdoptionTest {
   @Before
   public void constructor() {
     this.normtiveBoard = new NormativeBoard();
-    this.normAdoption = new NormAdoptionController(1, this.normtiveBoard);
+    this.normAdoption = new NormAdoptionController( 1, this.normtiveBoard );
     
-    this.normtiveBoard
-        .registerCallback(
-            new ArrayList<NormativeBoardEventType>(
-                Arrays.asList(NormativeBoardEventType.INSERT_NORM,
-                    NormativeBoardEventType.UPDATE_SALIENCE)),
-            this.normAdoption);
+    this.normtiveBoard.registerCallback(
+        new ArrayList<NormativeBoardEventType>(
+            Arrays.asList( NormativeBoardEventType.INSERT_NORM,
+                NormativeBoardEventType.UPDATE_SALIENCE ) ),
+        this.normAdoption );
   }
   
   
   @Test
   public void normAdoptionTest() {
-    NormContent content = new NormContent("COOPERATE");
-    NormEntity norm = new NormEntity(1, NormType.SOCIAL, NormSource.DISTRIBUTED,
-        NormStatus.BELIEF, content);
-    this.normtiveBoard.setNorm(norm);
+    NormContent content = new NormContent( "COOPERATE" );
+    NormEntity norm = new NormEntity( 1, NormType.SOCIAL,
+        NormSource.DISTRIBUTED, NormStatus.BELIEF, content );
+    this.normtiveBoard.setNorm( norm );
     
-    assertEquals(this.normtiveBoard.getNorm(1).getStatus(), NormStatus.GOAL);
+    assertEquals( this.normtiveBoard.getNorm( 1 ).getStatus(),
+        NormStatus.GOAL );
   }
 }
 
@@ -53,14 +52,12 @@ public class EmiliaAdoptionTest {
 
 class NormEntity extends NormEntityAbstract {
   
-  
-  public NormEntity(Integer id, NormType type, NormSource source,
-      NormStatus status, NormContentInterface content) {
-    this.setId(id);
-    this.setType(type);
-    this.setSource(source);
-    this.setStatus(status);
-    this.setContent(content);
+  public NormEntity( Integer id, NormType type, NormSource source, NormStatus status, NormContentInterface content ) {
+    this.setId( id );
+    this.setType( type );
+    this.setSource( source );
+    this.setStatus( status );
+    this.setContent( content );
   }
 }
 
@@ -68,20 +65,19 @@ class NormEntity extends NormEntityAbstract {
 
 class NormContent implements NormContentInterface {
   
-  
   private String content;
   
   
-  public NormContent(String content) {
+  public NormContent( String content ) {
     this.content = content;
   }
   
   
   @Override
-  public boolean match(Object content) {
+  public boolean match( Object content ) {
     
-    if(content instanceof String) {
-      if(this.content.equals((String) content)) {
+    if ( content instanceof String ) {
+      if ( this.content.equals( (String) content ) ) {
         return true;
       }
     }
@@ -91,11 +87,11 @@ class NormContent implements NormContentInterface {
   
   
   @Override
-  public boolean comply(Object content) {
+  public boolean comply( Object content ) {
     boolean comply = false;
     
-    if(content instanceof String) {
-      if(this.content.equalsIgnoreCase((String) content)) {
+    if ( content instanceof String ) {
+      if ( this.content.equalsIgnoreCase( (String) content ) ) {
         comply = true;
       }
     }

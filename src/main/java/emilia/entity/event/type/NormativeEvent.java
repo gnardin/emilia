@@ -1,16 +1,15 @@
 package emilia.entity.event.type;
 
-import emilia.entity.event.NormativeEventEntityAbstract;
-import emilia.entity.event.NormativeEventType;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
 
 public class NormativeEvent extends NormativeEventEntityAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(NormativeEvent.class);
+      .getLogger( NormativeEvent.class );
   
   // Norm identification
   protected int               normId;
@@ -33,9 +32,8 @@ public class NormativeEvent extends NormativeEventEntityAbstract {
    *          Norm identification
    * @return none
    */
-  public NormativeEvent(double time, int sourceId, int targetId, int informerId,
-      NormativeEventType type, int normId) {
-    super(time, sourceId, targetId, informerId, type);
+  public NormativeEvent( double time, int sourceId, int targetId, int informerId, NormativeEventType type, int normId ) {
+    super( time, sourceId, targetId, informerId, type );
     
     this.normId = normId;
   }

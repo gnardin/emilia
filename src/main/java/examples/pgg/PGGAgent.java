@@ -1,5 +1,12 @@
 package examples.pgg;
 
+import java.util.Calendar;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+import cern.jet.random.Uniform;
 import emilia.EmiliaController;
 import emilia.defaultImpl.entity.sanction.SanctionContent;
 import emilia.entity.action.ActionAbstract;
@@ -12,20 +19,12 @@ import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.enforcement.NormEnforcementListener;
 import examples.pgg.actions.CooperateAction;
 import examples.pgg.actions.DefectAction;
-import cern.jet.random.Uniform;
-import java.util.Calendar;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class PGGAgent implements NormEnforcementListener {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger                  logger    = LoggerFactory
-      .getLogger(PGGAgent.class);
+      .getLogger( PGGAgent.class );
   
   // Constants
   private final static ActionAbstract          COOPERATE = new CooperateAction();
@@ -67,14 +66,12 @@ public class PGGAgent implements NormEnforcementListener {
    *          Random generator
    * @return none
    */
-  public PGGAgent(int agentId, String xmlFile, String xsdFile,
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions,
-      Uniform rnd, double costPunish) {
+  public PGGAgent( int agentId, String xmlFile, String xsdFile, Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions, Uniform rnd, double costPunish ) {
     this.agentId = agentId;
-    this.normative = new EmiliaController(agentId, xmlFile, xsdFile);
+    this.normative = new EmiliaController( agentId, xmlFile, xsdFile );
     this.normative.init();
-    this.normative.registerNormEnforcement(this);
-    this.normative.addNormsSanctions(normsSanctions);
+    this.normative.registerNormEnforcement( this );
+    this.normative.addNormsSanctions( normsSanctions );
     this.rnd = rnd;
     
     this.punishments = new HashMap<Integer, SanctionEntityAbstract>();
@@ -116,7 +113,7 @@ public class PGGAgent implements NormEnforcementListener {
    * @return Salience
    */
   public double getSalience() {
-    return this.normative.getNormSalience(normId);
+    return this.normative.getNormSalience( normId );
   }
   
   
@@ -138,7 +135,7 @@ public class PGGAgent implements NormEnforcementListener {
    *          Round payoff
    * @return none
    */
-  public void setPayoff(double payoff) {
+  public void setPayoff( double payoff ) {
     this.payoff = payoff;
   }
   
@@ -152,14 +149,14 @@ public class PGGAgent implements NormEnforcementListener {
   public ActionAbstract decideAction() {
     
     // Cooperation probability
-    if(this.rnd.nextDouble() > NOISE) {
-      if(this.rnd.nextDouble() < this.normative.getNormSalience(normId)) {
+    if ( this.rnd.nextDouble() > NOISE ) {
+      if ( this.rnd.nextDouble() < this.normative.getNormSalience( normId ) ) {
         this.action = COOPERATE;
       } else {
         this.action = DEFECT;
       }
     } else {
-      if(this.rnd.nextIntFromTo(0, 1) == 0) {
+      if ( this.rnd.nextIntFromTo( 0, 1 ) == 0 ) {
         this.action = COOPERATE;
       } else {
         this.action = DEFECT;
@@ -177,22 +174,22 @@ public class PGGAgent implements NormEnforcementListener {
    *          List of neighbors actions
    * @return none
    */
-  public void updateActions(Map<Integer, ActionAbstract> neighborsActions) {
+  public void updateActions( Map<Integer, ActionAbstract> neighborsActions ) {
     this.neighborsActions = neighborsActions;
     
-    for(Integer neighborId : neighborsActions.keySet()) {
-      ActionAbstract act = neighborsActions.get(neighborId);
+    for ( Integer neighborId : neighborsActions.keySet() ) {
+      ActionAbstract act = neighborsActions.get( neighborId );
       
       NormativeEventEntityAbstract eventEntity;
-      if(act.equals(COOPERATE)) {
-        eventEntity = new ActionEvent(Calendar.getInstance().getTimeInMillis(),
-            neighborId, this.agentId, this.agentId, COOPERATE);
+      if ( act.equals( COOPERATE ) ) {
+        eventEntity = new ActionEvent( Calendar.getInstance().getTimeInMillis(),
+            neighborId, this.agentId, this.agentId, COOPERATE );
       } else {
-        eventEntity = new ActionEvent(Calendar.getInstance().getTimeInMillis(),
-            neighborId, this.agentId, this.agentId, DEFECT);
+        eventEntity = new ActionEvent( Calendar.getInstance().getTimeInMillis(),
+            neighborId, this.agentId, this.agentId, DEFECT );
       }
       
-      this.normative.input(eventEntity);
+      this.normative.input( eventEntity );
     }
   }
   
@@ -205,9 +202,9 @@ public class PGGAgent implements NormEnforcementListener {
    */
   public Map<Integer, SanctionEntityAbstract> decidePunish() {
     
-    if(this.action.equals(COOPERATE)) {
-      for(Integer neighborId : this.punishments.keySet()) {
-        SanctionEntityAbstract sanction = this.punishments.get(neighborId);
+    if ( this.action.equals( COOPERATE ) ) {
+      for ( Integer neighborId : this.punishments.keySet() ) {
+        SanctionEntityAbstract sanction = this.punishments.get( neighborId );
         SanctionContent sanctionContent = (SanctionContent) sanction
             .getContent();
         this.payoff -= sanctionContent.getCost();
@@ -229,30 +226,30 @@ public class PGGAgent implements NormEnforcementListener {
    * @return none
    */
   public void updatePunishment(
-      Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments) {
+      Map<Integer, Map<Integer, SanctionEntityAbstract>> punishments ) {
     
-    for(Integer punished : punishments.keySet()) {
-      Map<Integer, SanctionEntityAbstract> punish = punishments.get(punished);
+    for ( Integer punished : punishments.keySet() ) {
+      Map<Integer, SanctionEntityAbstract> punish = punishments.get( punished );
       
-      for(Integer punisher : punish.keySet()) {
+      for ( Integer punisher : punish.keySet() ) {
         NormativeEventEntityAbstract normativeEvent = null;
-        SanctionEntityAbstract sanction = punish.get(punisher);
+        SanctionEntityAbstract sanction = punish.get( punisher );
         SanctionContent sanctionContent = (SanctionContent) sanction
             .getContent();
         
         // Affected
-        if(punished == this.agentId) {
+        if ( punished == this.agentId ) {
           
-          switch(sanctionContent.getAction()) {
+          switch ( sanctionContent.getAction() ) {
             case PUNISHMENT:
               normativeEvent = new NormativeEvent(
                   Calendar.getInstance().getTimeInMillis(), punisher, punished,
-                  punished, NormativeEventType.PUNISHMENT, normId);
+                  punished, NormativeEventType.PUNISHMENT, normId );
               break;
             case SANCTION:
               normativeEvent = new NormativeEvent(
                   Calendar.getInstance().getTimeInMillis(), punisher, punished,
-                  punished, NormativeEventType.SANCTION, normId);
+                  punished, NormativeEventType.SANCTION, normId );
               break;
             case MESSAGE:
               break;
@@ -262,20 +259,20 @@ public class PGGAgent implements NormEnforcementListener {
           
         } else {
           // Observed
-          if(punisher == this.agentId) {
+          if ( punisher == this.agentId ) {
             
-            switch(sanctionContent.getAction()) {
+            switch ( sanctionContent.getAction() ) {
               case PUNISHMENT:
                 normativeEvent = new NormativeEvent(
                     Calendar.getInstance().getTimeInMillis(), punisher,
                     punished, punished, NormativeEventType.PUNISHMENT_OBSERVED,
-                    normId);
+                    normId );
                 break;
               case SANCTION:
                 normativeEvent = new NormativeEvent(
                     Calendar.getInstance().getTimeInMillis(), punisher,
                     punished, punished, NormativeEventType.SANCTION_OBSERVED,
-                    normId);
+                    normId );
                 break;
               case MESSAGE:
                 break;
@@ -284,18 +281,18 @@ public class PGGAgent implements NormEnforcementListener {
             // Informed
           } else {
             
-            switch(sanctionContent.getAction()) {
+            switch ( sanctionContent.getAction() ) {
               case PUNISHMENT:
                 normativeEvent = new NormativeEvent(
                     Calendar.getInstance().getTimeInMillis(), punisher,
                     punished, punisher, NormativeEventType.PUNISHMENT_INFORMED,
-                    normId);
+                    normId );
                 break;
               case SANCTION:
                 normativeEvent = new NormativeEvent(
                     Calendar.getInstance().getTimeInMillis(), punisher,
                     punished, punisher, NormativeEventType.SANCTION_INFORMED,
-                    normId);
+                    normId );
                 break;
               case MESSAGE:
                 break;
@@ -303,21 +300,21 @@ public class PGGAgent implements NormEnforcementListener {
           }
         }
         
-        this.normative.input(normativeEvent);
+        this.normative.input( normativeEvent );
       }
     }
   }
   
   
   @Override
-  public void receive(NormativeEventEntityAbstract event,
-      NormEntityAbstract norm, SanctionEntityAbstract sanction) {
+  public void receive( NormativeEventEntityAbstract event,
+      NormEntityAbstract norm, SanctionEntityAbstract sanction ) {
     
-    if(this.action == COOPERATE) {
+    if ( this.action == COOPERATE ) {
       System.out.println(
           "PUNISHER [" + event.getTarget() + "] PUNISHED [" + event.getSource()
-              + "] ENFORCEMENT [" + sanction.getContent().toString() + "]");
-      this.punishments.put(event.getSource(), sanction);
+              + "] ENFORCEMENT [" + sanction.getContent().toString() + "]" );
+      this.punishments.put( event.getSource(), sanction );
     }
   }
 }

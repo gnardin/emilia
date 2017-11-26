@@ -1,16 +1,15 @@
 package emilia.defaultImpl.entity.norm;
 
-import emilia.entity.action.ActionAbstract;
-import emilia.entity.norm.NormContentInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.action.ActionAbstract;
+import emilia.entity.norm.NormContentInterface;
 
 public class NormContent implements NormContentInterface {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(NormContent.class);
+      .getLogger( NormContent.class );
   
   // Action
   private ActionAbstract      action;
@@ -28,7 +27,7 @@ public class NormContent implements NormContentInterface {
    *          Negated action
    * @return none
    */
-  public NormContent(ActionAbstract action, ActionAbstract notAction) {
+  public NormContent( ActionAbstract action, ActionAbstract notAction ) {
     this.action = action;
     this.notAction = notAction;
   }
@@ -57,12 +56,12 @@ public class NormContent implements NormContentInterface {
   
   
   @Override
-  public boolean match(Object value) {
+  public boolean match( Object value ) {
     
-    if(value instanceof String) {
-      if((this.action.getDescription().equalsIgnoreCase((String) value))
+    if ( value instanceof String ) {
+      if ( (this.action.getDescription().equalsIgnoreCase( (String) value ))
           || (this.notAction.getDescription()
-              .equalsIgnoreCase((String) value))) {
+              .equalsIgnoreCase( (String) value )) ) {
         return true;
       }
     }
@@ -72,10 +71,10 @@ public class NormContent implements NormContentInterface {
   
   
   @Override
-  public boolean comply(Object value) {
+  public boolean comply( Object value ) {
     
-    if(value instanceof String) {
-      if(this.action.getDescription().equalsIgnoreCase((String) value)) {
+    if ( value instanceof String ) {
+      if ( this.action.getDescription().equalsIgnoreCase( (String) value ) ) {
         return true;
       }
     }

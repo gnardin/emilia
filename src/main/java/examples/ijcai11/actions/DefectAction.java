@@ -1,18 +1,17 @@
 package examples.ijcai11.actions;
 
-import emilia.entity.action.ActionAbstract;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.action.ActionAbstract;
 
 public class DefectAction extends ActionAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(DefectAction.class);
+      .getLogger( DefectAction.class );
   
   
   public DefectAction() {
-    super(1, "DEFECT");
+    super( 1, "DEFECT" );
   }
 }

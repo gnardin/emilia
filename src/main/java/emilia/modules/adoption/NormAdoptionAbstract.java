@@ -1,15 +1,14 @@
 package emilia.modules.adoption;
 
-import emilia.board.NormativeBoardInterface;
-import emilia.board.NormativeBoardListener;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.board.NormativeBoardInterface;
+import emilia.board.NormativeBoardListener;
 
 public abstract class NormAdoptionAbstract implements NormativeBoardListener {
   
-  
   private static final Logger       logger = LoggerFactory
-      .getLogger(NormAdoptionAbstract.class);
+      .getLogger( NormAdoptionAbstract.class );
   
   // Agent identification
   protected int                     agentId;
@@ -27,11 +26,10 @@ public abstract class NormAdoptionAbstract implements NormativeBoardListener {
    *          Normative board
    * @return none
    */
-  public NormAdoptionAbstract(Integer agentId,
-      NormativeBoardInterface normativeBoard) {
+  public NormAdoptionAbstract( Integer agentId, NormativeBoardInterface normativeBoard ) {
     this.agentId = agentId;
     this.normativeBoard = normativeBoard;
     
-    logger.debug("NORM ADOPTION INITIALIZED");
+    logger.debug( "NORM ADOPTION INITIALIZED" );
   }
 }

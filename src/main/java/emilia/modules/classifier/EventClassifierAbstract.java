@@ -1,16 +1,15 @@
 package emilia.modules.classifier;
 
-import emilia.entity.event.NormativeEventEntityAbstract;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.event.NormativeEventEntityAbstract;
 
 public abstract class EventClassifierAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(EventClassifierAbstract.class);
+      .getLogger( EventClassifierAbstract.class );
   
   // Agent identification
   protected int               agentId;
@@ -23,7 +22,7 @@ public abstract class EventClassifierAbstract {
    *          Agent identification
    * @return none
    */
-  public EventClassifierAbstract(Integer agentId) {
+  public EventClassifierAbstract( Integer agentId ) {
     this.agentId = agentId;
   }
   
@@ -35,5 +34,5 @@ public abstract class EventClassifierAbstract {
    *          Event to classify
    * @return Classified event
    */
-  public abstract List<NormativeEventEntityAbstract> classify(Object event);
+  public abstract List<NormativeEventEntityAbstract> classify( Object event );
 }

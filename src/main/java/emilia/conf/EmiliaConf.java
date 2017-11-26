@@ -1,6 +1,5 @@
 package emilia.conf;
 
-import emilia.Constants;
 import java.io.File;
 import javax.xml.XMLConstants;
 import javax.xml.bind.JAXBContext;
@@ -15,13 +14,13 @@ import javax.xml.validation.Validator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.xml.sax.SAXException;
+import emilia.Constants;
 
-@XmlRootElement(name = Constants.TAG_EMILIA)
+@XmlRootElement ( name = Constants.TAG_EMILIA )
 public class EmiliaConf {
   
-  
   private static final Logger logger = LoggerFactory
-      .getLogger(EmiliaConf.class);
+      .getLogger( EmiliaConf.class );
   
   private String              eventClassifierClass;
   
@@ -47,29 +46,29 @@ public class EmiliaConf {
    *          XSD configuration filename
    * @return Configuration information
    */
-  public static EmiliaConf getConf(String xmlFilename, String xsdFilename) {
+  public static EmiliaConf getConf( String xmlFilename, String xsdFilename ) {
     
     EmiliaConf emiliaConf = new EmiliaConf();
     
-    File xmlFile = new File(xmlFilename);
-    File xsdFile = new File(xsdFilename);
+    File xmlFile = new File( xmlFilename );
+    File xsdFile = new File( xsdFilename );
     
-    if((xmlFile.exists()) && (xsdFile.exists())) {
+    if ( (xmlFile.exists()) && (xsdFile.exists()) ) {
       
-      if(isValid(xmlFilename, xsdFilename)) {
+      if ( isValid( xmlFilename, xsdFilename ) ) {
         
         try {
-          JAXBContext jaxbContext = JAXBContext.newInstance(EmiliaConf.class);
+          JAXBContext jaxbContext = JAXBContext.newInstance( EmiliaConf.class );
           Unmarshaller jaxbUnmarshaller = jaxbContext.createUnmarshaller();
           
-          File XMLFile = new File(xmlFilename);
+          File XMLFile = new File( xmlFilename );
           
-          if(XMLFile.exists()) {
-            emiliaConf = (EmiliaConf) jaxbUnmarshaller.unmarshal(XMLFile);
+          if ( XMLFile.exists() ) {
+            emiliaConf = (EmiliaConf) jaxbUnmarshaller.unmarshal( XMLFile );
           }
           
-        } catch(JAXBException e) {
-          logger.debug(e.toString());
+        } catch ( JAXBException e ) {
+          logger.debug( e.toString() );
         }
         
       }
@@ -88,23 +87,23 @@ public class EmiliaConf {
    *          XSD filename
    * @return True if valid, False otherwise
    */
-  public static Boolean isValid(String xmlFilename, String xsdFilename) {
+  public static Boolean isValid( String xmlFilename, String xsdFilename ) {
     Boolean valid = false;
     
     try {
       SchemaFactory factory = SchemaFactory
-          .newInstance(XMLConstants.W3C_XML_SCHEMA_NS_URI);
-      Schema schema = factory.newSchema(new StreamSource(xsdFilename));
+          .newInstance( XMLConstants.W3C_XML_SCHEMA_NS_URI );
+      Schema schema = factory.newSchema( new StreamSource( xsdFilename ) );
       
       Validator validator = schema.newValidator();
-      validator.validate(new StreamSource(xmlFilename));
+      validator.validate( new StreamSource( xmlFilename ) );
       
       valid = true;
       
-    } catch(SAXException e) {
-      logger.debug(e.toString());
-    } catch(Exception e) {
-      logger.debug(e.toString());
+    } catch ( SAXException e ) {
+      logger.debug( e.toString() );
+    } catch ( Exception e ) {
+      logger.debug( e.toString() );
     }
     
     return valid;
@@ -116,8 +115,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_EVENT_CLASSIFIER)
-  public void setEventClassifierClass(String eventClassifierClass) {
+  @XmlElement ( name = Constants.TAG_EVENT_CLASSIFIER )
+  public void setEventClassifierClass( String eventClassifierClass ) {
     this.eventClassifierClass = eventClassifierClass;
   }
   
@@ -127,8 +126,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORM_RECOGNITION)
-  public void setNormRecognitionClass(String normRecognitionClass) {
+  @XmlElement ( name = Constants.TAG_NORM_RECOGNITION )
+  public void setNormRecognitionClass( String normRecognitionClass ) {
     this.normRecognitionClass = normRecognitionClass;
   }
   
@@ -138,8 +137,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORM_ADOPTION)
-  public void setNormAdoptionClass(String normAdoptionClass) {
+  @XmlElement ( name = Constants.TAG_NORM_ADOPTION )
+  public void setNormAdoptionClass( String normAdoptionClass ) {
     this.normAdoptionClass = normAdoptionClass;
   }
   
@@ -149,8 +148,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORM_SALIENCE)
-  public void setNormSalienceClass(String normSalienceClass) {
+  @XmlElement ( name = Constants.TAG_NORM_SALIENCE )
+  public void setNormSalienceClass( String normSalienceClass ) {
     this.normSalienceClass = normSalienceClass;
   }
   
@@ -160,8 +159,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORM_ENFORCEMENT)
-  public void setNormEnforcementClass(String normEnforcementClass) {
+  @XmlElement ( name = Constants.TAG_NORM_ENFORCEMENT )
+  public void setNormEnforcementClass( String normEnforcementClass ) {
     this.normEnforcementClass = normEnforcementClass;
   }
   
@@ -171,8 +170,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORM_COMPLIANCE)
-  public void setNormComplianceClass(String normComplianceClass) {
+  @XmlElement ( name = Constants.TAG_NORM_COMPLIANCE )
+  public void setNormComplianceClass( String normComplianceClass ) {
     this.normComplianceClass = normComplianceClass;
   }
   
@@ -182,8 +181,8 @@ public class EmiliaConf {
   }
   
   
-  @XmlElement(name = Constants.TAG_NORMATIVE_BOARD)
-  public void setNormativeBoardClass(String normativeBoardClass) {
+  @XmlElement ( name = Constants.TAG_NORMATIVE_BOARD )
+  public void setNormativeBoardClass( String normativeBoardClass ) {
     this.normativeBoardClass = normativeBoardClass;
   }
 }

@@ -1,15 +1,14 @@
 package emilia.defaultImpl.entity.sanction;
 
-import emilia.entity.sanction.SanctionContentInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.sanction.SanctionContentInterface;
 
 public class SanctionContent implements SanctionContentInterface {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(SanctionContent.class);
+      .getLogger( SanctionContent.class );
   
   public enum Sanction {
     PUNISHMENT,
@@ -37,7 +36,7 @@ public class SanctionContent implements SanctionContentInterface {
    * @param amount
    *          Sanction amount
    */
-  public SanctionContent(Sanction action, double cost, double amount) {
+  public SanctionContent( Sanction action, double cost, double amount ) {
     this.action = action;
     this.cost = cost;
     this.amount = amount;
@@ -78,7 +77,7 @@ public class SanctionContent implements SanctionContentInterface {
   
   
   @Override
-  public void execute(Object input) {
+  public void execute( Object input ) {
   }
   
   

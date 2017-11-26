@@ -1,12 +1,11 @@
 package emilia.board;
 
-import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.sanction.SanctionEntityAbstract;
 import java.util.List;
 import java.util.Map;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
 
 public interface NormativeBoardInterface {
-  
   
   /**
    * Get norm
@@ -15,7 +14,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return Norm entity
    */
-  public NormEntityAbstract getNorm(int normId);
+  public NormEntityAbstract getNorm( int normId );
   
   
   /**
@@ -34,7 +33,7 @@ public interface NormativeBoardInterface {
    *          Norm entity
    * @return none
    */
-  public void setNorm(NormEntityAbstract norm);
+  public void setNorm( NormEntityAbstract norm );
   
   
   /**
@@ -44,7 +43,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return none
    */
-  public void removeNorm(int normId);
+  public void removeNorm( int normId );
   
   
   /**
@@ -54,7 +53,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return True if norm exists, False otherwise
    */
-  public boolean hasNorm(int normId);
+  public boolean hasNorm( int normId );
   
   
   /**
@@ -64,7 +63,7 @@ public interface NormativeBoardInterface {
    *          Content to match with norms
    * @return List of norms that match the content
    */
-  public abstract List<NormEntityAbstract> match(Object content);
+  public abstract List<NormEntityAbstract> match( Object content );
   
   
   /**
@@ -74,7 +73,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return Norm salience
    */
-  public double getSalience(int normId);
+  public double getSalience( int normId );
   
   
   /**
@@ -86,7 +85,7 @@ public interface NormativeBoardInterface {
    *          Norm salience
    * @return none
    */
-  public void setSalience(int normId, double salience);
+  public void setSalience( int normId, double salience );
   
   
   /**
@@ -96,7 +95,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return Sanction entity
    */
-  public SanctionEntityAbstract getSanction(int sanctionId);
+  public SanctionEntityAbstract getSanction( int sanctionId );
   
   
   /**
@@ -115,7 +114,7 @@ public interface NormativeBoardInterface {
    *          Sanction entity
    * @return none
    */
-  public void setSanction(SanctionEntityAbstract sanction);
+  public void setSanction( SanctionEntityAbstract sanction );
   
   
   /**
@@ -125,7 +124,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return none
    */
-  public void removeSanction(int sanctionId);
+  public void removeSanction( int sanctionId );
   
   
   /**
@@ -135,7 +134,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return True if sanction exists, False otherwise
    */
-  public boolean hasSanction(int sanctionId);
+  public boolean hasSanction( int sanctionId );
   
   
   /**
@@ -145,7 +144,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return List of sanctions entities associated to the norm
    */
-  public List<SanctionEntityAbstract> getSanctions(int normId);
+  public List<SanctionEntityAbstract> getSanctions( int normId );
   
   
   /**
@@ -157,7 +156,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return none
    */
-  public void setNormSanction(int normId, int sanctionId);
+  public void setNormSanction( int normId, int sanctionId );
   
   
   /**
@@ -169,7 +168,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return none
    */
-  public void removeNormSanction(int normId, int sanctionId);
+  public void removeNormSanction( int normId, int sanctionId );
   
   
   /**
@@ -181,7 +180,7 @@ public interface NormativeBoardInterface {
    *          Sanction identification
    * @return True if association exists, False otherwise
    */
-  public boolean hasNormSanction(int normId, int sanctionId);
+  public boolean hasNormSanction( int normId, int sanctionId );
   
   
   /**
@@ -191,7 +190,7 @@ public interface NormativeBoardInterface {
    *          Norm identification
    * @return List of sanctions associated to the norm
    */
-  public List<Integer> getNormSanctions(int normId);
+  public List<Integer> getNormSanctions( int normId );
   
   
   /**
@@ -202,7 +201,7 @@ public interface NormativeBoardInterface {
    * @return none
    */
   public abstract void addNormsSanctions(
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions );
   
   
   /**
@@ -223,7 +222,7 @@ public interface NormativeBoardInterface {
    * @return none
    */
   public abstract void updateNormsSanctions(
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions);
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normsSanctions );
   
   
   /**
@@ -235,8 +234,8 @@ public interface NormativeBoardInterface {
    *          Method to be called
    * @return none
    */
-  public void registerCallback(List<NormativeBoardEventType> types,
-      NormativeBoardListener normListener);
+  public void registerCallback( List<NormativeBoardEventType> types,
+      NormativeBoardListener normListener );
   
   
   /**
@@ -248,6 +247,6 @@ public interface NormativeBoardInterface {
    *          Method to be called
    * @return none
    */
-  public void unregisterCallback(List<NormativeBoardEventType> types,
-      NormativeBoardListener normListener);
+  public void unregisterCallback( List<NormativeBoardEventType> types,
+      NormativeBoardListener normListener );
 }

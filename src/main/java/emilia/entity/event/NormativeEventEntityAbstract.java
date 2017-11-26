@@ -7,10 +7,9 @@ import org.slf4j.LoggerFactory;
 
 public abstract class NormativeEventEntityAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger   logger = LoggerFactory
-      .getLogger(NormativeEventEntityAbstract.class);
+      .getLogger( NormativeEventEntityAbstract.class );
   
   // Time in milliseconds
   protected double              time;
@@ -46,8 +45,7 @@ public abstract class NormativeEventEntityAbstract {
    *          Type of the Event
    * @return none
    */
-  public NormativeEventEntityAbstract(double time, int sourceId, int targetId,
-      int informerId, NormativeEventType type) {
+  public NormativeEventEntityAbstract( double time, int sourceId, int targetId, int informerId, NormativeEventType type ) {
     this.time = time;
     this.sourceId = sourceId;
     this.targetId = targetId;
@@ -74,9 +72,7 @@ public abstract class NormativeEventEntityAbstract {
    *          Context attributes and values
    * @return none
    */
-  public NormativeEventEntityAbstract(double time, int sourceId, int targetId,
-      int informerId, NormativeEventType type,
-      Map<String, Object> contextAttrs) {
+  public NormativeEventEntityAbstract( double time, int sourceId, int targetId, int informerId, NormativeEventType type, Map<String, Object> contextAttrs ) {
     this.time = time;
     this.sourceId = sourceId;
     this.targetId = targetId;
@@ -159,8 +155,8 @@ public abstract class NormativeEventEntityAbstract {
    *          Attribute name
    * @return True if the attribute exists, False otherwise
    */
-  public boolean hasContextAttr(String attr) {
-    return this.contextAttrs.containsKey(attr);
+  public boolean hasContextAttr( String attr ) {
+    return this.contextAttrs.containsKey( attr );
   }
   
   
@@ -171,11 +167,11 @@ public abstract class NormativeEventEntityAbstract {
    *          Attribute name
    * @return Attribute value if it exists, NULL otherwise
    */
-  public Object getContextAttribute(String attr) {
+  public Object getContextAttribute( String attr ) {
     Object result = null;
     
-    if(this.contextAttrs.containsKey(attr)) {
-      result = this.contextAttrs.get(attr);
+    if ( this.contextAttrs.containsKey( attr ) ) {
+      result = this.contextAttrs.get( attr );
     }
     
     return result;
@@ -191,8 +187,8 @@ public abstract class NormativeEventEntityAbstract {
    *          Attribute value
    * @return none
    */
-  public void setContextAttribute(String attr, Object value) {
-    this.contextAttrs.put(attr, value);
+  public void setContextAttribute( String attr, Object value ) {
+    this.contextAttrs.put( attr, value );
   }
   
   
@@ -208,8 +204,8 @@ public abstract class NormativeEventEntityAbstract {
     
     str = this.time + " " + this.sourceId + " " + this.targetId + " "
         + this.informerId + " " + this.type;
-    for(String attr : this.contextAttrs.keySet()) {
-      str += " [" + attr + "|" + this.contextAttrs.get(attr).toString() + "]";
+    for ( String attr : this.contextAttrs.keySet() ) {
+      str += " [" + attr + "|" + this.contextAttrs.get( attr ).toString() + "]";
     }
     
     return str;

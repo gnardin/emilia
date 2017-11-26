@@ -6,7 +6,6 @@ import emilia.entity.sanction.SanctionEntityAbstract;
 
 public interface NormEnforcementListener {
   
-  
   /**
    * Submit a sanction to the listener
    * 
@@ -18,6 +17,6 @@ public interface NormEnforcementListener {
    *          Sanction entity
    * @return none
    */
-  public void receive(NormativeEventEntityAbstract entity,
-      NormEntityAbstract norm, SanctionEntityAbstract sanction);
+  public void receive( NormativeEventEntityAbstract entity,
+      NormEntityAbstract norm, SanctionEntityAbstract sanction );
 }

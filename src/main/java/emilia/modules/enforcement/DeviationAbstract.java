@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 
 public abstract class DeviationAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(DeviationAbstract.class);
+      .getLogger( DeviationAbstract.class );
   
   public enum Type {
     COMPLIANCE,
@@ -26,7 +25,7 @@ public abstract class DeviationAbstract {
    *          Type of deviation
    * @return none
    */
-  public DeviationAbstract(Type type) {
+  public DeviationAbstract( Type type ) {
     this.type = type;
   }
   

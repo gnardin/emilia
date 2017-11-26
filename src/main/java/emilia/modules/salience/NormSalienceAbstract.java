@@ -1,21 +1,20 @@
 package emilia.modules.salience;
 
+import java.util.List;
+import java.util.Map;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardInterface;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.type.NormativeEvent;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.sanction.SanctionEntityAbstract;
 import emilia.modules.EventListener;
-import java.util.List;
-import java.util.Map;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public abstract class NormSalienceAbstract implements EventListener {
   
-  
   private static final Logger           logger = LoggerFactory
-      .getLogger(NormSalienceAbstract.class);
+      .getLogger( NormSalienceAbstract.class );
   
   // Agent identification
   protected int                         agentId;
@@ -36,8 +35,7 @@ public abstract class NormSalienceAbstract implements EventListener {
    *          Normative board
    * @return none
    */
-  public NormSalienceAbstract(Integer agentId,
-      NormativeBoardInterface normativeBoard) {
+  public NormSalienceAbstract( Integer agentId, NormativeBoardInterface normativeBoard ) {
     this.agentId = agentId;
     this.normativeBoard = normativeBoard;
   }
@@ -52,7 +50,7 @@ public abstract class NormSalienceAbstract implements EventListener {
    *          Initial values
    * @return none
    */
-  public abstract void setInitialValue(int normId, Object initialValues);
+  public abstract void setInitialValue( int normId, Object initialValues );
   
   
   /**
@@ -64,15 +62,15 @@ public abstract class NormSalienceAbstract implements EventListener {
    *          Data Type
    * @return none
    */
-  public abstract void updateSalience(int normId);
+  public abstract void updateSalience( int normId );
   
   
   @Override
-  public void receive(NormativeEventEntityAbstract event,
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions) {
+  public void receive( NormativeEventEntityAbstract event,
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions ) {
     
     DataType dataType;
-    switch(event.getType()) {
+    switch ( event.getType() ) {
       case COMPLIANCE:
         dataType = DataType.COMPLIANCE;
         break;
@@ -131,12 +129,12 @@ public abstract class NormSalienceAbstract implements EventListener {
         dataType = null;
     }
     
-    if((dataType != null) && (event instanceof NormativeEvent)) {
+    if ( (dataType != null) && (event instanceof NormativeEvent) ) {
       NormativeEvent normativeEvent = (NormativeEvent) event;
       
-      this.repository.increment(normativeEvent.getNormId(), dataType);
+      this.repository.increment( normativeEvent.getNormId(), dataType );
     }
     
-    logger.debug("[NORM_SALIENCE_ABSTRACT] RECEIVED" + dataType.name());
+    logger.debug( "[NORM_SALIENCE_ABSTRACT] RECEIVED" + dataType.name() );
   }
 }

@@ -1,24 +1,23 @@
 package emilia.modules.enforcement;
 
-import emilia.entity.event.NormativeEventEntityAbstract;
-import emilia.entity.event.NormativeEventType;
-import emilia.entity.event.type.NormativeEvent;
-import emilia.entity.norm.NormEntityAbstract;
-import emilia.entity.sanction.SanctionEntityAbstract;
-import emilia.modules.EventListener;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.entity.event.NormativeEventEntityAbstract;
+import emilia.entity.event.NormativeEventType;
+import emilia.entity.event.type.NormativeEvent;
+import emilia.entity.norm.NormEntityAbstract;
+import emilia.entity.sanction.SanctionEntityAbstract;
+import emilia.modules.EventListener;
 
 public abstract class NormEnforcementAbstract implements EventListener {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger                            logger = LoggerFactory
-      .getLogger(NormEnforcementAbstract.class);
+      .getLogger( NormEnforcementAbstract.class );
   
   // Agent identification
   protected int                                          agentId;
@@ -39,7 +38,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
    * @param none
    * @return none
    */
-  public NormEnforcementAbstract(Integer agentId) {
+  public NormEnforcementAbstract( Integer agentId ) {
     this.agentId = agentId;
     this.memory = new SanctionInfoRepositoryMemory();
     this.callbacks = new HashMap<NormativeEventType, List<EventListener>>();
@@ -56,20 +55,20 @@ public abstract class NormEnforcementAbstract implements EventListener {
    *          Method to be called
    * @return none
    */
-  public void registerCallback(List<NormativeEventType> types,
-      EventListener eventListener) {
+  public void registerCallback( List<NormativeEventType> types,
+      EventListener eventListener ) {
     
     List<EventListener> eventListeners;
-    for(NormativeEventType type : types) {
+    for ( NormativeEventType type : types ) {
       
-      if(this.callbacks.containsKey(type)) {
-        eventListeners = this.callbacks.get(type);
+      if ( this.callbacks.containsKey( type ) ) {
+        eventListeners = this.callbacks.get( type );
       } else {
         eventListeners = new ArrayList<EventListener>();
       }
       
-      eventListeners.add(eventListener);
-      this.callbacks.put(type, eventListeners);
+      eventListeners.add( eventListener );
+      this.callbacks.put( type, eventListeners );
     }
   }
   
@@ -83,16 +82,16 @@ public abstract class NormEnforcementAbstract implements EventListener {
    *          Method to be called
    * @return none
    */
-  public void unregisterCallback(List<NormativeEventType> types,
-      EventListener eventListener) {
+  public void unregisterCallback( List<NormativeEventType> types,
+      EventListener eventListener ) {
     
-    for(NormativeEventType type : types) {
-      if(this.callbacks.containsKey(type)) {
-        List<EventListener> eventListeners = this.callbacks.get(type);
+    for ( NormativeEventType type : types ) {
+      if ( this.callbacks.containsKey( type ) ) {
+        List<EventListener> eventListeners = this.callbacks.get( type );
         
-        if(eventListeners.contains(eventListener)) {
-          eventListeners.remove(eventListener);
-          this.callbacks.put(type, eventListeners);
+        if ( eventListeners.contains( eventListener ) ) {
+          eventListeners.remove( eventListener );
+          this.callbacks.put( type, eventListeners );
         }
       }
     }
@@ -106,7 +105,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
    *          Method to be called
    * @return none
    */
-  public void registerNormEnforcement(NormEnforcementListener listener) {
+  public void registerNormEnforcement( NormEnforcementListener listener ) {
     this.callback = listener;
   }
   
@@ -123,9 +122,9 @@ public abstract class NormEnforcementAbstract implements EventListener {
   
   
   @Override
-  public void receive(NormativeEventEntityAbstract event,
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions) {
-    this.normEnforcementController(event, normSanctions);
+  public void receive( NormativeEventEntityAbstract event,
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions ) {
+    this.normEnforcementController( event, normSanctions );
   }
   
   
@@ -140,79 +139,80 @@ public abstract class NormEnforcementAbstract implements EventListener {
    */
   private synchronized void normEnforcementController(
       NormativeEventEntityAbstract event,
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions) {
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions ) {
     
     // Detect the status of each norm
     Map<NormEntityAbstract, DeviationAbstract> normDeviations = this
-        .detect(event, normSanctions);
+        .detect( event, normSanctions );
     
     // Send messages to callbacks
     
-    for(NormEntityAbstract norm : normDeviations.keySet()) {
-      DeviationAbstract deviation = normDeviations.get(norm);
+    for ( NormEntityAbstract norm : normDeviations.keySet() ) {
+      DeviationAbstract deviation = normDeviations.get( norm );
       NormativeEvent normativeEvent = null;
       
       NormativeEventType type;
-      if(deviation.getType().equals(DeviationAbstract.Type.COMPLIANCE)) {
+      if ( deviation.getType().equals( DeviationAbstract.Type.COMPLIANCE ) ) {
         
-        if(event.getSource() == this.agentId) {
+        if ( event.getSource() == this.agentId ) {
           type = NormativeEventType.COMPLIANCE;
         } else {
-          if(event.getInformer() == this.agentId) {
+          if ( event.getInformer() == this.agentId ) {
             type = NormativeEventType.COMPLIANCE_OBSERVED;
           } else {
             type = NormativeEventType.COMPLIANCE_INFORMED;
           }
         }
         
-        normativeEvent = new NormativeEvent(event.getTime(), event.getSource(),
-            event.getTarget(), event.getInformer(), type, norm.getId());
+        normativeEvent = new NormativeEvent( event.getTime(), event.getSource(),
+            event.getTarget(), event.getInformer(), type, norm.getId() );
         
-      } else if(deviation.getType().equals(DeviationAbstract.Type.VIOLATION)) {
+      } else if ( deviation.getType()
+          .equals( DeviationAbstract.Type.VIOLATION ) ) {
         
-        if(event.getSource() == this.agentId) {
+        if ( event.getSource() == this.agentId ) {
           type = NormativeEventType.VIOLATION;
         } else {
-          if(event.getInformer() == this.agentId) {
+          if ( event.getInformer() == this.agentId ) {
             type = NormativeEventType.VIOLATION_OBSERVED;
           } else {
             type = NormativeEventType.VIOLATION_INFORMED;
           }
         }
         
-        normativeEvent = new NormativeEvent(event.getTime(), event.getSource(),
-            event.getTarget(), event.getInformer(), type, norm.getId());
+        normativeEvent = new NormativeEvent( event.getTime(), event.getSource(),
+            event.getTarget(), event.getInformer(), type, norm.getId() );
       }
       
-      if((normativeEvent != null)
-          && (this.callbacks.containsKey(normativeEvent.getType()))) {
+      if ( (normativeEvent != null)
+          && (this.callbacks.containsKey( normativeEvent.getType() )) ) {
         List<EventListener> listeners = this.callbacks
-            .get(normativeEvent.getType());
+            .get( normativeEvent.getType() );
         
-        for(EventListener listener : listeners) {
-          listener.receive(normativeEvent, normSanctions);
+        for ( EventListener listener : listeners ) {
+          listener.receive( normativeEvent, normSanctions );
         }
       }
     }
     
     // Avoid sanction its own actions
-    if(event.getSource() != event.getTarget()) {
-      for(NormEntityAbstract norm : normDeviations.keySet()) {
+    if ( event.getSource() != event.getTarget() ) {
+      for ( NormEntityAbstract norm : normDeviations.keySet() ) {
         // Sanction Effectiveness Updater
-        this.adapt(event, norm, normDeviations.get(norm));
+        this.adapt( event, norm, normDeviations.get( norm ) );
         
         List<SanctionEntityAbstract> possibleSanctions = normSanctions
-            .get(norm);
-        if(!possibleSanctions.isEmpty()) {
+            .get( norm );
+        if ( !possibleSanctions.isEmpty() ) {
           // Sanction Identified
-          List<SanctionEntityAbstract> sanctions = this.evaluate(event, norm,
-              possibleSanctions, normDeviations.get(norm));
+          List<SanctionEntityAbstract> sanctions = this.evaluate( event, norm,
+              possibleSanctions, normDeviations.get( norm ) );
           
           // Sanction Issuer
-          this.enforce(event, norm, sanctions);
+          this.enforce( event, norm, sanctions );
           
-          for(SanctionEntityAbstract sanction : sanctions) {
-            this.callback.receive(event, norm, sanction);
+          for ( SanctionEntityAbstract sanction : sanctions ) {
+            this.callback.receive( event, norm, sanction );
           }
         }
       }
@@ -230,7 +230,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
    */
   public abstract Map<NormEntityAbstract, DeviationAbstract> detect(
       NormativeEventEntityAbstract event,
-      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions);
+      Map<NormEntityAbstract, List<SanctionEntityAbstract>> normSanctions );
   
   
   /**
@@ -244,8 +244,8 @@ public abstract class NormEnforcementAbstract implements EventListener {
    *          Deviation evaluation
    * @return none
    */
-  public abstract void adapt(NormativeEventEntityAbstract event,
-      NormEntityAbstract norm, DeviationAbstract evaluation);
+  public abstract void adapt( NormativeEventEntityAbstract event,
+      NormEntityAbstract norm, DeviationAbstract evaluation );
   
   
   /**
@@ -263,7 +263,7 @@ public abstract class NormEnforcementAbstract implements EventListener {
    */
   public abstract List<SanctionEntityAbstract> evaluate(
       NormativeEventEntityAbstract event, NormEntityAbstract norm,
-      List<SanctionEntityAbstract> sanctions, DeviationAbstract evaluation);
+      List<SanctionEntityAbstract> sanctions, DeviationAbstract evaluation );
   
   
   /**
@@ -277,8 +277,8 @@ public abstract class NormEnforcementAbstract implements EventListener {
    *          List of sanctions to apply because of norm compliance or violation
    * @return none
    */
-  public abstract void enforce(NormativeEventEntityAbstract event,
-      NormEntityAbstract norm, List<SanctionEntityAbstract> sanctions);
+  public abstract void enforce( NormativeEventEntityAbstract event,
+      NormEntityAbstract norm, List<SanctionEntityAbstract> sanctions );
   
   
   /**

@@ -1,18 +1,17 @@
 package emilia.defaultImpl.modules.adoption;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.board.NormativeBoardEventType;
 import emilia.board.NormativeBoardInterface;
 import emilia.entity.norm.NormEntityAbstract;
 import emilia.entity.norm.NormEntityAbstract.NormStatus;
 import emilia.modules.adoption.NormAdoptionAbstract;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class NormAdoptionController extends NormAdoptionAbstract {
   
-  
   private static final Logger logger = LoggerFactory
-      .getLogger(NormAdoptionController.class);
+      .getLogger( NormAdoptionController.class );
   
   
   /**
@@ -24,30 +23,29 @@ public class NormAdoptionController extends NormAdoptionAbstract {
    *          Normative board
    * @return none
    */
-  public NormAdoptionController(Integer agentId,
-      NormativeBoardInterface normativeBoard) {
-    super(agentId, normativeBoard);
+  public NormAdoptionController( Integer agentId, NormativeBoardInterface normativeBoard ) {
+    super( agentId, normativeBoard );
   }
   
   
   @Override
-  public void receive(NormativeBoardEventType type, NormEntityAbstract oldNorm,
-      NormEntityAbstract newNorm) {
+  public void receive( NormativeBoardEventType type, NormEntityAbstract oldNorm,
+      NormEntityAbstract newNorm ) {
     
     String str = new String();
     
-    if((newNorm != null) && (newNorm.getStatus() != NormStatus.GOAL)) {
+    if ( (newNorm != null) && (newNorm.getStatus() != NormStatus.GOAL) ) {
       
       str = type.name() + " " + newNorm.getContent().toString() + " "
           + newNorm.getStatus().name();
-      logger.debug(str);
+      logger.debug( str );
       
-      newNorm.setStatus(NormStatus.GOAL);
-      this.normativeBoard.setNorm(newNorm);
+      newNorm.setStatus( NormStatus.GOAL );
+      this.normativeBoard.setNorm( newNorm );
       
       str = type.name() + " " + newNorm.getContent().toString() + " "
           + newNorm.getStatus().name();
-      logger.debug(str);
+      logger.debug( str );
     }
   }
 }

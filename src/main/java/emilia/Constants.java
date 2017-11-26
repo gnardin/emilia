@@ -2,7 +2,6 @@ package emilia;
 
 public class Constants {
   
-  
   public static final String TAG_EMILIA           = "emilia";
   
   public static final String TAG_EVENT_CLASSIFIER = "eventClassifierClass";

@@ -4,7 +4,6 @@ import java.util.Map;
 
 public interface SanctionInfoRepositoryInterface {
   
-  
   /**
    * Check the norm information existence
    * 
@@ -12,7 +11,7 @@ public interface SanctionInfoRepositoryInterface {
    *          Norm identification
    * @return True Norm information exist, False otherwise
    */
-  public boolean hasNormInfo(int normId);
+  public boolean hasNormInfo( int normId );
   
   
   /**
@@ -22,7 +21,7 @@ public interface SanctionInfoRepositoryInterface {
    *          Norm identification
    * @return Norm evaluation information
    */
-  public NormInfoEntityInterface getNormInfo(int normId);
+  public NormInfoEntityInterface getNormInfo( int normId );
   
   
   /**
@@ -43,7 +42,7 @@ public interface SanctionInfoRepositoryInterface {
    *          Norm evaluation information
    * @return none
    */
-  public void setNormInfo(int normId, NormInfoEntityInterface evaluation);
+  public void setNormInfo( int normId, NormInfoEntityInterface evaluation );
   
   
   /**
@@ -55,8 +54,8 @@ public interface SanctionInfoRepositoryInterface {
    *          Sanction identification
    * @return Norm x sanction evaluation information
    */
-  public SanctionInfoEntityInterface getSanctionInfo(int normId,
-      int sanctionId);
+  public SanctionInfoEntityInterface getSanctionInfo( int normId,
+      int sanctionId );
   
   
   /**
@@ -66,7 +65,8 @@ public interface SanctionInfoRepositoryInterface {
    *          Norm identification
    * @return Sanctions evaluation information
    */
-  public Map<Integer, SanctionInfoEntityInterface> getSanctionsInfo(int normId);
+  public Map<Integer, SanctionInfoEntityInterface>
+      getSanctionsInfo( int normId );
   
   
   /**
@@ -80,6 +80,6 @@ public interface SanctionInfoRepositoryInterface {
    *          Norm x sanction evaluation information
    * @return none
    */
-  public void setSanctionInfo(int normId, int sanctionId,
-      SanctionInfoEntityInterface evaluation);
+  public void setSanctionInfo( int normId, int sanctionId,
+      SanctionInfoEntityInterface evaluation );
 }

@@ -11,9 +11,8 @@ import org.slf4j.LoggerFactory;
 
 public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
   
-  
   private static final Logger logger = LoggerFactory
-      .getLogger(LatticeGraphGenerator.class);
+      .getLogger( LatticeGraphGenerator.class );
   
   private int                 numAgents;
   
@@ -31,21 +30,22 @@ public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
    * @throws IllegalArgumentException
    *           if the specified size is negative.
    */
-  public LatticeGraphGenerator(int numAgents, int numNeighbors) {
+  public LatticeGraphGenerator( int numAgents, int numNeighbors ) {
     
-    if(numAgents < 0) {
+    if ( numAgents < 0 ) {
       throw new IllegalArgumentException(
-          "Network must contain positive number of nodes.");
+          "Network must contain positive number of nodes." );
     }
-    if((numNeighbors % 2) != 0) {
-      throw new IllegalArgumentException("All nodes must have an even degree.");
+    if ( (numNeighbors % 2) != 0 ) {
+      throw new IllegalArgumentException(
+          "All nodes must have an even degree." );
     }
     
     this.numAgents = numAgents;
     this.numNeighbors = numNeighbors;
     
-    logger.debug("Number of Agents: " + this.numAgents
-        + " Number of Neighbors: " + this.numNeighbors);
+    logger.debug( "Number of Agents: " + this.numAgents
+        + " Number of Neighbors: " + this.numNeighbors );
   }
   
   
@@ -79,25 +79,25 @@ public class LatticeGraphGenerator<V, E> implements GraphGenerator<V, E, V> {
    * @param resultMap
    * @return none
    */
-  public void generateGraph(Graph<V, E> target, VertexFactory<V> vertexFactory,
-      Map<String, V> resultMap) {
+  public void generateGraph( Graph<V, E> target, VertexFactory<V> vertexFactory,
+      Map<String, V> resultMap ) {
     
     List<V> vertexList = new ArrayList<V>();
-    for(int i = 0; i < this.numAgents; i++) {
+    for ( int i = 0; i < this.numAgents; i++ ) {
       V newVertex = vertexFactory.createVertex();
-      target.addVertex(newVertex);
-      vertexList.add(newVertex);
+      target.addVertex( newVertex );
+      vertexList.add( newVertex );
     }
     
     int neighborhood = (int) ((double) this.numNeighbors / 2.0);
-    logger.debug("Vertex list size " + vertexList.size() + " Neighborhood "
-        + neighborhood);
+    logger.debug( "Vertex list size " + vertexList.size() + " Neighborhood "
+        + neighborhood );
     
     // Lattice constructed
-    for(int i = 0; i < vertexList.size(); i++) {
-      for(int k = 1; k <= neighborhood; k++) {
-        target.addEdge(vertexList.get(i),
-            vertexList.get((i + k) % vertexList.size()));
+    for ( int i = 0; i < vertexList.size(); i++ ) {
+      for ( int k = 1; k <= neighborhood; k++ ) {
+        target.addEdge( vertexList.get( i ),
+            vertexList.get( (i + k) % vertexList.size() ) );
       }
     }
   }

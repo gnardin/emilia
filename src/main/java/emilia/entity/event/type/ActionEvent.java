@@ -1,17 +1,16 @@
 package emilia.entity.event.type;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import emilia.entity.action.ActionAbstract;
 import emilia.entity.event.NormativeEventEntityAbstract;
 import emilia.entity.event.NormativeEventType;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 
 public class ActionEvent extends NormativeEventEntityAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(ActionEvent.class);
+      .getLogger( ActionEvent.class );
   
   // Action performed
   protected ActionAbstract    action;
@@ -32,9 +31,8 @@ public class ActionEvent extends NormativeEventEntityAbstract {
    *          Performed action
    * @return none
    */
-  public ActionEvent(double time, int sourceId, int targetId, int informerId,
-      ActionAbstract action) {
-    super(time, sourceId, targetId, informerId, NormativeEventType.ACTION);
+  public ActionEvent( double time, int sourceId, int targetId, int informerId, ActionAbstract action ) {
+    super( time, sourceId, targetId, informerId, NormativeEventType.ACTION );
     
     this.action = action;
   }

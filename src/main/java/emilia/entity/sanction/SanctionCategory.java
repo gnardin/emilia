@@ -5,10 +5,9 @@ import org.slf4j.LoggerFactory;
 
 public class SanctionCategory {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(SanctionCategory.class);
+      .getLogger( SanctionCategory.class );
   
   // Source types
   public enum Issuer {
@@ -71,8 +70,7 @@ public class SanctionCategory {
    *          Discernibility type
    * @return none
    */
-  public SanctionCategory(Issuer source, Locus locus, Mode mode,
-      Polarity polarity, Discernability discernibility) {
+  public SanctionCategory( Issuer source, Locus locus, Mode mode, Polarity polarity, Discernability discernibility ) {
     this.source = source;
     this.locus = locus;
     this.mode = mode;
@@ -145,20 +143,20 @@ public class SanctionCategory {
   public int getCategory() {
     int category = source.ordinal() - 1;
     
-    if((locus.ordinal() - 1) > 0) {
-      category += (int) Math.pow(2, 1);
+    if ( (locus.ordinal() - 1) > 0 ) {
+      category += (int) Math.pow( 2, 1 );
     }
     
-    if((mode.ordinal() - 1) > 0) {
-      category += (int) Math.pow(2, 2);
+    if ( (mode.ordinal() - 1) > 0 ) {
+      category += (int) Math.pow( 2, 2 );
     }
     
-    if((polarity.ordinal() - 1) > 0) {
-      category += (int) Math.pow(2, 3);
+    if ( (polarity.ordinal() - 1) > 0 ) {
+      category += (int) Math.pow( 2, 3 );
     }
     
-    if((discernibility.ordinal() - 1) > 0) {
-      category += (int) Math.pow(2, 4);
+    if ( (discernibility.ordinal() - 1) > 0 ) {
+      category += (int) Math.pow( 2, 4 );
     }
     
     return category;
@@ -166,19 +164,20 @@ public class SanctionCategory {
   
   
   @Override
-  public boolean equals(Object obj) {
+  public boolean equals( Object obj ) {
     boolean result = false;
     
-    if(this == obj)
+    if ( this == obj )
       return true;
     
-    if((obj != null) && (this.getClass() == obj.getClass())) {
+    if ( (obj != null) && (this.getClass() == obj.getClass()) ) {
       SanctionCategory other = (SanctionCategory) obj;
       
-      result = ((this.source.equals(other.source))
-          && (this.locus.equals(other.locus)) && (this.mode.equals(other.mode))
-          && (this.polarity.equals(other.polarity))
-          && (this.discernibility.equals(other.discernibility)));
+      result = ((this.source.equals( other.source ))
+          && (this.locus.equals( other.locus ))
+          && (this.mode.equals( other.mode ))
+          && (this.polarity.equals( other.polarity ))
+          && (this.discernibility.equals( other.discernibility )));
     }
     
     return result;
@@ -204,8 +203,8 @@ public class SanctionCategory {
   public SanctionCategory clone() {
     try {
       return (SanctionCategory) super.clone();
-    } catch(CloneNotSupportedException e) {
-      throw new IllegalStateException(e);
+    } catch ( CloneNotSupportedException e ) {
+      throw new IllegalStateException( e );
     }
   }
 }

@@ -1,15 +1,14 @@
 package emilia.modules.compliance;
 
-import emilia.board.NormativeBoardInterface;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.board.NormativeBoardInterface;
 
 public abstract class NormComplianceAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger       logger = LoggerFactory
-      .getLogger(NormComplianceAbstract.class);
+      .getLogger( NormComplianceAbstract.class );
   
   // Agent identification
   protected int                     agentId;
@@ -27,8 +26,7 @@ public abstract class NormComplianceAbstract {
    *          Normative board
    * @return none
    */
-  public NormComplianceAbstract(Integer agentId,
-      NormativeBoardInterface normativeBoard) {
+  public NormComplianceAbstract( Integer agentId, NormativeBoardInterface normativeBoard ) {
     this.agentId = agentId;
     this.normativeBoard = normativeBoard;
   }
@@ -41,5 +39,5 @@ public abstract class NormComplianceAbstract {
    *          Norm identification
    * @return Normative drive
    */
-  public abstract double getNormativeDrive(int normId);
+  public abstract double getNormativeDrive( int normId );
 }

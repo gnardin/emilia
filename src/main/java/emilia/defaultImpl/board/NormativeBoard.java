@@ -1,36 +1,35 @@
 package emilia.defaultImpl.board;
 
-import emilia.board.NormativeBoardAbstract;
-import emilia.entity.norm.NormEntityAbstract;
 import java.util.ArrayList;
 import java.util.List;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import emilia.board.NormativeBoardAbstract;
+import emilia.entity.norm.NormEntityAbstract;
 
 public class NormativeBoard extends NormativeBoardAbstract {
   
-  
-  @SuppressWarnings("unused")
+  @SuppressWarnings ( "unused" )
   private static final Logger logger = LoggerFactory
-      .getLogger(NormativeBoard.class);
+      .getLogger( NormativeBoard.class );
   
   
   @Override
-  public List<NormEntityAbstract> match(Object info) {
+  public List<NormEntityAbstract> match( Object info ) {
     
     List<NormEntityAbstract> result = new ArrayList<NormEntityAbstract>();
     
     // Norm identification
-    if(info instanceof Integer) {
-      NormEntityAbstract norm = this.norms.get((Integer) info);
-      result.add(norm);
+    if ( info instanceof Integer ) {
+      NormEntityAbstract norm = this.norms.get( (Integer) info );
+      result.add( norm );
       
       // Norm content
-    } else if(info instanceof String) {
-      for(Integer normId : this.norms.keySet()) {
-        NormEntityAbstract norm = this.norms.get(normId);
-        if(norm.getContent().match((String) info)) {
-          result.add(norm);
+    } else if ( info instanceof String ) {
+      for ( Integer normId : this.norms.keySet() ) {
+        NormEntityAbstract norm = this.norms.get( normId );
+        if ( norm.getContent().match( (String) info ) ) {
+          result.add( norm );
         }
       }
     }
